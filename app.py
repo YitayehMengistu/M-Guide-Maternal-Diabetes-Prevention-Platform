@@ -1439,6 +1439,29 @@ with tab_booking:
     if booking_model_error:
         st.error(booking_model_error)
 
+    st.markdown("#### Predictors used in the booking model")
+    g1, g2 = st.columns(2)
+    with g1:
+        booking_parity = st.number_input(
+            "Parity",
+            min_value=0,
+            max_value=15,
+            step=1,
+            value=int(st.session_state.parity),
+            key="booking_parity",
+        )
+    with g2:
+        booking_family_hist_dm = st.selectbox(
+            "Family history of diabetes",
+            options=[0, 1],
+            index=int(st.session_state.family_hist_dm),
+            format_func=lambda x: "Yes" if x == 1 else "No",
+            key="booking_family_hist_dm",
+        )
+    st.session_state.parity = int(booking_parity)
+    st.session_state.family_hist_dm = int(booking_family_hist_dm)
+
+    st.markdown("##### Maternal characteristics")
     c1, c2, c3 = st.columns(3)
     with c1:
         st.number_input("Age (years)", min_value=10, max_value=60, step=1, key="age")
@@ -1446,21 +1469,30 @@ with tab_booking:
         st.number_input("Weight (kg)", min_value=30.0, max_value=250.0, step=0.1, key="weight")
     with c2:
         st.selectbox("Ethnicity group", options=list(RECODE_DICT.keys()), key="ethnicity_group")
+    with c3:
+        st.markdown(
+            '<div class="callout"><strong>Presentation tip:</strong> position this module as the entry point for early prevention and targeted antenatal follow-up.</div>',
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("##### Previous obstetric history")
+    o1, o2, o3 = st.columns(3)
+    with o1:
         st.selectbox(
-            "Past history of GDM",
+            "Previous GDM",
             options=[0, 1],
             format_func=lambda x: "Yes" if x == 1 else "No",
             key="past_hist_gdm",
         )
         st.selectbox(
-            "Past shoulder dystocia",
+            "Previous shoulder dystocia",
             options=[0, 1],
             format_func=lambda x: "Yes" if x == 1 else "No",
             key="past_shoulder_d",
         )
-    with c3:
+    with o2:
         st.selectbox(
-            "Previous preeclampsia",
+            "Previous pre-eclampsia",
             options=[0, 1],
             format_func=lambda x: "Yes" if x == 1 else "No",
             key="previous_preeclampsia",
@@ -1471,9 +1503,9 @@ with tab_booking:
             format_func=lambda x: "Yes" if x == 1 else "No",
             key="previous_macrosomia",
         )
-        st.markdown(
-            '<div class="callout"><strong>Presentation tip:</strong> position this module as the entry point for early prevention and targeted antenatal follow-up.</div>',
-            unsafe_allow_html=True,
+    with o3:
+        st.info(
+            "The booking model uses age, height, weight, ethnicity, parity, family history of diabetes, previous GDM, and previous obstetric complications."
         )
 
     if st.button("Run booking prediction", type="primary", use_container_width=True):
