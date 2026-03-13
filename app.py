@@ -110,6 +110,23 @@ CUSTOM_CSS = """
         opacity: 1 !important;
         margin-bottom: 0 !important;
     }
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--mono-navy) !important;
+    }
+    .form-section-title {
+        color: var(--mono-navy);
+        font-size: 1.05rem;
+        font-weight: 800;
+        margin: 0.35rem 0 0.55rem 0;
+        padding-bottom: 0.15rem;
+        border-bottom: 2px solid #dbe5f2;
+    }
+    .form-section-note {
+        color: var(--mono-muted);
+        font-size: 0.88rem;
+        margin-top: -0.2rem;
+        margin-bottom: 0.6rem;
+    }
     .hero-wrap {
         background: linear-gradient(120deg, var(--mono-navy) 0%, #153a72 52%, var(--mono-cyan) 100%);
         border-radius: 24px;
@@ -1399,7 +1416,7 @@ with tab_booking:
     if booking_model_error:
         st.error(booking_model_error)
 
-    st.markdown("#### Predictors used in the booking model")
+    st.markdown("<div class="form-section-title">Key booking-model predictors entered here</div><div class="form-section-note">These two predictors are shared across the platform, but are shown here as part of the booking model input set.</div>", unsafe_allow_html=True)
     g1, g2 = st.columns(2)
     with g1:
         st.number_input(
@@ -1419,7 +1436,7 @@ with tab_booking:
             on_change=sync_booking_to_sidebar,
         )
 
-    st.markdown("##### Maternal characteristics")
+    st.markdown("<div class="form-section-title">Maternal characteristics</div><div class="form-section-note">Core booking predictors available at the first antenatal visit.</div>", unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
     with c1:
         st.number_input("Age (years)", min_value=10, max_value=60, step=1, key="age")
@@ -1433,7 +1450,7 @@ with tab_booking:
             unsafe_allow_html=True,
         )
 
-    st.markdown("##### Previous obstetric history")
+    st.markdown("<div class="form-section-title">Previous obstetric history</div><div class="form-section-note">These history items contribute to previous-GDM and previous-obstetric-complication features.</div>", unsafe_allow_html=True)
     o1, o2, o3 = st.columns(3)
     with o1:
         st.selectbox(
@@ -1463,7 +1480,7 @@ with tab_booking:
         )
     with o3:
         st.info(
-            "The booking model uses age, height, weight, ethnicity, parity, family history of diabetes, previous GDM, and previous obstetric complications."
+            "Booking model predictors: age, height, weight, ethnicity group, parity, family history of diabetes, previous GDM, and previous obstetric complications."
         )
 
     if st.button("Run booking prediction", type="primary", width="stretch"):
@@ -1504,13 +1521,14 @@ with tab_antenatal:
         unsafe_allow_html=True,
     )
 
+    st.markdown("<div class="form-section-title">Antenatal predictors in the published model</div><div class="form-section-note">This model combines pregnancy glucose values, prior GDM pattern, treatment, menstrual history, parity, and family history of diabetes.</div>", unsafe_allow_html=True)
     a1, a2, a3 = st.columns(3)
     with a1:
-        st.number_input("Antenatal fasting plasma glucose (FPG)", min_value=0.0, max_value=30.0, step=0.1, key="antenatal_fpg")
-        st.number_input("Antenatal 2h-OGTT", min_value=0.0, max_value=40.0, step=0.1, key="antenatal_2h_ogtt", on_change=sync_antenatal_to_post_view)
+        st.number_input("Antenatal fasting plasma glucose (FPG, mmol/L)", min_value=0.0, max_value=30.0, step=0.1, key="antenatal_fpg")
+        st.number_input("Antenatal 2-hour OGTT (mmol/L)", min_value=0.0, max_value=40.0, step=0.1, key="antenatal_2h_ogtt", on_change=sync_antenatal_to_post_view)
     with a2:
         st.selectbox(
-            "History of recurrent GDM",
+            "Recurrent GDM",
             options=[0, 1],
             format_func=lambda x: "Yes" if x == 1 else "No",
             key="recurrent_gdm",
@@ -1523,7 +1541,7 @@ with tab_antenatal:
         )
     with a3:
         st.selectbox(
-            "History of irregular menstrual cycle",
+            "History of irregular menstrual cycles",
             options=[0, 1],
             format_func=lambda x: "Yes" if x == 1 else "No",
             key="irregular_menses",
@@ -1562,10 +1580,11 @@ with tab_postnatal:
         unsafe_allow_html=True,
     )
 
+    st.markdown("<div class="form-section-title">Postnatal model variables</div><div class="form-section-note">This equation uses the linked antenatal 2-hour OGTT plus postnatal fasting glucose, postnatal 2-hour OGTT, and postnatal BMI.</div>", unsafe_allow_html=True)
     p1, p2, p3 = st.columns(3)
     with p1:
         st.number_input(
-            "Pregnancy 2h-OGTT (mirrored)",
+            "Antenatal 2-hour OGTT (linked value, mmol/L)",
             min_value=0.0,
             max_value=40.0,
             step=0.1,
@@ -1573,16 +1592,16 @@ with tab_postnatal:
             on_change=sync_post_view_to_antenatal,
             help="This mirrors the antenatal 2h-OGTT value used in the postnatal model.",
         )
-        st.number_input("Postnatal FPG", min_value=0.0, max_value=30.0, step=0.1, key="postnatal_fpg")
+        st.number_input("Postnatal fasting plasma glucose (FPG, mmol/L)", min_value=0.0, max_value=30.0, step=0.1, key="postnatal_fpg")
     with p2:
-        st.number_input("Postnatal 2h-OGTT", min_value=0.0, max_value=40.0, step=0.1, key="postnatal_2h_ogtt")
-        st.number_input("Postnatal BMI", min_value=10.0, max_value=80.0, step=0.1, key="postnatal_bmi")
+        st.number_input("Postnatal 2-hour OGTT (mmol/L)", min_value=0.0, max_value=40.0, step=0.1, key="postnatal_2h_ogtt")
+        st.number_input("Postnatal body mass index (BMI, kg/m²)", min_value=10.0, max_value=80.0, step=0.1, key="postnatal_bmi")
     with p3:
         st.markdown(
             '<div class="callout"><strong>Practical note:</strong> this module is strongest when postpartum testing has actually been completed.</div>',
             unsafe_allow_html=True,
         )
-        st.metric("Pregnancy 2h-OGTT linked value", f"{float(st.session_state.post_view_antenatal_2h_ogtt):.1f}")
+        st.metric("Linked antenatal 2-hour OGTT", f"{float(st.session_state.post_view_antenatal_2h_ogtt):.1f}")
 
     if st.button("Run postnatal future T2DM prediction", type="primary", width="stretch"):
         st.session_state.post_prob = predict_postnatal_t2dm_after_gdm()
