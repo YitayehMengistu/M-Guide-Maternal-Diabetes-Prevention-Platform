@@ -130,12 +130,6 @@ CUSTOM_CSS = """
         background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 58%, transparent 70%);
         border-radius: 50%;
     }
-    .brand-row {
-        display: grid;
-        grid-template-columns: 1.7fr 0.7fr;
-        gap: 1rem;
-        align-items: stretch;
-    }
     .brand-chip {
         display: inline-block;
         padding: 0.25rem 0.72rem;
@@ -189,26 +183,22 @@ CUSTOM_CSS = """
         font-size: 0.82rem;
         opacity: 0.95;
     }
-    .summary-strip {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.7rem;
-        margin-top: 1rem;
-    }
     .summary-tile {
-        background: rgba(255,255,255,0.12);
-        border: 1px solid rgba(255,255,255,0.16);
+        background: white;
+        border: 1px solid var(--mono-border);
         border-radius: 16px;
         padding: 0.8rem 0.95rem;
         min-height: 82px;
+        box-shadow: 0 8px 24px rgba(16, 34, 61, 0.05);
     }
     .summary-tile .label {
         font-size: 0.8rem;
-        opacity: 0.88;
+        color: var(--mono-muted);
         margin-bottom: 0.25rem;
     }
     .summary-tile .value {
         font-size: 1.05rem;
+        color: var(--mono-navy);
         font-weight: 800;
         line-height: 1.22;
     }
@@ -357,49 +347,6 @@ CUSTOM_CSS = """
         font-weight: 800;
         text-transform: uppercase;
     }
-    .share-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.85rem;
-    }
-    .share-card {
-        background: #fbfdff;
-        border: 1px solid var(--mono-border);
-        border-radius: 18px;
-        padding: 1rem;
-        min-height: 240px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .share-card h4 {
-        margin: 0.2rem 0 0.25rem 0;
-        color: var(--mono-navy);
-    }
-    .qr-wrap {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.4rem 0 0.2rem 0;
-    }
-    .qr-wrap img {
-        width: 150px;
-        height: 150px;
-        border-radius: 12px;
-        border: 1px solid var(--mono-border);
-        background: white;
-        padding: 0.35rem;
-    }
-    .link-box {
-        background: #f4f8fc;
-        border: 1px solid var(--mono-border);
-        border-radius: 12px;
-        padding: 0.6rem 0.7rem;
-        font-size: 0.84rem;
-        word-break: break-word;
-        color: #1d3153;
-        margin-top: 0.5rem;
-    }
     .report-page {
         background: white;
         border: 1px solid #d5e0ee;
@@ -528,13 +475,12 @@ CUSTOM_CSS = """
         margin-bottom: 0.3rem;
     }
     @media (max-width: 1180px) {
-        .brand-row, .report-head { grid-template-columns: 1fr; }
+        .report-head { grid-template-columns: 1fr; }
         .journey { grid-template-columns: 1fr 1fr; }
-        .summary-strip { grid-template-columns: 1fr 1fr; }
-        .module-grid, .share-grid, .deploy-grid, .report-grid { grid-template-columns: 1fr; }
+        .module-grid, .deploy-grid, .report-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 760px) {
-        .journey, .summary-strip { grid-template-columns: 1fr; }
+        .journey { grid-template-columns: 1fr; }
     }
 </style>
 """
@@ -586,8 +532,10 @@ DEFAULTS = {
     "height": 165,
     "weight": 70.0,
     "parity": 1,
+    "booking_parity": 1,
     "ethnicity_group": "Southern and Central Asian",
     "family_hist_dm": 1,
+    "booking_family_hist_dm": 1,
     "past_hist_gdm": 0,
     "past_shoulder_d": 0,
     "previous_preeclampsia": 0,
@@ -619,6 +567,7 @@ DEFAULTS = {
     "report_note": "Research demo only. Decision support and presentation use only.",
 }
 
+
 # =========================================================
 # STATE
 # =========================================================
@@ -628,6 +577,21 @@ def init_state():
             st.session_state[key] = value
 
 
+def init_booking_mirror_state():
+    st.session_state.booking_parity = int(st.session_state.parity)
+    st.session_state.booking_family_hist_dm = int(st.session_state.family_hist_dm)
+
+
+def sync_sidebar_to_booking():
+    st.session_state.booking_parity = int(st.session_state.parity)
+    st.session_state.booking_family_hist_dm = int(st.session_state.family_hist_dm)
+
+
+def sync_booking_to_sidebar():
+    st.session_state.parity = int(st.session_state.booking_parity)
+    st.session_state.family_hist_dm = int(st.session_state.booking_family_hist_dm)
+
+
 def load_demo_patient():
     demo = {
         "patient_name": "Demo patient",
@@ -635,8 +599,10 @@ def load_demo_patient():
         "height": 160,
         "weight": 78.5,
         "parity": 2,
+        "booking_parity": 2,
         "ethnicity_group": "Southern and Central Asian",
         "family_hist_dm": 1,
+        "booking_family_hist_dm": 1,
         "past_hist_gdm": 1,
         "past_shoulder_d": 0,
         "previous_preeclampsia": 1,
@@ -662,6 +628,7 @@ def reset_everything():
 
 
 init_state()
+init_booking_mirror_state()
 
 
 def sync_antenatal_to_post_view():
@@ -737,20 +704,6 @@ def file_to_data_uri(path: Path) -> str:
     return f"data:{mime};base64,{encoded}"
 
 
-def logo_html() -> str:
-    logo_path = first_existing_logo()
-    if logo_path is None:
-        return "<div class='logo-panel'><div class='logo-label'>Custom logo area</div><div class='logo-caption'>Add assets/custom_logo.png before deployment</div></div>"
-    uri = file_to_data_uri(logo_path)
-    return f"""
-    <div class="logo-panel">
-        <img src="{uri}" alt="Institution logo" />
-        <div class="logo-label">Custom logo area</div>
-        <div class="logo-caption">Replace <strong>assets/custom_logo.*</strong> with your approved branding.</div>
-    </div>
-    """
-
-
 def qr_image(url: str):
     payload = (url or "").strip()
     if not payload or not payload.startswith(("http://", "https://")):
@@ -786,18 +739,17 @@ def safe_link(url: str, label: str) -> str:
 # =========================================================
 @st.cache_resource
 def load_booking_model():
-    model_path = MODEL_FILE
-    scaler_path = SCALER_FILE
-    if not model_path.exists() or not scaler_path.exists():
+    if not MODEL_FILE.exists() or not SCALER_FILE.exists():
         return None, None, "Booking model or scaler file not found in the app folder."
 
     model = CatBoostClassifier()
-    model.load_model(str(model_path))
-    scaler = joblib.load(str(scaler_path))
+    model.load_model(str(MODEL_FILE))
+    scaler = joblib.load(str(SCALER_FILE))
     return model, scaler, None
 
 
 booking_model, booking_scaler, booking_model_error = load_booking_model()
+
 
 # =========================================================
 # PREDICTION HELPERS
@@ -1029,7 +981,7 @@ def render_actions(actions: list[str]):
 def render_result_cards(prob: float, band: str, title: str, threshold: Optional[float], prediction_label: str, subtitle: str):
     left, right = st.columns([1.05, 1])
     with left:
-        st.plotly_chart(make_gauge(prob, title, threshold), use_container_width=True)
+        st.plotly_chart(make_gauge(prob, title, threshold), width="stretch")
     with right:
         st.markdown(
             f"""
@@ -1212,22 +1164,30 @@ st.sidebar.caption("One platform for ANC booking, pregnancy after GDM, and postn
 
 c1, c2 = st.sidebar.columns(2)
 with c1:
-    if st.button("Load demo patient", use_container_width=True):
+    if st.button("Load demo patient", width="stretch"):
         load_demo_patient()
         st.rerun()
 with c2:
-    if st.button("Reset all inputs", use_container_width=True):
+    if st.button("Reset all inputs", width="stretch"):
         reset_everything()
         st.rerun()
 
 st.sidebar.markdown("---")
 st.sidebar.text_input("Patient label", key="patient_name")
-st.sidebar.number_input("Parity", min_value=0, max_value=15, step=1, key="parity")
+st.sidebar.number_input(
+    "Parity",
+    min_value=0,
+    max_value=15,
+    step=1,
+    key="parity",
+    on_change=sync_sidebar_to_booking,
+)
 st.sidebar.selectbox(
     "Family history of diabetes",
     options=[0, 1],
     format_func=lambda x: "Yes" if x == 1 else "No",
     key="family_hist_dm",
+    on_change=sync_sidebar_to_booking,
 )
 st.sidebar.selectbox(
     "Current pathway status",
@@ -1386,7 +1346,7 @@ with tab_landing:
             unsafe_allow_html=True,
         )
         st.dataframe(patient_context_table(), width="stretch", hide_index=True)
-        st.plotly_chart(make_completion_donut(), use_container_width=True)
+        st.plotly_chart(make_completion_donut(), width="stretch")
 
     st.markdown(
         """
@@ -1421,9 +1381,9 @@ with tab_landing:
     else:
         v1, v2 = st.columns(2)
         with v1:
-            st.plotly_chart(make_comparison_chart(summary_df), use_container_width=True)
+            st.plotly_chart(make_comparison_chart(summary_df), width="stretch")
         with v2:
-            st.plotly_chart(make_journey_line_chart(summary_df), use_container_width=True)
+            st.plotly_chart(make_journey_line_chart(summary_df), width="stretch")
 
 with tab_booking:
     st.markdown(
@@ -1442,24 +1402,22 @@ with tab_booking:
     st.markdown("#### Predictors used in the booking model")
     g1, g2 = st.columns(2)
     with g1:
-        booking_parity = st.number_input(
+        st.number_input(
             "Parity",
             min_value=0,
             max_value=15,
             step=1,
-            value=int(st.session_state.parity),
             key="booking_parity",
+            on_change=sync_booking_to_sidebar,
         )
     with g2:
-        booking_family_hist_dm = st.selectbox(
+        st.selectbox(
             "Family history of diabetes",
             options=[0, 1],
-            index=int(st.session_state.family_hist_dm),
             format_func=lambda x: "Yes" if x == 1 else "No",
             key="booking_family_hist_dm",
+            on_change=sync_booking_to_sidebar,
         )
-    st.session_state.parity = int(booking_parity)
-    st.session_state.family_hist_dm = int(booking_family_hist_dm)
 
     st.markdown("##### Maternal characteristics")
     c1, c2, c3 = st.columns(3)
@@ -1508,7 +1466,7 @@ with tab_booking:
             "The booking model uses age, height, weight, ethnicity, parity, family history of diabetes, previous GDM, and previous obstetric complications."
         )
 
-    if st.button("Run booking prediction", type="primary", use_container_width=True):
+    if st.button("Run booking prediction", type="primary", width="stretch"):
         try:
             prob, pred, feature_frame = predict_booking_risk()
             st.session_state.anc_prob = prob
@@ -1532,7 +1490,7 @@ with tab_booking:
         st.markdown("#### Suggested next action")
         render_actions(next_best_action("booking", anc_prob, float(st.session_state.anc_threshold)))
         with st.expander("Model inputs sent to scaler and CatBoost model"):
-            st.dataframe(st.session_state.booking_feature_frame, use_container_width=True)
+            st.dataframe(st.session_state.booking_feature_frame, width="stretch")
 
 with tab_antenatal:
     st.markdown(
@@ -1573,7 +1531,7 @@ with tab_antenatal:
         st.metric("Parity", st.session_state.parity)
         st.metric("Family history of diabetes", "Yes" if st.session_state.family_hist_dm == 1 else "No")
 
-    if st.button("Run antenatal future T2DM prediction", type="primary", use_container_width=True):
+    if st.button("Run antenatal future T2DM prediction", type="primary", width="stretch"):
         st.session_state.ant_prob = predict_antenatal_t2dm_after_gdm()
 
     if st.session_state.ant_prob is not None:
@@ -1604,9 +1562,6 @@ with tab_postnatal:
         unsafe_allow_html=True,
     )
 
-    if "post_view_antenatal_2h_ogtt" not in st.session_state:
-        st.session_state.post_view_antenatal_2h_ogtt = float(st.session_state.antenatal_2h_ogtt)
-
     p1, p2, p3 = st.columns(3)
     with p1:
         st.number_input(
@@ -1629,7 +1584,7 @@ with tab_postnatal:
         )
         st.metric("Pregnancy 2h-OGTT linked value", f"{float(st.session_state.post_view_antenatal_2h_ogtt):.1f}")
 
-    if st.button("Run postnatal future T2DM prediction", type="primary", use_container_width=True):
+    if st.button("Run postnatal future T2DM prediction", type="primary", width="stretch"):
         st.session_state.post_prob = predict_postnatal_t2dm_after_gdm()
 
     if st.session_state.post_prob is not None:
