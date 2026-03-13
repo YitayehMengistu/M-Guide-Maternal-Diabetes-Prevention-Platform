@@ -57,28 +57,37 @@ CUSTOM_CSS = """
         color: #f7fbff;
     }
     div[data-testid="stTabs"] {
-        margin-top: 0.15rem;
-        margin-bottom: 0.35rem;
+        margin-top: 0.18rem;
+        margin-bottom: 0.45rem;
     }
     div[data-testid="stTabs"] button[role="tab"] {
-        color: #4a5f7a !important;
-        font-weight: 700;
-        font-size: 0.98rem;
-        padding-top: 0.55rem;
-        padding-bottom: 0.55rem;
-        border-bottom: 3px solid transparent;
-        transition: color 0.15s ease, border-color 0.15s ease;
+        color: #344a67 !important;
+        font-weight: 800 !important;
+        font-size: 1.18rem !important;
+        line-height: 1.2 !important;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        min-height: 3.1rem;
+        border-bottom: 4px solid transparent;
+        transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
     }
     div[data-testid="stTabs"] button[role="tab"]:hover {
         color: var(--mono-blue) !important;
+        background: rgba(0, 94, 184, 0.04);
     }
     div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
         color: var(--mono-navy) !important;
         border-bottom-color: var(--mono-blue) !important;
+        background: rgba(0, 94, 184, 0.05);
     }
     div[data-testid="stTabs"] button[role="tab"] p {
         color: inherit !important;
         font-weight: inherit !important;
+        font-size: inherit !important;
+        line-height: inherit !important;
+        opacity: 1 !important;
     }
     div[data-testid="stNumberInput"] label,
     div[data-testid="stSelectbox"] label,
