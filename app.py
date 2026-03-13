@@ -554,9 +554,7 @@ DEFAULTS = {
     "family_hist_dm": 1,
     "booking_family_hist_dm": 1,
     "past_hist_gdm": 0,
-    "past_shoulder_d": 0,
-    "previous_preeclampsia": 0,
-    "previous_macrosomia": 0,
+    "past_hist_obs_complica": 0,
     "anc_threshold": 0.50,
     "gdm_status": "Not diagnosed / screening stage",
     "antenatal_fpg": 5.5,
@@ -621,9 +619,7 @@ def load_demo_patient():
         "family_hist_dm": 1,
         "booking_family_hist_dm": 1,
         "past_hist_gdm": 1,
-        "past_shoulder_d": 0,
-        "previous_preeclampsia": 1,
-        "previous_macrosomia": 0,
+        "past_hist_obs_complica": 1,
         "gdm_status": "GDM confirmed",
         "antenatal_fpg": 5.8,
         "antenatal_2h_ogtt": 9.4,
@@ -772,12 +768,6 @@ booking_model, booking_scaler, booking_model_error = load_booking_model()
 # PREDICTION HELPERS
 # =========================================================
 def build_booking_features() -> pd.DataFrame:
-    past_hist_obs_complica = int(
-        st.session_state.past_shoulder_d == 1
-        or st.session_state.previous_preeclampsia == 1
-        or st.session_state.previous_macrosomia == 1
-    )
-
     row = {col: 0 for col in FEATURE_COLUMNS}
     row["Height"] = int(st.session_state.height)
     row["Weight"] = float(st.session_state.weight)
@@ -785,7 +775,7 @@ def build_booking_features() -> pd.DataFrame:
     row["Age"] = int(st.session_state.age)
     row["Family_Hist_DM"] = int(st.session_state.family_hist_dm)
     row["Past_Hist_GDM"] = int(st.session_state.past_hist_gdm)
-    row["Past_Hist_Obs_Complica"] = int(past_hist_obs_complica)
+    row["Past_Hist_Obs_Complica"] = int(st.session_state.past_hist_obs_complica)
 
     ethnicity_col = recode_ethnicity(st.session_state.ethnicity_group)
     row[ethnicity_col] = 1
@@ -1457,39 +1447,28 @@ with tab_booking:
         )
 
     st.markdown(
-        '<div class="form-section-title">Previous obstetric history</div><div class="form-section-note">These history items contribute to previous-GDM and previous-obstetric-complication features.</div>',
+        '<div class="form-section-title">Previous obstetric history</div><div class="form-section-note">These are the two history predictors used directly in the booking model.</div>',
         unsafe_allow_html=True,
     )
     o1, o2, o3 = st.columns(3)
     with o1:
         st.selectbox(
-            "Previous GDM",
+            "Past history of GDM",
             options=[0, 1],
             format_func=lambda x: "Yes" if x == 1 else "No",
             key="past_hist_gdm",
         )
-        st.selectbox(
-            "Previous shoulder dystocia",
-            options=[0, 1],
-            format_func=lambda x: "Yes" if x == 1 else "No",
-            key="past_shoulder_d",
-        )
     with o2:
         st.selectbox(
-            "Previous pre-eclampsia",
+            "Past obstetric complications",
             options=[0, 1],
             format_func=lambda x: "Yes" if x == 1 else "No",
-            key="previous_preeclampsia",
-        )
-        st.selectbox(
-            "Previous macrosomia",
-            options=[0, 1],
-            format_func=lambda x: "Yes" if x == 1 else "No",
-            key="previous_macrosomia",
+            key="past_hist_obs_complica",
+            help="Yes if there is any relevant past obstetric complication included in the original model definition.",
         )
     with o3:
         st.info(
-            "Booking model predictors: age, height, weight, ethnicity group, parity, family history of diabetes, previous GDM, and previous obstetric complications."
+            "Booking model predictors: age, height, weight, ethnicity group, parity, family history of diabetes, past history of GDM, and past obstetric complications."
         )
 
     if st.button("Run booking prediction", type="primary", width="stretch"):
