@@ -1416,7 +1416,10 @@ with tab_booking:
     if booking_model_error:
         st.error(booking_model_error)
 
-    st.markdown("<div class="form-section-title">Key booking-model predictors entered here</div><div class="form-section-note">These two predictors are shared across the platform, but are shown here as part of the booking model input set.</div>", unsafe_allow_html=True)
+    st.markdown(
+        '<div class="form-section-title">Key booking-model predictors entered here</div><div class="form-section-note">These two predictors are shared across the platform, but are shown here as part of the booking model input set.</div>',
+        unsafe_allow_html=True,
+    )
     g1, g2 = st.columns(2)
     with g1:
         st.number_input(
@@ -1436,7 +1439,10 @@ with tab_booking:
             on_change=sync_booking_to_sidebar,
         )
 
-    st.markdown("<div class="form-section-title">Maternal characteristics</div><div class="form-section-note">Core booking predictors available at the first antenatal visit.</div>", unsafe_allow_html=True)
+    st.markdown(
+        '<div class="form-section-title">Maternal characteristics</div><div class="form-section-note">Core booking predictors available at the first antenatal visit.</div>',
+        unsafe_allow_html=True,
+    )
     c1, c2, c3 = st.columns(3)
     with c1:
         st.number_input("Age (years)", min_value=10, max_value=60, step=1, key="age")
@@ -1450,7 +1456,10 @@ with tab_booking:
             unsafe_allow_html=True,
         )
 
-    st.markdown("<div class="form-section-title">Previous obstetric history</div><div class="form-section-note">These history items contribute to previous-GDM and previous-obstetric-complication features.</div>", unsafe_allow_html=True)
+    st.markdown(
+        '<div class="form-section-title">Previous obstetric history</div><div class="form-section-note">These history items contribute to previous-GDM and previous-obstetric-complication features.</div>',
+        unsafe_allow_html=True,
+    )
     o1, o2, o3 = st.columns(3)
     with o1:
         st.selectbox(
@@ -1521,7 +1530,10 @@ with tab_antenatal:
         unsafe_allow_html=True,
     )
 
-    st.markdown("<div class="form-section-title">Antenatal predictors in the published model</div><div class="form-section-note">This model combines pregnancy glucose values, prior GDM pattern, treatment, menstrual history, parity, and family history of diabetes.</div>", unsafe_allow_html=True)
+    st.markdown(
+        '<div class="form-section-title">Antenatal predictors in the published model</div><div class="form-section-note">This model combines pregnancy glucose values, prior GDM pattern, treatment, menstrual history, parity, and family history of diabetes.</div>',
+        unsafe_allow_html=True,
+    )
     a1, a2, a3 = st.columns(3)
     with a1:
         st.number_input("Antenatal fasting plasma glucose (FPG, mmol/L)", min_value=0.0, max_value=30.0, step=0.1, key="antenatal_fpg")
@@ -1580,7 +1592,10 @@ with tab_postnatal:
         unsafe_allow_html=True,
     )
 
-    st.markdown("<div class="form-section-title">Postnatal model variables</div><div class="form-section-note">This equation uses the linked antenatal 2-hour OGTT plus postnatal fasting glucose, postnatal 2-hour OGTT, and postnatal BMI.</div>", unsafe_allow_html=True)
+    st.markdown(
+        '<div class="form-section-title">Postnatal model variables</div><div class="form-section-note">This equation uses the linked antenatal 2-hour OGTT plus postnatal fasting glucose, postnatal 2-hour OGTT, and postnatal BMI.</div>',
+        unsafe_allow_html=True,
+    )
     p1, p2, p3 = st.columns(3)
     with p1:
         st.number_input(
