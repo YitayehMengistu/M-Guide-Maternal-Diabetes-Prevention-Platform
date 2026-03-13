@@ -56,8 +56,59 @@ CUSTOM_CSS = """
     section[data-testid="stSidebar"] * {
         color: #f7fbff;
     }
-    div[data-testid="stTabs"] button {
+    div[data-testid="stTabs"] {
+        margin-top: 0.15rem;
+        margin-bottom: 0.35rem;
+    }
+    div[data-testid="stTabs"] button[role="tab"] {
+        color: #4a5f7a !important;
         font-weight: 700;
+        font-size: 0.98rem;
+        padding-top: 0.55rem;
+        padding-bottom: 0.55rem;
+        border-bottom: 3px solid transparent;
+        transition: color 0.15s ease, border-color 0.15s ease;
+    }
+    div[data-testid="stTabs"] button[role="tab"]:hover {
+        color: var(--mono-blue) !important;
+    }
+    div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+        color: var(--mono-navy) !important;
+        border-bottom-color: var(--mono-blue) !important;
+    }
+    div[data-testid="stTabs"] button[role="tab"] p {
+        color: inherit !important;
+        font-weight: inherit !important;
+    }
+    div[data-testid="stNumberInput"] label,
+    div[data-testid="stSelectbox"] label,
+    div[data-testid="stTextInput"] label,
+    div[data-testid="stTextArea"] label,
+    div[data-testid="stDateInput"] label,
+    div[data-testid="stTimeInput"] label,
+    div[data-testid="stSlider"] label,
+    div[data-testid="stRadio"] label,
+    div[data-testid="stCheckbox"] label {
+        display: block !important;
+        color: var(--mono-text) !important;
+        font-weight: 700 !important;
+        opacity: 1 !important;
+        margin-bottom: 0.18rem !important;
+    }
+    div[data-testid="stNumberInput"] label p,
+    div[data-testid="stSelectbox"] label p,
+    div[data-testid="stTextInput"] label p,
+    div[data-testid="stTextArea"] label p,
+    div[data-testid="stDateInput"] label p,
+    div[data-testid="stTimeInput"] label p,
+    div[data-testid="stSlider"] label p,
+    div[data-testid="stRadio"] label p,
+    div[data-testid="stCheckbox"] label p {
+        color: inherit !important;
+        font-weight: inherit !important;
+        font-size: 0.95rem !important;
+        opacity: 1 !important;
+        margin-bottom: 0 !important;
     }
     .hero-wrap {
         background: linear-gradient(120deg, var(--mono-navy) 0%, #153a72 52%, var(--mono-cyan) 100%);
@@ -492,9 +543,10 @@ st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 # =========================================================
 # CONSTANTS
 # =========================================================
-MODEL_FILE = "All_data_Catboost_GDM_ML_model.bin"
-SCALER_FILE = "All_data_scaler.pkl"
-ASSETS_DIR = Path("assets")
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_FILE = BASE_DIR / "All_data_Catboost_GDM_ML_model.bin"
+SCALER_FILE = BASE_DIR / "All_data_scaler.pkl"
+ASSETS_DIR = BASE_DIR / "assets"
 LOGO_CANDIDATES = [
     ASSETS_DIR / "custom_logo.png",
     ASSETS_DIR / "custom_logo.jpg",
@@ -734,8 +786,8 @@ def safe_link(url: str, label: str) -> str:
 # =========================================================
 @st.cache_resource
 def load_booking_model():
-    model_path = Path(MODEL_FILE)
-    scaler_path = Path(SCALER_FILE)
+    model_path = MODEL_FILE
+    scaler_path = SCALER_FILE
     if not model_path.exists() or not scaler_path.exists():
         return None, None, "Booking model or scaler file not found in the app folder."
 
