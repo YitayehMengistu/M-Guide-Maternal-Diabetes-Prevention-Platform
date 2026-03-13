@@ -1,0 +1,9 @@
+streamlit
+pandas
+numpy
+scikit-learn>=1.8,<1.9
+catboost
+joblib
+plotly
+qrcode[pil]
+pillow
