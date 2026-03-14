@@ -1943,38 +1943,6 @@ with hero_right:
             unsafe_allow_html=True,
         )
 
-summary_cols = st.columns(4)
-summary_items = [
-    ("Patient label", str(st.session_state.patient_name)),
-    ("Pathway status", str(st.session_state.gdm_status)),
-    ("Modules completed", f"{completed_count}/3"),
-    ("Deployment mode", "Public demo ready"),
-]
-for col, (label, value) in zip(summary_cols, summary_items):
-    with col:
-        st.markdown(
-            f"""
-            <div class="summary-tile">
-                <div class="label">{escape(label)}</div>
-                <div class="value">{escape(value)}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-st.markdown(
-    """
-<div class="journey">
-  <div class="journey-step"><strong>1. Booking visit</strong><span>Estimate risk of developing GDM at 24-28 weeks from the saved CatBoost model.</span></div>
-  <div class="journey-step"><strong>2. Routine screening</strong><span>Screening takes place at 24-28 weeks and women with GDM move into future diabetes prevention planning.</span></div>
-  <div class="journey-step"><strong>3. Pregnancy after GDM</strong><span>Use the antenatal logistic equation to estimate future T2DM risk after delivery.</span></div>
-  <div class="journey-step"><strong>4. Postnatal follow-up</strong><span>Use postpartum glucose values and BMI to update long-term future T2DM risk.</span></div>
-  <div class="journey-step"><strong>5. Prevention summary</strong><span>Combine all outputs into one presentation-ready patient prevention passport.</span></div>
-</div>
-""",
-    unsafe_allow_html=True,
-)
-
 st.markdown(
     '<div class="notice-banner">Research demo only. This platform is for presentation and decision-support demonstration. It is not stand-alone diagnosis or real-world clinical deployment without governance, local validation, security review, and approval.</div>',
     unsafe_allow_html=True,
@@ -2320,39 +2288,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# summary cards / journey / notice retained
-summary_cols = st.columns(4)
-summary_items = [
-    ("Patient label", str(st.session_state.patient_name)),
-    ("Pathway status", str(st.session_state.gdm_status)),
-    ("Modules completed", f"{modules_completed()}/3"),
-    ("Deployment mode", "Public demo ready"),
-]
-for col, (label, value) in zip(summary_cols, summary_items):
-    with col:
-        st.markdown(
-            f"""
-            <div class="summary-tile">
-                <div class="label">{escape(label)}</div>
-                <div class="value">{escape(value)}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-st.markdown(
-    """
-<div class="journey">
-  <div class="journey-step"><strong>1. Booking visit</strong><span>Estimate risk of developing GDM at 24-28 weeks from the saved CatBoost model.</span></div>
-  <div class="journey-step"><strong>2. Routine screening</strong><span>Screening takes place at 24-28 weeks and women with GDM move into future diabetes prevention planning.</span></div>
-  <div class="journey-step"><strong>3. Pregnancy after GDM</strong><span>Use the antenatal logistic equation to estimate future T2DM risk after delivery.</span></div>
-  <div class="journey-step"><strong>4. Postnatal follow-up</strong><span>Use postpartum glucose values and BMI to update long-term future T2DM risk.</span></div>
-  <div class="journey-step"><strong>5. Prevention summary</strong><span>Combine all outputs into one presentation-ready patient prevention passport.</span></div>
-</div>
-""",
-    unsafe_allow_html=True,
-)
-
 st.markdown(
     '<div class="notice-banner">Research demo only. This platform is for presentation and decision-support demonstration. It is not stand-alone diagnosis or real-world clinical deployment without governance, local validation, security review, and approval.</div>',
     unsafe_allow_html=True,
@@ -2387,17 +2322,6 @@ for col, (color, kicker, title, body, cta, target) in zip(app_cols, app_cards):
         if st.button(cta + " →", key=f"open_{target}", width="stretch"):
             set_active_module(target)
             st.rerun()
-
-st.markdown("<div style='height:0.8rem'></div>", unsafe_allow_html=True)
-module_name = {
-    "booking": "Booking visit model",
-    "antenatal": "After GDM in pregnancy model",
-    "postnatal": "Postnatal follow-up model",
-}.get(st.session_state.active_module, "Selected model")
-st.markdown(
-    f"<div class='panel'><div class='section-kicker'>Selected application</div><h3>{escape(module_name)}</h3><p class='muted'>The model selected from Applications opens directly below for a cleaner, simpler workflow.</p></div>",
-    unsafe_allow_html=True,
-)
 
 if st.session_state.active_module == "booking":
     render_booking_module()
