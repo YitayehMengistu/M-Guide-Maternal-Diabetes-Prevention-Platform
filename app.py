@@ -1111,7 +1111,7 @@ DEFAULTS = {
     "post_prob": None,
     "booking_feature_frame": pd.DataFrame(),
     "institution_name": "MCHRI",
-    "institution_unit": "MCHI",
+    "institution_unit": "",
     "contact_email": "yitayeh.mengistu@monash.edu",
     "public_app_url": "https://m-guide-maternal-diabetes-prevention-platform-na7gro2wekpgin3k.streamlit.app/",
     "github_url": "https://github.com/YitayehMengistu/M-Guide-Maternal-Diabetes-Prevention-Platform",
@@ -1980,239 +1980,25 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+
 # =========================================================
-# TABS
+# MODULE RENDERERS AND SINGLE-PAGE LAYOUT
 # =========================================================
-(
-    tab_landing,
-    tab_booking,
-    tab_antenatal,
-    tab_postnatal,
-    tab_report,
-    tab_about,
-) = st.tabs(
-    [
-        "Public landing page",
-        "Booking screen",
-        "After GDM in pregnancy",
-        "Postnatal follow-up",
-        "Clinical report",
-        "About & deploy",
-    ]
-)
 
-with tab_landing:
-    st.markdown(
-        f"""
-        <div class="clean-hero">
-            <div class="clean-hero-grid">
-                <div class="clean-hero-copy">
-                    <div class="clean-hero-kicker">Web-based, data-driven prediction tools</div>
-                    <h2 class="clean-hero-title">Personalised maternal diabetes risk support</h2>
-                    <p class="clean-hero-text">These evidence-based tools are provided by {escape(st.session_state.institution_name)} and {escape(st.session_state.institution_unit)}. They are designed to support risk-stratified care across booking, pregnancy after GDM, and postpartum follow-up using clear risk estimates, simple language, and practical next steps.</p>
-                </div>
-                <div class="clean-hero-panel">
-                    <div>
-                        <div class="clean-hero-badge">Decision support for clinicians and women</div>
-                        <h3 style="margin:0; font-size:2.2rem; line-height:1.1; font-weight:900;">One clean platform, three linked prediction stages</h3>
-                    </div>
-                    <div class="clean-hero-points">
-                        <div class="clean-hero-point"><strong>Booking:</strong> estimate risk of developing GDM at 24–28 weeks.</div>
-                        <div class="clean-hero-point"><strong>After GDM in pregnancy:</strong> estimate future T2DM risk after delivery.</div>
-                        <div class="clean-hero-point"><strong>Postnatal follow-up:</strong> update long-term future T2DM risk using postpartum results.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+def show_secondary_name(value: str) -> str:
+    value = (value or '').strip()
+    return value
 
-    st.markdown("<div class='clean-section-title'>Applications</div>", unsafe_allow_html=True)
-    st.markdown(
-        "<div class='clean-section-text'>Choose a module depending on where the woman is in the pathway. The structure mirrors the simplicity of a public-facing health tool: one clear purpose, short explanatory text, and an obvious next step.</div>",
-        unsafe_allow_html=True,
-    )
 
-    app_cols = st.columns(3)
-    app_cards = [
-        ("blue", "Maternal diabetes platform", "Booking visit", "Estimate the probability of developing gestational diabetes during pregnancy using the saved CatBoost model and scaler.", "Open booking screen →"),
-        ("teal", "Future diabetes prevention", "After GDM in pregnancy", "Use the published antenatal equation to estimate future type 2 diabetes risk after delivery among women with GDM.", "Open antenatal model →"),
-        ("rose", "Postpartum review", "Postnatal follow-up", "Update long-term future diabetes risk using linked antenatal OGTT, postnatal fasting glucose, postnatal 2-hour OGTT, and BMI.", "Open postnatal model →"),
-    ]
-    for col, (color, kicker, title, body, cta) in zip(app_cols, app_cards):
-        with col:
-            st.markdown(
-                f"""
-                <div class="app-card">
-                    <div class="app-card-top {color}">
-                        <div class="app-card-kicker">{escape(kicker)}</div>
-                        <div class="app-card-title">{escape(title)}</div>
-                    </div>
-                    <div class="app-card-body">
-                        {escape(body)}
-                        <div class="app-pill">{escape(cta)}</div>
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+def set_active_module(name: str):
+    st.session_state.active_module = name
 
-    st.markdown("<div class='clean-section-title'>About this approach</div>", unsafe_allow_html=True)
-    st.markdown(
-        "<div class='clean-section-text'>The aim is not simply to predict risk, but to support clearer conversations, proportionate follow-up, and better allocation of care across the maternal pathway.</div>",
-        unsafe_allow_html=True,
-    )
-    a1, a2, a3 = st.columns(3)
-    with a1:
-        st.markdown(
-            """
-            <div class="insight-card emphasis">
-                <div class="clean-hero-badge" style="background:rgba(255,255,255,0.9); color:#e24674;">Why consider risk stratification?</div>
-                <div style="font-size:2.45rem; font-weight:900; line-height:1.12; margin-top:0.8rem;">Use risk to tailor care rather than treat every woman as needing the same intensity of follow-up.</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with a2:
-        st.markdown(
-            """
-            <div class="insight-card">
-                Earlier, clearer identification of risk can support <strong>timely lifestyle advice</strong>, <strong>appropriate testing</strong>, and more focused follow-up.
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with a3:
-        st.markdown(
-            """
-            <div class="insight-card">
-                A simple web tool can communicate an <strong>individualised estimate of risk</strong> in language that is easier to discuss in clinic and postpartum review.
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
 
-    s1, s2, s3 = st.columns(3)
-    with s1:
-        st.markdown(
-            """
-            <div class="solution-card">
-                <div class="title">Accessible on one platform</div>
-                <div class="text">A single web interface keeps booking, pregnancy-after-GDM, and postnatal models together, so clinicians and women can move through the pathway without changing tools.</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with s2:
-        st.markdown(
-            """
-            <div class="solution-card">
-                <div class="title">Individualised estimates with simple visuals</div>
-                <div class="text">Each model returns a percentage risk, a visual band, and a practical next-action section to support shared decision making.</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with s3:
-        st.markdown(
-            """
-            <div class="solution-card dark">
-                <div class="clean-hero-badge" style="background:rgba(255,255,255,0.92); color:#234f81;">Our solution</div>
-                <div class="title">A clean, data-driven prediction experience</div>
-                <div class="text">The interface is intentionally simple: clear headings, short descriptions, obvious actions, and no unnecessary clutter.</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+if "active_module" not in st.session_state:
+    st.session_state.active_module = "booking"
 
-    st.markdown("<div class='clean-section-title'>Research</div>", unsafe_allow_html=True)
-    st.markdown(
-        f"<div class='clean-section-text'>These tools are designed to be used by healthcare providers together with women who are or may be affected by gestational diabetes. They can support estimation of risk of developing gestational diabetes, and future type 2 diabetes risk after a pregnancy affected by GDM.</div>",
-        unsafe_allow_html=True,
-    )
-    r1, r2 = st.columns([1.2, 0.8])
-    with r1:
-        st.markdown(
-            f"""
-            <div class="research-wrap">
-                <div class="section-kicker">Powered by {escape(st.session_state.institution_name)}</div>
-                <h3 style="font-size:3rem; margin:0 0 0.7rem 0; color:var(--mono-navy);">Research</h3>
-                <p class="clean-section-text" style="margin-bottom:0; max-width:none;">These evidence-based tools are designed to support risk-stratified care for women who may develop GDM and women with prior GDM who need long-term diabetes-prevention planning.</p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with r2:
-        st.markdown(
-            f"""
-            <div class="research-side">
-                <div class="section-kicker">Primary publication</div>
-                <h4>Prediction for risk-stratified care in maternal diabetes</h4>
-                <div class="tag-link">{safe_link(st.session_state.publication_url, 'Know more')}</div>
-                <div style="height:0.65rem"></div>
-                <div class="section-kicker">Related publication</div>
-                <div class="tag-link">{safe_link(st.session_state.publication_url_secondary, 'Know more')}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
 
-    st.markdown("<div class='clean-section-title'>Powered by</div>", unsafe_allow_html=True)
-    pcols = st.columns(3)
-    powered = [
-        ("MCHRI", "Monash Centre for Health Research and Implementation", "Evidence generation, implementation, and translation for clinical and public health research.", safe_link('https://www.monash.edu/medicine/mchri', 'Know more →')),
-        ("MCHI", "Monash Centre for Health Innovation", "Applied digital health, innovation, and implementation thinking supporting practical clinical tools.", safe_link('https://www.monash.edu/medicine/scs/mchi', 'Know more →')),
-        ("Monash", "Monash University", "Research, translation, and partnership to deliver impact locally and internationally.", safe_link('https://www.monash.edu', 'Know more →')),
-    ]
-    for col, (imgtext, title, text, link) in zip(pcols, powered):
-        with col:
-            st.markdown(
-                f"""
-                <div class="powered-card">
-                    <div class="powered-image">{escape(imgtext)}</div>
-                    <div class="powered-body">
-                        <h4>{escape(title)}</h4>
-                        <p>{escape(text)}</p>
-                        <div class="app-pill" style="margin-top:1rem; width:fit-content;">{link}</div>
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-    st.markdown("<div class='clean-section-title'>Share the tool</div>", unsafe_allow_html=True)
-    st.markdown(
-        "<div class='clean-section-text'>Use the public app, code repository, and publication cards for posters, presentations, or sharing with collaborators.</div>",
-        unsafe_allow_html=True,
-    )
-    share_cols = st.columns(3)
-    share_items = [
-        ("Public app", st.session_state.public_app_url, "Scan to open the deployed Streamlit app."),
-        ("GitHub repository", st.session_state.github_url, "Scan to view source code and deployment files."),
-        ("Publication / DOI", st.session_state.publication_url, "Scan to open the publication or project page."),
-    ]
-    for col, (title, url, caption) in zip(share_cols, share_items):
-        with col:
-            st.markdown(f"<div class='panel'><div class='section-kicker'>{escape(title)}</div><h4>{escape(title)}</h4><p class='muted'>{escape(caption)}</p></div>", unsafe_allow_html=True)
-            img_bytes = qr_image(url)
-            if img_bytes is not None:
-                st.image(img_bytes, width=170)
-            else:
-                st.info(f"Add a valid URL for {title.lower()} in the sidebar to generate a QR code.")
-            st.caption(url or "URL not set")
-
-    summary_df = summary_dataframe()
-    if summary_df.empty:
-        st.info("Run one or more modules to populate the journey visualisations.")
-    else:
-        v1, v2 = st.columns(2)
-        with v1:
-            st.plotly_chart(make_comparison_chart(summary_df), width="stretch")
-        with v2:
-            st.plotly_chart(make_journey_line_chart(summary_df), width="stretch")
-
-with tab_booking:
+def render_booking_module():
     st.markdown(
         """
         <div class="panel">
@@ -2291,7 +2077,7 @@ with tab_booking:
             "Booking model predictors: age, height, weight, ethnicity group, parity, family history of diabetes, past history of GDM, and past obstetric complications."
         )
 
-    if st.button("Run booking prediction", type="primary", width="stretch"):
+    if st.button("Run booking prediction", type="primary", width="stretch", key="run_booking_pred"):
         try:
             prob, pred, feature_frame = predict_booking_risk()
             st.session_state.anc_prob = prob
@@ -2317,7 +2103,8 @@ with tab_booking:
         with st.expander("Model inputs sent to scaler and CatBoost model"):
             st.dataframe(st.session_state.booking_feature_frame, width="stretch")
 
-with tab_antenatal:
+
+def render_antenatal_module():
     st.markdown(
         """
         <div class="panel">
@@ -2360,7 +2147,7 @@ with tab_antenatal:
         st.metric("Parity", st.session_state.parity)
         st.metric("Family history of diabetes", "Yes" if st.session_state.family_hist_dm == 1 else "No")
 
-    if st.button("Run antenatal future T2DM prediction", type="primary", width="stretch"):
+    if st.button("Run antenatal future T2DM prediction", type="primary", width="stretch", key="run_antenatal_pred"):
         st.session_state.ant_prob = predict_antenatal_t2dm_after_gdm()
 
     if st.session_state.ant_prob is not None:
@@ -2379,7 +2166,8 @@ with tab_antenatal:
         render_recommendation_panel(antenatal_action_payload(ant_prob, 0.096))
         st.info("Paper-reported action threshold used in this demo: 0.096.")
 
-with tab_postnatal:
+
+def render_postnatal_module():
     st.markdown(
         """
         <div class="panel">
@@ -2417,7 +2205,7 @@ with tab_postnatal:
         )
         st.metric("Linked antenatal 2-hour OGTT", f"{float(st.session_state.post_view_antenatal_2h_ogtt):.1f}")
 
-    if st.button("Run postnatal future T2DM prediction", type="primary", width="stretch"):
+    if st.button("Run postnatal future T2DM prediction", type="primary", width="stretch", key="run_postnatal_pred"):
         st.session_state.post_prob = predict_postnatal_t2dm_after_gdm()
 
     if st.session_state.post_prob is not None:
@@ -2436,13 +2224,14 @@ with tab_postnatal:
         render_recommendation_panel(postnatal_action_payload(post_prob, 0.086))
         st.info("Paper-reported action threshold used in this demo: 0.086.")
 
-with tab_report:
+
+def render_report_section():
     st.markdown(
         """
         <div class="panel">
-            <div class="section-kicker">Report output</div>
+            <div class="section-kicker">Clinical report</div>
             <h3>PDF-style patient report page</h3>
-            <p class="muted">This page is styled like a one-page report for screenshots, slide decks, posters, and prototype demonstrations.</p>
+            <p class="muted">Create a simple one-page output for screenshots, slide decks, or prototype demonstrations.</p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -2450,22 +2239,25 @@ with tab_report:
     summary_df = summary_dataframe()
     html_report = report_html(summary_df)
     st.markdown(html_report, unsafe_allow_html=True)
-
     csv_bytes = summary_df.to_csv(index=False).encode("utf-8") if not summary_df.empty else b"Module,Probability\n"
-    st.download_button(
-        "Download summary CSV",
-        data=csv_bytes,
-        file_name="maternal_diabetes_risk_summary.csv",
-        mime="text/csv",
-    )
-    st.download_button(
-        "Download HTML report",
-        data=html_report,
-        file_name="maternal_diabetes_report.html",
-        mime="text/html",
-    )
+    c1, c2 = st.columns(2)
+    with c1:
+        st.download_button(
+            "Download summary CSV",
+            data=csv_bytes,
+            file_name="maternal_diabetes_risk_summary.csv",
+            mime="text/csv",
+        )
+    with c2:
+        st.download_button(
+            "Download HTML report",
+            data=html_report,
+            file_name="maternal_diabetes_report.html",
+            mime="text/html",
+        )
 
-with tab_about:
+
+def render_about_deploy_section():
     top_left, top_right = st.columns([1.1, 0.9])
     with top_left:
         st.markdown(
@@ -2473,88 +2265,314 @@ with tab_about:
             <div class="panel">
                 <div class="section-kicker">About this demo</div>
                 <h3>What this final clean version includes</h3>
-                <p class="muted">This version is designed for a polished public research demo: stronger typography, clearer module navigation, QR-enabled sharing, publication-ready cards, and deployment-ready Streamlit Cloud files.</p>
+                <p class="muted">This version is designed for a polished public research demo: stronger typography, applications-first navigation, QR-enabled sharing, publication-ready cards, and deployment-ready Streamlit Cloud files.</p>
                 <div class="callout"><strong>Public message:</strong> this platform supports prevention across the maternal metabolic pathway, rather than focusing on one isolated prediction point.</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            """
-            <div class="deploy-grid">
-                <div class="panel">
-                    <div class="section-kicker">GitHub checklist</div>
-                    <h4>Repo contents</h4>
-                    <ul>
-                        <li><code>app.py</code></li>
-                        <li><code>requirements.txt</code></li>
-                        <li><code>.streamlit/config.toml</code></li>
-                        <li><code>README.md</code></li>
-                        <li>Saved model and scaler</li>
-                        <li><code>assets/custom_logo.png</code> (optional)</li>
-                    </ul>
-                </div>
-                <div class="panel">
-                    <div class="section-kicker">Deployment</div>
-                    <h4>Streamlit Community Cloud</h4>
-                    <ol>
-                        <li>Push the project to GitHub.</li>
-                        <li>Choose the repo and <code>app.py</code> in Streamlit Community Cloud.</li>
-                        <li>Add model files to the repo if the app is for demo use.</li>
-                        <li>Deploy and add the public app URL back into the sidebar to generate the QR code.</li>
-                    </ol>
-                </div>
             </div>
             """,
             unsafe_allow_html=True,
         )
     with top_right:
         st.markdown(
-            """
+            f"""
             <div class="panel">
-                <div class="section-kicker">Publication block</div>
-                <h4>Suggested public-sharing text</h4>
-                <p class="muted">This block now carries your institution, public app URL, GitHub repository, and both publication DOIs for easier sharing in presentations and posters.</p>
+                <div class="section-kicker">Contacts and links</div>
+                <h4 style="margin-top:0;">Platform details</h4>
+                <p class="muted" style="margin-bottom:0.35rem;">Institution: {escape(st.session_state.institution_name)}</p>
+                <p class="muted" style="margin-bottom:0.35rem;">Contact: {escape(st.session_state.contact_email)}</p>
+                <p class="muted" style="margin-bottom:0.35rem;">GitHub: {safe_link(st.session_state.github_url, 'Open repository')}</p>
+                <p class="muted" style="margin-bottom:0;">Publication: {safe_link(st.session_state.publication_url, 'Primary DOI')}</p>
             </div>
             """,
             unsafe_allow_html=True,
         )
-        st.code(
-            f"Institution: {st.session_state.institution_name}\n"
-            f"Unit: {st.session_state.institution_unit}\n"
-            f"Contact: {st.session_state.contact_email}\n"
-            f"App URL: {st.session_state.public_app_url}\n"
-            f"GitHub: {st.session_state.github_url}\n"
-            f"Publication 1: {st.session_state.publication_url}\n"
-            f"Publication 2: {st.session_state.publication_url_secondary}\n",
-            language="text",
-        )
-        qr_bytes = qr_image(st.session_state.public_app_url)
-        if qr_bytes is not None:
-            st.image(qr_bytes, width=180, caption="QR for public app")
 
-    st.markdown("#### Suggested footer text")
-    st.code(
-        "Research demonstration only. This app is intended for model presentation and decision-support prototyping. "
-        "It does not replace local screening policy, clinician judgment, or governance requirements.",
-        language="text",
+# =========================================================
+# MAIN SINGLE-PAGE EXPERIENCE
+# =========================================================
+secondary_name = show_secondary_name(st.session_state.institution_unit)
+provider_text = escape(st.session_state.institution_name)
+if secondary_name:
+    provider_text = f"{escape(st.session_state.institution_name)} and {escape(secondary_name)}"
+
+st.markdown(
+    f"""
+    <div class="clean-hero">
+        <div class="clean-hero-grid">
+            <div class="clean-hero-copy">
+                <div class="clean-hero-kicker">Web-based, data-driven prediction tools</div>
+                <h2 class="clean-hero-title">Personalised maternal diabetes risk support</h2>
+                <p class="clean-hero-text">These evidence-based tools are provided by {provider_text}. They are designed to support risk-stratified care across booking, pregnancy after GDM, and postpartum follow-up using clear risk estimates, simple language, and practical next steps.</p>
+            </div>
+            <div class="clean-hero-panel">
+                <div>
+                    <div class="clean-hero-badge">Decision support for clinicians and women</div>
+                    <h3 style="margin:0; font-size:2.2rem; line-height:1.1; font-weight:900;">One clean platform, three linked prediction stages</h3>
+                </div>
+                <div class="clean-hero-points">
+                    <div class="clean-hero-point"><strong>Booking:</strong> estimate risk of developing GDM at 24–28 weeks.</div>
+                    <div class="clean-hero-point"><strong>After GDM in pregnancy:</strong> estimate future T2DM risk after delivery.</div>
+                    <div class="clean-hero-point"><strong>Postnatal follow-up:</strong> update long-term future T2DM risk using postpartum results.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+# summary cards / journey / notice retained
+summary_cols = st.columns(4)
+summary_items = [
+    ("Patient label", str(st.session_state.patient_name)),
+    ("Pathway status", str(st.session_state.gdm_status)),
+    ("Modules completed", f"{modules_completed()}/3"),
+    ("Deployment mode", "Public demo ready"),
+]
+for col, (label, value) in zip(summary_cols, summary_items):
+    with col:
+        st.markdown(
+            f"""
+            <div class="summary-tile">
+                <div class="label">{escape(label)}</div>
+                <div class="value">{escape(value)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+st.markdown(
+    """
+<div class="journey">
+  <div class="journey-step"><strong>1. Booking visit</strong><span>Estimate risk of developing GDM at 24-28 weeks from the saved CatBoost model.</span></div>
+  <div class="journey-step"><strong>2. Routine screening</strong><span>Screening takes place at 24-28 weeks and women with GDM move into future diabetes prevention planning.</span></div>
+  <div class="journey-step"><strong>3. Pregnancy after GDM</strong><span>Use the antenatal logistic equation to estimate future T2DM risk after delivery.</span></div>
+  <div class="journey-step"><strong>4. Postnatal follow-up</strong><span>Use postpartum glucose values and BMI to update long-term future T2DM risk.</span></div>
+  <div class="journey-step"><strong>5. Prevention summary</strong><span>Combine all outputs into one presentation-ready patient prevention passport.</span></div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
+st.markdown(
+    '<div class="notice-banner">Research demo only. This platform is for presentation and decision-support demonstration. It is not stand-alone diagnosis or real-world clinical deployment without governance, local validation, security review, and approval.</div>',
+    unsafe_allow_html=True,
+)
+
+st.markdown("<div class='clean-section-title'>Applications</div>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='clean-section-text'>Choose a module depending on where the woman is in the pathway. Use the buttons below to open the model directly in this section.</div>",
+    unsafe_allow_html=True,
+)
+
+app_cols = st.columns(3)
+app_cards = [
+    ("blue", "Maternal diabetes platform", "Booking visit", "Estimate the probability of developing gestational diabetes during pregnancy using the saved CatBoost model and scaler.", "Open booking screen", "booking"),
+    ("teal", "Future diabetes prevention", "After GDM in pregnancy", "Use the published antenatal equation to estimate future type 2 diabetes risk after delivery among women with GDM.", "Open antenatal model", "antenatal"),
+    ("rose", "Postpartum review", "Postnatal follow-up", "Update long-term future diabetes risk using linked antenatal OGTT, postnatal fasting glucose, postnatal 2-hour OGTT, and BMI.", "Open postnatal model", "postnatal"),
+]
+for col, (color, kicker, title, body, cta, target) in zip(app_cols, app_cards):
+    with col:
+        st.markdown(
+            f"""
+            <div class="app-card">
+                <div class="app-card-top {color}">
+                    <div class="app-card-kicker">{escape(kicker)}</div>
+                    <div class="app-card-title">{escape(title)}</div>
+                </div>
+                <div class="app-card-body">{escape(body)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        if st.button(cta + " →", key=f"open_{target}", width="stretch"):
+            set_active_module(target)
+            st.rerun()
+
+st.markdown("<div style='height:0.8rem'></div>", unsafe_allow_html=True)
+module_name = {
+    "booking": "Booking visit model",
+    "antenatal": "After GDM in pregnancy model",
+    "postnatal": "Postnatal follow-up model",
+}.get(st.session_state.active_module, "Selected model")
+st.markdown(
+    f"<div class='panel'><div class='section-kicker'>Selected application</div><h3>{escape(module_name)}</h3><p class='muted'>The model selected from Applications opens directly below for a cleaner, simpler workflow.</p></div>",
+    unsafe_allow_html=True,
+)
+
+if st.session_state.active_module == "booking":
+    render_booking_module()
+elif st.session_state.active_module == "antenatal":
+    render_antenatal_module()
+else:
+    render_postnatal_module()
+
+# keep the rest of the clean landing content
+st.markdown("<div class='clean-section-title'>About this approach</div>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='clean-section-text'>The aim is not simply to predict risk, but to support clearer conversations, proportionate follow-up, and better allocation of care across the maternal pathway.</div>",
+    unsafe_allow_html=True,
+)
+a1, a2, a3 = st.columns(3)
+with a1:
+    st.markdown(
+        """
+        <div class="insight-card emphasis">
+            <div class="clean-hero-badge" style="background:rgba(255,255,255,0.9); color:#e24674;">Why consider risk stratification?</div>
+            <div style="font-size:2.45rem; font-weight:900; line-height:1.12; margin-top:0.8rem;">Use risk to tailor care rather than treat every woman as needing the same intensity of follow-up.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
+with a2:
+    st.markdown(
+        """
+        <div class="insight-card">
+            Earlier, clearer identification of risk can support <strong>timely lifestyle advice</strong>, <strong>appropriate testing</strong>, and more focused follow-up.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with a3:
+    st.markdown(
+        """
+        <div class="insight-card">
+            A simple web tool can communicate an <strong>individualised estimate of risk</strong> in language that is easier to discuss in clinic and postpartum review.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+b1, b2, b3 = st.columns(3)
+with b1:
+    st.markdown(
+        """
+        <div class="insight-card">
+            <h4 style="margin-top:0; font-size:2rem; line-height:1.1;">Accessible on one platform</h4>
+            A single web interface keeps booking, pregnancy-after-GDM, and postnatal models together, so clinicians and women can move through the pathway without changing tools.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with b2:
+    st.markdown(
+        """
+        <div class="insight-card">
+            <h4 style="margin-top:0; font-size:2rem; line-height:1.1;">Individualised estimates with simple visuals</h4>
+            Each model returns a percentage risk, a visual band, and a practical next-action section to support shared decision making.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with b3:
+    st.markdown(
+        """
+        <div class="solution-card dark">
+            <div class="clean-hero-badge" style="background:rgba(255,255,255,0.92); color:#234f81;">Our solution</div>
+            <div class="title">A clean, data-driven prediction experience</div>
+            <div class="text">The interface is intentionally simple: clear headings, short descriptions, obvious actions, and no unnecessary clutter.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+st.markdown("<div class='clean-section-title'>Research</div>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='clean-section-text'>These tools are designed to be used by healthcare providers together with women who are or may be affected by gestational diabetes. They can support estimation of risk of developing gestational diabetes, and future type 2 diabetes risk after a pregnancy affected by GDM.</div>",
+    unsafe_allow_html=True,
+)
+r1, r2 = st.columns([1.2, 0.8])
+with r1:
+    st.markdown(
+        f"""
+        <div class="research-wrap">
+            <div class="section-kicker">Powered by {escape(st.session_state.institution_name)}</div>
+            <h3 style="font-size:3rem; margin:0 0 0.7rem 0; color:var(--mono-navy);">Research</h3>
+            <p class="clean-section-text" style="margin-bottom:0; max-width:none;">These evidence-based tools are designed to support risk-stratified care for women who may develop GDM and women with prior GDM who need long-term diabetes-prevention planning.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with r2:
+    st.markdown(
+        f"""
+        <div class="research-side">
+            <div class="section-kicker">Primary publication</div>
+            <h4>Prediction for risk-stratified care in maternal diabetes</h4>
+            <div class="tag-link">{safe_link(st.session_state.publication_url, 'Know more')}</div>
+            <div style="height:0.65rem"></div>
+            <div class="section-kicker">Related publication</div>
+            <div class="tag-link">{safe_link(st.session_state.publication_url_secondary, 'Know more')}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+st.markdown("<div class='clean-section-title'>Powered by</div>", unsafe_allow_html=True)
+pcols = st.columns(3)
+powered = [
+    ("MCHRI", "Monash Centre for Health Research and Implementation", "Evidence generation, implementation, and translation for clinical and public health research.", safe_link('https://www.monash.edu/medicine/mchri', 'Know more →')),
+    ("Monash Health", "Monash Health", "Public health-service partnership supporting translational, implementation-focused maternal health innovation.", safe_link('https://monashhealth.org', 'Know more →')),
+    ("Monash", "Monash University", "Research, translation, and partnership to deliver impact locally and internationally.", safe_link('https://www.monash.edu', 'Know more →')),
+]
+for col, (imgtext, title, text, link) in zip(pcols, powered):
+    with col:
+        st.markdown(
+            f"""
+            <div class="powered-card">
+                <div class="powered-image">{escape(imgtext)}</div>
+                <div class="powered-body">
+                    <h4>{escape(title)}</h4>
+                    <p>{escape(text)}</p>
+                    <div class="app-pill" style="margin-top:1rem; width:fit-content;">{link}</div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+st.markdown("<div class='clean-section-title'>Share the tool</div>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='clean-section-text'>Use the public app, code repository, and publication cards for posters, presentations, or sharing with collaborators.</div>",
+    unsafe_allow_html=True,
+)
+share_cols = st.columns(3)
+share_items = [
+    ("Public app", st.session_state.public_app_url, "Scan to open the deployed Streamlit app."),
+    ("GitHub repository", st.session_state.github_url, "Scan to view source code and deployment files."),
+    ("Publication / DOI", st.session_state.publication_url, "Scan to open the publication or project page."),
+]
+for col, (title, url, caption) in zip(share_cols, share_items):
+    with col:
+        st.markdown(f"<div class='panel'><div class='section-kicker'>{escape(title)}</div><h4>{escape(title)}</h4><p class='muted'>{escape(caption)}</p></div>", unsafe_allow_html=True)
+        img_bytes = qr_image(url)
+        if img_bytes is not None:
+            st.image(img_bytes, width=170)
+        else:
+            st.info(f"Add a valid URL for {title.lower()} in the sidebar to generate a QR code.")
+        st.caption(url or "URL not set")
+
+with st.expander("Clinical report and downloads"):
+    render_report_section()
+
+with st.expander("About deployment and platform details"):
+    render_about_deploy_section()
 
 # =========================================================
 # FOOTER
 # =========================================================
+secondary = show_secondary_name(st.session_state.institution_unit)
+mid = f" · {escape(secondary)}" if secondary else ""
 st.markdown(
     f"""
     <div class="footer-wrap">
         <div class="footer-top">
             <div>
                 <span class="footer-pill">{escape(st.session_state.institution_name)}</span>
-                <span class="footer-pill">{escape(st.session_state.institution_unit)}</span>
                 <span class="footer-pill">{escape(st.session_state.model_version)}</span>
             </div>
             <div>{safe_link(st.session_state.github_url, 'GitHub')} · {safe_link(st.session_state.publication_url, 'Publication 1')} · {safe_link(st.session_state.publication_url_secondary, 'Publication 2')} · {safe_link(st.session_state.public_app_url, 'Public app')}</div>
         </div>
-        <div><strong>M-Guide | Maternal Diabetes Prevention Platform</strong> — Monash-style prototype for research demonstration and public sharing. Replace placeholder branding with approved institutional assets before external release.</div>
+        <div><strong>M-Guide | Maternal Diabetes Prevention Platform</strong> — a clean, applications-first prototype for research demonstration and public sharing.</div>
         <div>Contact: {escape(st.session_state.contact_email)} | {escape(st.session_state.report_note)}</div>
     </div>
     """,
