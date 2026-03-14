@@ -1860,7 +1860,6 @@ def report_html(summary_df: pd.DataFrame) -> str:
 # SIDEBAR
 # =========================================================
 st.sidebar.markdown("## 🩺 Risk journey controls")
-st.sidebar.caption("One platform for ANC booking, pregnancy after GDM, and postnatal prevention follow-up.")
 
 c1, c2 = st.sidebar.columns(2)
 with c1:
@@ -1967,16 +1966,6 @@ if "active_module" not in st.session_state:
 
 
 def render_booking_module():
-    st.markdown(
-        """
-        <div class="panel">
-            <div class="section-kicker">Stage 1</div>
-            <h3>ANC booking risk of developing GDM</h3>
-            <p class="muted">This module uses the saved CatBoost model and preprocessing scaler already stored in the app folder.</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
     if booking_model_error:
         st.error(booking_model_error)
 
@@ -2074,17 +2063,6 @@ def render_booking_module():
 
 def render_antenatal_module():
     st.markdown(
-        """
-        <div class="panel">
-            <div class="section-kicker">Stage 2</div>
-            <h3>Pregnancy after GDM: future T2DM risk after delivery</h3>
-            <p class="muted">Use this module for women who already have GDM. It applies the published antenatal logistic equation.</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
         '<div class="form-section-title">Antenatal predictors in the published model</div><div class="form-section-note">This model combines pregnancy glucose values, prior GDM pattern, treatment, menstrual history, parity, and family history of diabetes.</div>',
         unsafe_allow_html=True,
     )
@@ -2136,17 +2114,6 @@ def render_antenatal_module():
 
 
 def render_postnatal_module():
-    st.markdown(
-        """
-        <div class="panel">
-            <div class="section-kicker">Stage 3</div>
-            <h3>Postnatal follow-up: updated future T2DM risk</h3>
-            <p class="muted">Use postpartum glucose values and BMI to update long-term future T2DM risk after a pregnancy affected by GDM.</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
     st.markdown(
         '<div class="form-section-title">Postnatal model variables</div><div class="form-section-note">This equation uses the linked antenatal 2-hour OGTT plus postnatal fasting glucose, postnatal 2-hour OGTT, and postnatal BMI.</div>',
         unsafe_allow_html=True,
@@ -2288,10 +2255,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown(
-    '<div class="notice-banner">Research demo only. This platform is for presentation and decision-support demonstration. It is not stand-alone diagnosis or real-world clinical deployment without governance, local validation, security review, and approval.</div>',
-    unsafe_allow_html=True,
-)
 
 st.markdown("<div class='clean-section-title'>Applications</div>", unsafe_allow_html=True)
 st.markdown(
