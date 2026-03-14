@@ -752,34 +752,88 @@ CUSTOM_CSS = """
     .action-card {
         background: #ffffff;
         border: 1px solid var(--mono-border);
-        border-radius: 18px;
-        padding: 1rem 1.05rem;
-        box-shadow: 0 8px 22px rgba(16, 34, 61, 0.05);
-        height: 100%;
+        border-radius: 20px;
+        padding: 1.1rem 1.15rem;
+        box-shadow: 0 10px 26px rgba(16, 34, 61, 0.06);
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
     }
     .action-card h4 {
-        margin: 0 0 0.35rem 0;
+        margin: 0;
         color: var(--mono-navy);
-        font-size: 1.02rem;
+        font-size: 1.12rem;
+        font-weight: 800;
+        line-height: 1.25;
     }
-    .action-card p, .action-card li {
+    .action-card .action-kicker {
+        font-size: 0.74rem;
+        text-transform: uppercase;
+        letter-spacing: 0.35px;
+        font-weight: 800;
+        color: var(--mono-blue);
+        margin: 0;
+    }
+    .action-card p {
+        color: var(--mono-text);
+        font-size: 0.98rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+    .action-list {
+        margin: 0;
+        padding-left: 1.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+    }
+    .action-list li {
+        color: var(--mono-text);
+        font-size: 0.98rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+    .reason-list {
+        margin: 0;
+        padding-left: 1.05rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+    }
+    .reason-list li {
         color: var(--mono-text);
         font-size: 0.95rem;
         line-height: 1.55;
+        margin: 0;
     }
-    .action-card ul {
-        margin: 0.35rem 0 0 1rem;
-        padding: 0;
+    .action-intensity-pill {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 0.28rem 0.75rem;
+        font-size: 0.84rem;
+        font-weight: 800;
+        border: 1px solid var(--mono-border);
+        background: #f4f8fc;
+        color: var(--mono-navy);
+    }
+    .action-followup {
+        color: var(--mono-text);
+        font-size: 1rem;
+        line-height: 1.65;
+        margin: 0;
     }
     .action-note {
-        margin-top: 0.65rem;
-        padding: 0.75rem 0.85rem;
-        border-radius: 14px;
+        margin-top: 0.2rem;
+        padding: 0.8rem 0.9rem;
+        border-radius: 15px;
         background: #edf5ff;
         border: 1px solid #cfe0f7;
         color: #173860;
-        font-size: 0.92rem;
-        line-height: 1.45;
+        font-size: 0.95rem;
+        line-height: 1.55;
     }
 
 </style>
@@ -1376,48 +1430,50 @@ def postnatal_action_payload(prob: float, threshold: float) -> dict:
 
 
 def render_recommendation_panel(payload: dict):
-    c1, c2, c3 = st.columns([1.15, 0.95, 0.9])
+    action_items = "".join(f"<li>{escape(item)}</li>" for item in payload["actions"])
+    reason_items = payload.get("reasons") or ["Based primarily on the current predicted risk level."]
+    reason_html = "".join(f"<li>{escape(reason)}</li>" for reason in reason_items)
+    followup_html = f"<p class='action-followup'>{escape(payload['follow_up'])}</p>"
+    tailored_html = ""
+    if payload.get("tailored_note"):
+        tailored_html = f"<div class='action-note'><strong>Tailored support:</strong> {escape(payload['tailored_note'])}</div>"
+
+    c1, c2, c3 = st.columns([1.12, 0.92, 0.9])
     with c1:
         st.markdown(
-            """
+            f"""
             <div class="action-card">
+                <div class="action-kicker">Care recommendation</div>
                 <h4>Suggested next action</h4>
+                <ul class="action-list">{action_items}</ul>
+            </div>
             """,
             unsafe_allow_html=True,
         )
-        for item in payload["actions"]:
-            st.markdown(f"- {item}")
-        st.markdown("</div>", unsafe_allow_html=True)
     with c2:
         st.markdown(
             f"""
             <div class="action-card">
+                <div class="action-kicker">Reasoning</div>
                 <h4>Why this was suggested</h4>
-                <p><strong>Action intensity:</strong> {escape(payload['intensity'])}</p>
+                <div class="action-intensity-pill">Action intensity: {escape(payload['intensity'])}</div>
+                <ul class="reason-list">{reason_html}</ul>
+            </div>
             """,
             unsafe_allow_html=True,
         )
-        if payload["reasons"]:
-            for reason in payload["reasons"]:
-                st.markdown(f"- {reason}")
-        else:
-            st.markdown("- Based primarily on the current predicted risk level.")
-        st.markdown("</div>", unsafe_allow_html=True)
     with c3:
         st.markdown(
             f"""
             <div class="action-card">
+                <div class="action-kicker">Follow-up</div>
                 <h4>Recommended follow-up</h4>
-                <p>{escape(payload['follow_up'])}</p>
+                {followup_html}
+                {tailored_html}
+            </div>
             """,
             unsafe_allow_html=True,
         )
-        if payload.get("tailored_note"):
-            st.markdown(
-                f'<div class="action-note"><strong>Tailored support:</strong> {escape(payload["tailored_note"])}</div>',
-                unsafe_allow_html=True,
-            )
-        st.markdown("</div>", unsafe_allow_html=True)
 
 
 def render_result_cards(prob: float, band: str, title: str, threshold: Optional[float], prediction_label: str, subtitle: str):
@@ -1934,7 +1990,7 @@ with tab_booking:
             pred_label,
             "Booking-stage risk output from the saved CatBoost model.",
         )
-        st.markdown("#### Suggested next action")
+        st.markdown("### Suggested next action")
         render_recommendation_panel(booking_action_payload(anc_prob, float(st.session_state.anc_threshold)))
         with st.expander("Model inputs sent to scaler and CatBoost model"):
             st.dataframe(st.session_state.booking_feature_frame, width="stretch")
@@ -1997,7 +2053,7 @@ with tab_antenatal:
             ant_label,
             "Published antenatal logistic model for women with GDM.",
         )
-        st.markdown("#### Suggested next action")
+        st.markdown("### Suggested next action")
         render_recommendation_panel(antenatal_action_payload(ant_prob, 0.096))
         st.info("Paper-reported action threshold used in this demo: 0.096.")
 
@@ -2054,7 +2110,7 @@ with tab_postnatal:
             post_label,
             "Published postnatal logistic model using postpartum glucose values and BMI.",
         )
-        st.markdown("#### Suggested next action")
+        st.markdown("### Suggested next action")
         render_recommendation_panel(postnatal_action_payload(post_prob, 0.086))
         st.info("Paper-reported action threshold used in this demo: 0.086.")
 
