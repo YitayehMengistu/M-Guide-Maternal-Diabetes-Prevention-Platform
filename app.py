@@ -748,6 +748,40 @@ CUSTOM_CSS = """
         div[data-testid="stTabs"] button[role="tab"] { font-size: 1.02rem !important; }
     }
 
+
+    .action-card {
+        background: #ffffff;
+        border: 1px solid var(--mono-border);
+        border-radius: 18px;
+        padding: 1rem 1.05rem;
+        box-shadow: 0 8px 22px rgba(16, 34, 61, 0.05);
+        height: 100%;
+    }
+    .action-card h4 {
+        margin: 0 0 0.35rem 0;
+        color: var(--mono-navy);
+        font-size: 1.02rem;
+    }
+    .action-card p, .action-card li {
+        color: var(--mono-text);
+        font-size: 0.95rem;
+        line-height: 1.55;
+    }
+    .action-card ul {
+        margin: 0.35rem 0 0 1rem;
+        padding: 0;
+    }
+    .action-note {
+        margin-top: 0.65rem;
+        padding: 0.75rem 0.85rem;
+        border-radius: 14px;
+        background: #edf5ff;
+        border: 1px solid #cfe0f7;
+        color: #173860;
+        font-size: 0.92rem;
+        line-height: 1.45;
+    }
+
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
@@ -1186,53 +1220,204 @@ def make_completion_donut():
     return fig
 
 
-def next_best_action(stage: str, prob: float, threshold: Optional[float] = None) -> list[str]:
-    if stage == "booking":
-        if threshold is not None and prob < threshold:
-            return [
-                "Continue routine antenatal pathway and standard 24-28 week GDM screening.",
-                "Reinforce healthy nutrition, weight, and physical activity advice early in pregnancy.",
-                "Reassess if new risk factors emerge before routine screening.",
-            ]
-        if prob < 0.20:
-            return [
-                "Discuss modifiable risk factors early in pregnancy.",
-                "Consider targeted preventive counselling and reinforce routine screening attendance.",
-                "Document the elevated risk so the care team remembers routine or earlier glucose assessment.",
-            ]
-        return [
-            "Flag as high-risk for GDM and consider earlier testing per local protocol.",
-            "Provide targeted nutrition and activity counselling at booking.",
-            "Plan closer review before routine 24-28 week screening.",
+def yes_no(value: int) -> str:
+    return "Yes" if int(value) == 1 else "No"
+
+
+def action_intensity_label(prob: float, threshold: float) -> str:
+    if prob < threshold:
+        return "Low"
+    if prob < 0.20:
+        return "Medium"
+    return "High"
+
+
+def booking_action_payload(prob: float, threshold: float) -> dict:
+    intensity = action_intensity_label(prob, threshold)
+    reasons = []
+    if int(st.session_state.family_hist_dm) == 1:
+        reasons.append("family history of diabetes")
+    if int(st.session_state.past_hist_gdm) == 1:
+        reasons.append("past history of GDM")
+    if int(st.session_state.past_hist_obs_complica) == 1:
+        reasons.append("past obstetric complications")
+    if int(st.session_state.age) >= 35:
+        reasons.append("maternal age 35 years or above")
+    if int(st.session_state.parity) >= 2:
+        reasons.append("multiparity")
+
+    actions = []
+    follow_up = "Routine GDM screening at 24–28 weeks with standard antenatal review."
+    if intensity == "Low":
+        actions = [
+            "Continue routine antenatal care and routine GDM screening at 24–28 weeks.",
+            "Reinforce healthy nutrition, physical activity, and weight monitoring early in pregnancy.",
         ]
-
-    if stage == "antenatal_after_gdm":
-        if threshold is not None and prob < threshold:
-            return [
-                "Discuss postpartum diabetes prevention before discharge from maternity care.",
-                "Ensure postpartum glucose testing is scheduled and documented.",
-            ]
-        return [
-            "Create an enhanced postpartum prevention plan before delivery.",
-            "Emphasise postpartum OGTT follow-up and long-term diabetes screening.",
-            "Offer structured lifestyle or weight-management support where available.",
+    elif intensity == "Medium":
+        actions = [
+            "Provide targeted antenatal lifestyle counselling and reinforce attendance for GDM screening.",
+            "Consider closer review before routine 24–28 week screening depending on local protocol.",
+            "Document the elevated booking risk so the care team can plan timely follow-up.",
         ]
-
-    if threshold is not None and prob < threshold:
-        return [
-            "Continue routine diabetes-prevention counselling and periodic screening.",
-            "Reinforce healthy weight, physical activity, and repeat glycaemic follow-up.",
+        follow_up = "Enhanced antenatal review before routine screening; consider earlier testing if local policy supports it."
+    else:
+        actions = [
+            "Flag as high risk for GDM and consider earlier glucose assessment or earlier review according to local policy.",
+            "Provide intensified lifestyle counselling and closer antenatal follow-up from booking.",
+            "Discuss the result with the care team so a prevention-focused plan is documented early.",
         ]
-    return [
-        "Escalate diabetes-prevention follow-up in primary care or endocrinology.",
-        "Prioritise weight-management, nutrition, and annual glycaemic surveillance.",
-        "Use the result to support shared decision-making, not as a stand-alone diagnosis.",
-    ]
+        follow_up = "Earlier antenatal review and consideration of earlier glucose testing according to local protocol."
+
+    tailored_note = None
+    if str(st.session_state.ethnicity_group) in [
+        "Southern and Central Asian",
+        "South-East and North-East Asian",
+        "Middle-Eastern, North African, or Sub-Saharan African",
+    ]:
+        tailored_note = "Offer culturally appropriate dietary counselling and communication support where available."
+
+    return {
+        "intensity": intensity,
+        "actions": actions,
+        "reasons": reasons,
+        "follow_up": follow_up,
+        "tailored_note": tailored_note,
+    }
 
 
-def render_actions(actions: list[str]):
-    for item in actions:
-        st.markdown(f"- {item}")
+def antenatal_action_payload(prob: float, threshold: float) -> dict:
+    intensity = action_intensity_label(prob, threshold)
+    reasons = []
+    if float(st.session_state.antenatal_fpg) >= 5.6:
+        reasons.append("higher antenatal fasting plasma glucose")
+    if float(st.session_state.antenatal_2h_ogtt) >= 8.5:
+        reasons.append("higher antenatal 2-hour OGTT")
+    if int(st.session_state.recurrent_gdm) == 1:
+        reasons.append("recurrent GDM")
+    if int(st.session_state.insulin_treatment) == 1:
+        reasons.append("insulin treatment during pregnancy")
+    if int(st.session_state.irregular_menses) == 1:
+        reasons.append("history of irregular menstrual cycles")
+    if int(st.session_state.family_hist_dm) == 1:
+        reasons.append("family history of diabetes")
+
+    if intensity == "Low":
+        actions = [
+            "Plan routine postpartum glucose follow-up and reinforce long-term diabetes prevention advice before delivery.",
+            "Ensure postpartum OGTT timing is documented in the discharge plan.",
+        ]
+        follow_up = "Routine postpartum OGTT and usual primary-care follow-up."
+    elif intensity == "Medium":
+        actions = [
+            "Create a structured postpartum follow-up plan before delivery.",
+            "Provide targeted counselling about future type 2 diabetes prevention and the importance of postpartum testing.",
+            "Consider referral to dietetic or lifestyle support where available.",
+        ]
+        follow_up = "Structured postpartum plan with clear testing date and prevention counselling before discharge."
+    else:
+        actions = [
+            "Arrange enhanced postpartum follow-up and clearly document the need for early postpartum testing.",
+            "Emphasise postpartum OGTT attendance and long-term diabetes surveillance in primary care.",
+            "Consider referral to structured lifestyle, weight-management, or diabetes-prevention services where available.",
+        ]
+        follow_up = "Enhanced postpartum follow-up with active recall for OGTT and ongoing diabetes-prevention review."
+
+    return {
+        "intensity": intensity,
+        "actions": actions,
+        "reasons": reasons,
+        "follow_up": follow_up,
+        "tailored_note": None,
+    }
+
+
+def postnatal_action_payload(prob: float, threshold: float) -> dict:
+    intensity = action_intensity_label(prob, threshold)
+    reasons = []
+    if float(st.session_state.postnatal_fpg) >= 5.6:
+        reasons.append("elevated postnatal fasting glucose")
+    if float(st.session_state.postnatal_2h_ogtt) >= 7.8:
+        reasons.append("elevated postnatal 2-hour glucose")
+    if float(st.session_state.postnatal_bmi) >= 30:
+        reasons.append("BMI in the obesity range")
+    elif float(st.session_state.postnatal_bmi) >= 25:
+        reasons.append("BMI above the healthy range")
+    if float(st.session_state.post_view_antenatal_2h_ogtt) >= 8.5:
+        reasons.append("higher antenatal 2-hour OGTT")
+
+    if intensity == "Low":
+        actions = [
+            "Continue routine long-term diabetes-prevention advice and periodic glycaemic surveillance as per local guideline.",
+            "Reinforce healthy eating, physical activity, and weight management goals.",
+        ]
+        follow_up = "Routine repeat glycaemic surveillance in primary care according to guideline."
+    elif intensity == "Medium":
+        actions = [
+            "Provide targeted diabetes-prevention counselling and closer primary-care follow-up.",
+            "Encourage repeat glucose testing and weight-management support.",
+            "Document the need for longer-term surveillance after a pregnancy affected by GDM.",
+        ]
+        follow_up = "Closer primary-care follow-up with repeat glucose testing and weight-management support."
+    else:
+        actions = [
+            "Escalate follow-up for diabetes prevention and regular glycaemic monitoring.",
+            "Consider referral for structured lifestyle intervention or specialist review depending on local pathway.",
+            "Use the result to support shared decision-making about longer-term diabetes surveillance.",
+        ]
+        follow_up = "Enhanced diabetes-prevention follow-up and active recall for repeat glycaemic review."
+
+    return {
+        "intensity": intensity,
+        "actions": actions,
+        "reasons": reasons,
+        "follow_up": follow_up,
+        "tailored_note": None,
+    }
+
+
+def render_recommendation_panel(payload: dict):
+    c1, c2, c3 = st.columns([1.15, 0.95, 0.9])
+    with c1:
+        st.markdown(
+            """
+            <div class="action-card">
+                <h4>Suggested next action</h4>
+            """,
+            unsafe_allow_html=True,
+        )
+        for item in payload["actions"]:
+            st.markdown(f"- {item}")
+        st.markdown("</div>", unsafe_allow_html=True)
+    with c2:
+        st.markdown(
+            f"""
+            <div class="action-card">
+                <h4>Why this was suggested</h4>
+                <p><strong>Action intensity:</strong> {escape(payload['intensity'])}</p>
+            """,
+            unsafe_allow_html=True,
+        )
+        if payload["reasons"]:
+            for reason in payload["reasons"]:
+                st.markdown(f"- {reason}")
+        else:
+            st.markdown("- Based primarily on the current predicted risk level.")
+        st.markdown("</div>", unsafe_allow_html=True)
+    with c3:
+        st.markdown(
+            f"""
+            <div class="action-card">
+                <h4>Recommended follow-up</h4>
+                <p>{escape(payload['follow_up'])}</p>
+            """,
+            unsafe_allow_html=True,
+        )
+        if payload.get("tailored_note"):
+            st.markdown(
+                f'<div class="action-note"><strong>Tailored support:</strong> {escape(payload["tailored_note"])}</div>',
+                unsafe_allow_html=True,
+            )
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 def render_result_cards(prob: float, band: str, title: str, threshold: Optional[float], prediction_label: str, subtitle: str):
@@ -1750,7 +1935,7 @@ with tab_booking:
             "Booking-stage risk output from the saved CatBoost model.",
         )
         st.markdown("#### Suggested next action")
-        render_actions(next_best_action("booking", anc_prob, float(st.session_state.anc_threshold)))
+        render_recommendation_panel(booking_action_payload(anc_prob, float(st.session_state.anc_threshold)))
         with st.expander("Model inputs sent to scaler and CatBoost model"):
             st.dataframe(st.session_state.booking_feature_frame, width="stretch")
 
@@ -1813,7 +1998,7 @@ with tab_antenatal:
             "Published antenatal logistic model for women with GDM.",
         )
         st.markdown("#### Suggested next action")
-        render_actions(next_best_action("antenatal_after_gdm", ant_prob, 0.096))
+        render_recommendation_panel(antenatal_action_payload(ant_prob, 0.096))
         st.info("Paper-reported action threshold used in this demo: 0.096.")
 
 with tab_postnatal:
@@ -1870,7 +2055,7 @@ with tab_postnatal:
             "Published postnatal logistic model using postpartum glucose values and BMI.",
         )
         st.markdown("#### Suggested next action")
-        render_actions(next_best_action("postnatal_after_gdm", post_prob, 0.086))
+        render_recommendation_panel(postnatal_action_payload(post_prob, 0.086))
         st.info("Paper-reported action threshold used in this demo: 0.086.")
 
 with tab_report:
