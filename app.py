@@ -836,6 +836,208 @@ CUSTOM_CSS = """
         line-height: 1.55;
     }
 
+
+    .clean-hero {
+        background: linear-gradient(135deg, #ffffff 0%, #f7fbff 100%);
+        border: 1px solid var(--mono-border);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 14px 34px rgba(16, 34, 61, 0.06);
+        margin-bottom: 1.2rem;
+    }
+    .clean-hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        min-height: 360px;
+    }
+    .clean-hero-copy {
+        padding: 2rem 2.2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.8rem;
+    }
+    .clean-hero-kicker {
+        color: var(--mono-blue);
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 0.01em;
+    }
+    .clean-hero-title {
+        color: var(--mono-navy);
+        font-size: 3.2rem;
+        line-height: 1.02;
+        font-weight: 900;
+        margin: 0;
+    }
+    .clean-hero-text {
+        color: #294466;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        max-width: 780px;
+        margin: 0;
+    }
+    .clean-hero-panel {
+        background: linear-gradient(135deg, #163f75 0%, #2bb8c8 100%);
+        color: white;
+        padding: 1.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 100%;
+    }
+    .clean-hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.14);
+        border: 1px solid rgba(255,255,255,0.2);
+        width: fit-content;
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-bottom: 0.8rem;
+    }
+    .clean-hero-points {
+        display: grid;
+        gap: 0.75rem;
+        margin-top: 1rem;
+    }
+    .clean-hero-point {
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 18px;
+        padding: 0.95rem 1rem;
+    }
+    .clean-section-title {
+        color: var(--mono-navy);
+        font-size: 2.3rem;
+        font-weight: 900;
+        margin: 1.25rem 0 0.35rem 0;
+    }
+    .clean-section-text {
+        color: #5b6f8a;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        max-width: 950px;
+    }
+    .app-card {
+        background: #ffffff;
+        border: 1px solid var(--mono-border);
+        border-radius: 26px;
+        overflow: hidden;
+        box-shadow: 0 12px 30px rgba(16, 34, 61, 0.06);
+        height: 100%;
+    }
+    .app-card-top {
+        padding: 1.3rem 1.4rem 1.2rem 1.4rem;
+        color: white;
+        min-height: 170px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .app-card-top.blue { background: #234f81; }
+    .app-card-top.teal { background: #1fb88a; }
+    .app-card-top.rose { background: #ea9ea0; }
+    .app-card-kicker { font-size: 0.9rem; opacity: 0.95; margin-bottom: 0.45rem; }
+    .app-card-title { font-size: 2.15rem; font-weight: 900; line-height: 1.05; }
+    .app-card-body { padding: 1.35rem 1.45rem 1.5rem 1.45rem; color: #294466; font-size: 1.02rem; line-height: 1.7; }
+    .app-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: #28489c;
+        color: white;
+        padding: 0.7rem 1.2rem;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.98rem;
+        margin-top: 1rem;
+    }
+    .insight-card {
+        background: #ffffff;
+        border: 1px solid var(--mono-border);
+        border-radius: 24px;
+        padding: 1.4rem 1.5rem;
+        min-height: 220px;
+        box-shadow: 0 10px 25px rgba(16, 34, 61, 0.05);
+        color: #234466;
+        font-size: 1.15rem;
+        line-height: 1.65;
+    }
+    .insight-card.emphasis {
+        background: linear-gradient(180deg, #eb537d 0%, #e24674 100%);
+        color: white;
+        border: none;
+    }
+    .insight-card strong { font-weight: 900; }
+    .solution-card {
+        background: #ffffff;
+        border: 1px solid var(--mono-border);
+        border-radius: 26px;
+        padding: 1.4rem;
+        min-height: 240px;
+        box-shadow: 0 10px 24px rgba(16, 34, 61, 0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .solution-card .title { color: var(--mono-navy); font-size: 1.9rem; font-weight: 900; line-height: 1.12; }
+    .solution-card .text { color: #294466; font-size: 1.1rem; line-height: 1.7; }
+    .solution-card.dark { background: #234f81; color: white; border: none; }
+    .solution-card.dark .title, .solution-card.dark .text { color: white; }
+    .research-wrap {
+        background: #ffffff;
+        border: 1px solid var(--mono-border);
+        border-radius: 28px;
+        padding: 1.6rem;
+        box-shadow: 0 10px 24px rgba(16, 34, 61, 0.05);
+    }
+    .powered-card {
+        background: white;
+        border: 1px solid var(--mono-border);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 12px 30px rgba(16, 34, 61, 0.05);
+        height: 100%;
+    }
+    .powered-image {
+        min-height: 150px;
+        background: linear-gradient(135deg, #d9ecfb 0%, #f9fbff 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--mono-navy);
+        font-weight: 900;
+        font-size: 1.5rem;
+    }
+    .powered-body { padding: 1.35rem 1.45rem 1.45rem 1.45rem; }
+    .powered-body h4 { margin: 0 0 0.45rem 0; color: var(--mono-navy); font-size: 1.8rem; }
+    .powered-body p { margin: 0; color: #294466; font-size: 1.04rem; line-height: 1.7; }
+    .research-side {
+        background: #f9fbff;
+        border: 1px solid var(--mono-border);
+        border-radius: 24px;
+        padding: 1.35rem;
+    }
+    .research-side h4 { margin: 0 0 0.55rem 0; color: var(--mono-navy); font-size: 1.9rem; }
+    .tag-link {
+        display: inline-block;
+        background: #eef3fb;
+        color: #294466;
+        padding: 0.42rem 0.8rem;
+        border-radius: 10px;
+        font-weight: 700;
+        margin-top: 0.35rem;
+    }
+    @media (max-width: 1100px) {
+        .clean-hero-grid { grid-template-columns: 1fr; }
+        .clean-hero-title { font-size: 2.5rem; }
+    }
+
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
@@ -1800,64 +2002,190 @@ st.markdown(
 )
 
 with tab_landing:
-    left, right = st.columns([1.2, 0.9])
-    with left:
-        st.markdown(
-            """
-            <div class="panel">
-                <div class="section-kicker">Public-facing overview</div>
-                <h3>One platform, three prediction stages, one prevention story</h3>
-                <p class="muted">Use this landing page when you share the app publicly. It explains the journey, the intended use, and the quickest path to a live demo.</p>
-                <div class="callout"><strong>Simple positioning:</strong> describe the tool as a <strong>maternal metabolic risk journey</strong> rather than three disconnected calculators.</div>
-                <div class="module-grid">
-                    <div class="module-card"><span class="mini-tag">Module 1</span><h4>Booking visit</h4><p class="muted">Saved CatBoost model plus saved scaler to estimate risk of developing GDM at 24-28 weeks.</p></div>
-                    <div class="module-card"><span class="mini-tag">Module 2</span><h4>After GDM in pregnancy</h4><p class="muted">Published antenatal logistic equation to estimate future T2DM risk after delivery among women with GDM.</p></div>
-                    <div class="module-card"><span class="mini-tag">Module 3</span><h4>Postnatal follow-up</h4><p class="muted">Published postnatal logistic equation to update future T2DM risk using postpartum glucose values and BMI.</p></div>
+    st.markdown(
+        f"""
+        <div class="clean-hero">
+            <div class="clean-hero-grid">
+                <div class="clean-hero-copy">
+                    <div class="clean-hero-kicker">Web-based, data-driven prediction tools</div>
+                    <h2 class="clean-hero-title">Personalised maternal diabetes risk support</h2>
+                    <p class="clean-hero-text">These evidence-based tools are provided by {escape(st.session_state.institution_name)} and {escape(st.session_state.institution_unit)}. They are designed to support risk-stratified care across booking, pregnancy after GDM, and postpartum follow-up using clear risk estimates, simple language, and practical next steps.</p>
+                </div>
+                <div class="clean-hero-panel">
+                    <div>
+                        <div class="clean-hero-badge">Decision support for clinicians and women</div>
+                        <h3 style="margin:0; font-size:2.2rem; line-height:1.1; font-weight:900;">One clean platform, three linked prediction stages</h3>
+                    </div>
+                    <div class="clean-hero-points">
+                        <div class="clean-hero-point"><strong>Booking:</strong> estimate risk of developing GDM at 24–28 weeks.</div>
+                        <div class="clean-hero-point"><strong>After GDM in pregnancy:</strong> estimate future T2DM risk after delivery.</div>
+                        <div class="clean-hero-point"><strong>Postnatal follow-up:</strong> update long-term future T2DM risk using postpartum results.</div>
+                    </div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            """
-            <div class="panel">
-                <div class="section-kicker">Use in 30 seconds</div>
-                <h4>Fast demo sequence</h4>
-                <ol>
-                    <li>Click <strong>Load demo patient</strong> in the sidebar.</li>
-                    <li>Run the <strong>Booking screen</strong> module.</li>
-                    <li>Run <strong>After GDM in pregnancy</strong> and <strong>Postnatal follow-up</strong>.</li>
-                    <li>Open <strong>Clinical report</strong> for a screenshot or export.</li>
-                </ol>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    with right:
-        st.markdown(
-            """
-            <div class="panel">
-                <div class="section-kicker">Live patient context</div>
-                <h4>Shared patient summary</h4>
-                <p class="muted">All modules use the same patient context so the tool feels like one longitudinal pathway.</p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.dataframe(patient_context_table(), width="stretch", hide_index=True)
-        st.plotly_chart(make_completion_donut(), width="stretch")
-
-    st.markdown(
-        """
-        <div class="panel">
-            <div class="section-kicker">Public sharing section</div>
-            <h3>Share the app, paper, and code with QR-enabled cards</h3>
-            <p class="muted">Populate the URLs in the sidebar, then use these cards for posters, presentations, or the app landing page.</p>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
+    st.markdown("<div class='clean-section-title'>Applications</div>", unsafe_allow_html=True)
+    st.markdown(
+        "<div class='clean-section-text'>Choose a module depending on where the woman is in the pathway. The structure mirrors the simplicity of a public-facing health tool: one clear purpose, short explanatory text, and an obvious next step.</div>",
+        unsafe_allow_html=True,
+    )
+
+    app_cols = st.columns(3)
+    app_cards = [
+        ("blue", "Maternal diabetes platform", "Booking visit", "Estimate the probability of developing gestational diabetes during pregnancy using the saved CatBoost model and scaler.", "Open booking screen →"),
+        ("teal", "Future diabetes prevention", "After GDM in pregnancy", "Use the published antenatal equation to estimate future type 2 diabetes risk after delivery among women with GDM.", "Open antenatal model →"),
+        ("rose", "Postpartum review", "Postnatal follow-up", "Update long-term future diabetes risk using linked antenatal OGTT, postnatal fasting glucose, postnatal 2-hour OGTT, and BMI.", "Open postnatal model →"),
+    ]
+    for col, (color, kicker, title, body, cta) in zip(app_cols, app_cards):
+        with col:
+            st.markdown(
+                f"""
+                <div class="app-card">
+                    <div class="app-card-top {color}">
+                        <div class="app-card-kicker">{escape(kicker)}</div>
+                        <div class="app-card-title">{escape(title)}</div>
+                    </div>
+                    <div class="app-card-body">
+                        {escape(body)}
+                        <div class="app-pill">{escape(cta)}</div>
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+    st.markdown("<div class='clean-section-title'>About this approach</div>", unsafe_allow_html=True)
+    st.markdown(
+        "<div class='clean-section-text'>The aim is not simply to predict risk, but to support clearer conversations, proportionate follow-up, and better allocation of care across the maternal pathway.</div>",
+        unsafe_allow_html=True,
+    )
+    a1, a2, a3 = st.columns(3)
+    with a1:
+        st.markdown(
+            """
+            <div class="insight-card emphasis">
+                <div class="clean-hero-badge" style="background:rgba(255,255,255,0.9); color:#e24674;">Why consider risk stratification?</div>
+                <div style="font-size:2.45rem; font-weight:900; line-height:1.12; margin-top:0.8rem;">Use risk to tailor care rather than treat every woman as needing the same intensity of follow-up.</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with a2:
+        st.markdown(
+            """
+            <div class="insight-card">
+                Earlier, clearer identification of risk can support <strong>timely lifestyle advice</strong>, <strong>appropriate testing</strong>, and more focused follow-up.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with a3:
+        st.markdown(
+            """
+            <div class="insight-card">
+                A simple web tool can communicate an <strong>individualised estimate of risk</strong> in language that is easier to discuss in clinic and postpartum review.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    s1, s2, s3 = st.columns(3)
+    with s1:
+        st.markdown(
+            """
+            <div class="solution-card">
+                <div class="title">Accessible on one platform</div>
+                <div class="text">A single web interface keeps booking, pregnancy-after-GDM, and postnatal models together, so clinicians and women can move through the pathway without changing tools.</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with s2:
+        st.markdown(
+            """
+            <div class="solution-card">
+                <div class="title">Individualised estimates with simple visuals</div>
+                <div class="text">Each model returns a percentage risk, a visual band, and a practical next-action section to support shared decision making.</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with s3:
+        st.markdown(
+            """
+            <div class="solution-card dark">
+                <div class="clean-hero-badge" style="background:rgba(255,255,255,0.92); color:#234f81;">Our solution</div>
+                <div class="title">A clean, data-driven prediction experience</div>
+                <div class="text">The interface is intentionally simple: clear headings, short descriptions, obvious actions, and no unnecessary clutter.</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("<div class='clean-section-title'>Research</div>", unsafe_allow_html=True)
+    st.markdown(
+        f"<div class='clean-section-text'>These tools are designed to be used by healthcare providers together with women who are or may be affected by gestational diabetes. They can support estimation of risk of developing gestational diabetes, and future type 2 diabetes risk after a pregnancy affected by GDM.</div>",
+        unsafe_allow_html=True,
+    )
+    r1, r2 = st.columns([1.2, 0.8])
+    with r1:
+        st.markdown(
+            f"""
+            <div class="research-wrap">
+                <div class="section-kicker">Powered by {escape(st.session_state.institution_name)}</div>
+                <h3 style="font-size:3rem; margin:0 0 0.7rem 0; color:var(--mono-navy);">Research</h3>
+                <p class="clean-section-text" style="margin-bottom:0; max-width:none;">These evidence-based tools are designed to support risk-stratified care for women who may develop GDM and women with prior GDM who need long-term diabetes-prevention planning.</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with r2:
+        st.markdown(
+            f"""
+            <div class="research-side">
+                <div class="section-kicker">Primary publication</div>
+                <h4>Prediction for risk-stratified care in maternal diabetes</h4>
+                <div class="tag-link">{safe_link(st.session_state.publication_url, 'Know more')}</div>
+                <div style="height:0.65rem"></div>
+                <div class="section-kicker">Related publication</div>
+                <div class="tag-link">{safe_link(st.session_state.publication_url_secondary, 'Know more')}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("<div class='clean-section-title'>Powered by</div>", unsafe_allow_html=True)
+    pcols = st.columns(3)
+    powered = [
+        ("MCHRI", "Monash Centre for Health Research and Implementation", "Evidence generation, implementation, and translation for clinical and public health research.", safe_link('https://www.monash.edu/medicine/mchri', 'Know more →')),
+        ("MCHI", "Monash Centre for Health Innovation", "Applied digital health, innovation, and implementation thinking supporting practical clinical tools.", safe_link('https://www.monash.edu/medicine/scs/mchi', 'Know more →')),
+        ("Monash", "Monash University", "Research, translation, and partnership to deliver impact locally and internationally.", safe_link('https://www.monash.edu', 'Know more →')),
+    ]
+    for col, (imgtext, title, text, link) in zip(pcols, powered):
+        with col:
+            st.markdown(
+                f"""
+                <div class="powered-card">
+                    <div class="powered-image">{escape(imgtext)}</div>
+                    <div class="powered-body">
+                        <h4>{escape(title)}</h4>
+                        <p>{escape(text)}</p>
+                        <div class="app-pill" style="margin-top:1rem; width:fit-content;">{link}</div>
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+    st.markdown("<div class='clean-section-title'>Share the tool</div>", unsafe_allow_html=True)
+    st.markdown(
+        "<div class='clean-section-text'>Use the public app, code repository, and publication cards for posters, presentations, or sharing with collaborators.</div>",
+        unsafe_allow_html=True,
+    )
     share_cols = st.columns(3)
     share_items = [
         ("Public app", st.session_state.public_app_url, "Scan to open the deployed Streamlit app."),
@@ -1874,15 +2202,9 @@ with tab_landing:
                 st.info(f"Add a valid URL for {title.lower()} in the sidebar to generate a QR code.")
             st.caption(url or "URL not set")
 
-    if st.session_state.publication_url_secondary:
-        st.markdown(
-            f"<div class='callout'><strong>Related publication:</strong> {safe_link(st.session_state.publication_url_secondary, st.session_state.publication_url_secondary)}</div>",
-            unsafe_allow_html=True,
-        )
-
     summary_df = summary_dataframe()
     if summary_df.empty:
-        st.info("Run one or more modules to populate the journey visualizations.")
+        st.info("Run one or more modules to populate the journey visualisations.")
     else:
         v1, v2 = st.columns(2)
         with v1:
