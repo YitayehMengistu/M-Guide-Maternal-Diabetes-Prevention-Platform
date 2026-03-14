@@ -508,6 +508,246 @@ CUSTOM_CSS = """
     @media (max-width: 760px) {
         .journey { grid-template-columns: 1fr; }
     }
+
+    /* Aesthetic polish overrides */
+    html, body, [data-testid="stAppViewContainer"] {
+        font-size: 17px;
+    }
+    .block-container {
+        max-width: 1640px !important;
+        padding-top: 1.25rem !important;
+        padding-left: 1.8rem !important;
+        padding-right: 1.8rem !important;
+        padding-bottom: 3rem !important;
+    }
+    section[data-testid="stSidebar"] {
+        min-width: 320px !important;
+        max-width: 320px !important;
+    }
+    section[data-testid="stSidebar"] .stMarkdown p,
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] div[data-baseweb="select"] * {
+        font-size: 1rem !important;
+    }
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3 {
+        font-size: 1.35rem !important;
+        font-weight: 800 !important;
+        color: #ffffff !important;
+    }
+    div[data-testid="stTabs"] button[role="tab"] {
+        font-size: 1.28rem !important;
+        font-weight: 900 !important;
+        min-height: 3.4rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        border-radius: 12px 12px 0 0;
+    }
+    div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+        box-shadow: inset 0 -4px 0 var(--mono-blue);
+    }
+    div[data-testid="stTabs"] button[role="tab"] p {
+        white-space: nowrap !important;
+    }
+    div[data-testid="stNumberInput"] label p,
+    div[data-testid="stSelectbox"] label p,
+    div[data-testid="stTextInput"] label p,
+    div[data-testid="stTextArea"] label p,
+    div[data-testid="stSlider"] label p {
+        font-size: 1.02rem !important;
+        font-weight: 800 !important;
+    }
+    div[data-testid="stNumberInput"] input {
+        font-size: 1.04rem !important;
+        font-weight: 700 !important;
+    }
+    div[data-baseweb="select"] > div {
+        min-height: 3.2rem !important;
+        font-size: 1.02rem !important;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        letter-spacing: -0.02em;
+    }
+    .hero-wrap {
+        border-radius: 28px;
+        padding: 1.75rem 1.8rem 1.45rem 1.8rem !important;
+        min-height: 270px;
+    }
+    .hero-wrap h1 {
+        font-size: 3rem !important;
+        line-height: 1.02 !important;
+        color: #ffffff !important;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.08);
+        max-width: 1100px;
+    }
+    .hero-wrap p {
+        font-size: 1.25rem !important;
+        line-height: 1.55 !important;
+        color: rgba(255,255,255,0.98) !important;
+        max-width: 1020px !important;
+        font-weight: 500;
+    }
+    .brand-chip {
+        font-size: 0.92rem !important;
+        padding: 0.32rem 0.95rem !important;
+    }
+    .logo-panel {
+        min-height: 190px !important;
+        border-radius: 20px;
+    }
+    .logo-caption {
+        font-size: 0.95rem !important;
+        line-height: 1.4 !important;
+    }
+    .summary-tile {
+        padding: 1.15rem 1.2rem !important;
+        min-height: 108px !important;
+        border-radius: 20px !important;
+    }
+    .summary-tile .label {
+        font-size: 0.98rem !important;
+        margin-bottom: 0.45rem !important;
+    }
+    .summary-tile .value {
+        font-size: 1.7rem !important;
+        line-height: 1.15 !important;
+    }
+    .journey {
+        gap: 0.9rem !important;
+    }
+    .journey-step {
+        padding: 1.15rem !important;
+        min-height: 172px !important;
+        border-radius: 22px !important;
+    }
+    .journey-step strong {
+        font-size: 1.28rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 0.55rem !important;
+    }
+    .journey-step span {
+        font-size: 1rem !important;
+        line-height: 1.65 !important;
+    }
+    .notice-banner {
+        font-size: 1.12rem !important;
+        line-height: 1.6 !important;
+        padding: 1rem 1.2rem !important;
+        border-radius: 18px !important;
+    }
+    .panel {
+        padding: 1.25rem 1.3rem !important;
+        border-radius: 22px !important;
+    }
+    .panel h3 {
+        font-size: 2rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 0.55rem !important;
+    }
+    .panel h4 {
+        font-size: 1.45rem !important;
+        line-height: 1.25 !important;
+        margin-bottom: 0.45rem !important;
+    }
+    .muted {
+        font-size: 1.02rem !important;
+        line-height: 1.65 !important;
+    }
+    .section-kicker {
+        font-size: 0.88rem !important;
+        margin-bottom: 0.55rem !important;
+    }
+    .form-section-title {
+        font-size: 1.32rem !important;
+        margin: 0.65rem 0 0.45rem 0 !important;
+        padding-bottom: 0.3rem !important;
+    }
+    .form-section-note {
+        font-size: 0.95rem !important;
+        line-height: 1.55 !important;
+    }
+    .callout {
+        font-size: 1rem !important;
+        line-height: 1.7 !important;
+        padding: 1.05rem 1.1rem !important;
+        border-radius: 18px !important;
+    }
+    .metric-card {
+        padding: 1.1rem 1.15rem !important;
+        border-radius: 20px !important;
+    }
+    .metric-card .small-label {
+        font-size: 0.92rem !important;
+    }
+    .metric-card .big-value {
+        font-size: 2.2rem !important;
+    }
+    .metric-card .subtext {
+        font-size: 0.95rem !important;
+        line-height: 1.55 !important;
+    }
+    .risk-pill {
+        font-size: 0.94rem !important;
+        padding: 0.42rem 0.9rem !important;
+    }
+    .module-card {
+        min-height: 215px !important;
+        border-radius: 20px !important;
+    }
+    .module-card h4 {
+        font-size: 1.28rem !important;
+        line-height: 1.3 !important;
+    }
+    .module-card .muted,
+    .share-card .muted {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+    }
+    .mini-tag {
+        font-size: 0.78rem !important;
+        padding: 0.24rem 0.72rem !important;
+    }
+    .share-card {
+        min-height: 285px !important;
+        border-radius: 20px !important;
+    }
+    .share-card h4 {
+        font-size: 1.35rem !important;
+    }
+    .link-box, .report-subtitle, .report-footer {
+        font-size: 0.96rem !important;
+        line-height: 1.55 !important;
+    }
+    div.stButton > button {
+        font-size: 1.08rem !important;
+        font-weight: 800 !important;
+        min-height: 3.1rem !important;
+        border-radius: 12px !important;
+    }
+    .stDownloadButton > button {
+        font-size: 1rem !important;
+        font-weight: 700 !important;
+        min-height: 2.8rem !important;
+    }
+    div[data-testid="stDataFrame"] * {
+        font-size: 0.98rem !important;
+    }
+    .footer-wrap {
+        font-size: 0.98rem !important;
+        line-height: 1.65 !important;
+        margin-top: 1.7rem !important;
+    }
+    .footer-pill {
+        font-size: 0.78rem !important;
+        padding: 0.22rem 0.62rem !important;
+    }
+    @media (max-width: 1200px) {
+        .hero-wrap h1 { font-size: 2.45rem !important; }
+        .journey-step strong { font-size: 1.1rem !important; }
+        .summary-tile .value { font-size: 1.35rem !important; }
+        div[data-testid="stTabs"] button[role="tab"] { font-size: 1.02rem !important; }
+    }
+
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
@@ -580,12 +820,13 @@ DEFAULTS = {
     "ant_prob": None,
     "post_prob": None,
     "booking_feature_frame": pd.DataFrame(),
-    "institution_name": "Monash University",
-    "institution_unit": "School / Department / Research Group",
-    "contact_email": "your.name@monash.edu",
-    "public_app_url": "https://your-app-name.streamlit.app",
-    "github_url": "https://github.com/your-username/maternal-diabetes-platform",
-    "publication_url": "https://doi.org/your-paper-doi",
+    "institution_name": "MCHRI",
+    "institution_unit": "MCHI",
+    "contact_email": "yitayeh.mengistu@monash.edu",
+    "public_app_url": "https://m-guide-maternal-diabetes-prevention-platform-na7gro2wekpgin3k.streamlit.app/",
+    "github_url": "https://github.com/YitayehMengistu/M-Guide-Maternal-Diabetes-Prevention-Platform",
+    "publication_url": "https://doi.org/10.1016/j.ijmedinf.2023.105228",
+    "publication_url_secondary": "https://doi.org/10.1016/j.clnu.2024.06.006",
     "app_tagline": "Pregnancy-to-postpartum diabetes risk platform",
     "model_version": "Prototype v3.0",
     "report_note": "Research demo only. Decision support and presentation use only.",
@@ -1228,7 +1469,8 @@ st.sidebar.text_input("Institution unit", key="institution_unit")
 st.sidebar.text_input("Contact email", key="contact_email")
 st.sidebar.text_input("Public app URL", key="public_app_url")
 st.sidebar.text_input("GitHub repo URL", key="github_url")
-st.sidebar.text_input("Publication URL / DOI", key="publication_url")
+st.sidebar.text_input("Primary publication URL / DOI", key="publication_url")
+st.sidebar.text_input("Secondary publication URL / DOI", key="publication_url_secondary")
 st.sidebar.text_input("App tagline", key="app_tagline")
 st.sidebar.text_input("Model version label", key="model_version")
 
@@ -1243,7 +1485,7 @@ with hero_left:
         <div class="hero-wrap">
             <span class="brand-chip">MONASH-STYLE PUBLIC DEMO</span>
             <h1>M-Guide | Maternal Diabetes Prevention Platform</h1>
-            <p>{escape(st.session_state.app_tagline)}. A longitudinal risk journey linking ANC booking risk of gestational diabetes with future type 2 diabetes risk during pregnancy after GDM and again after delivery.</p>
+            <p>{escape(st.session_state.app_tagline)}. A longitudinal risk journey from pregnancy booking to postpartum prevention, linking ANC booking risk of gestational diabetes with future type 2 diabetes risk during pregnancy after GDM and again after delivery.</p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -1390,6 +1632,12 @@ with tab_landing:
             else:
                 st.info(f"Add a valid URL for {title.lower()} in the sidebar to generate a QR code.")
             st.caption(url or "URL not set")
+
+    if st.session_state.publication_url_secondary:
+        st.markdown(
+            f"<div class='callout'><strong>Related publication:</strong> {safe_link(st.session_state.publication_url_secondary, st.session_state.publication_url_secondary)}</div>",
+            unsafe_allow_html=True,
+        )
 
     summary_df = summary_dataframe()
     if summary_df.empty:
@@ -1662,7 +1910,7 @@ with tab_about:
             <div class="panel">
                 <div class="section-kicker">About this demo</div>
                 <h3>What this final clean version includes</h3>
-                <p class="muted">This version is designed for a public research demo: custom logo area, institution footer, QR-enabled sharing, cleaner result cards, a publication block, and Streamlit Cloud deployment files.</p>
+                <p class="muted">This version is designed for a polished public research demo: stronger typography, clearer module navigation, QR-enabled sharing, publication-ready cards, and deployment-ready Streamlit Cloud files.</p>
                 <div class="callout"><strong>Public message:</strong> this platform supports prevention across the maternal metabolic pathway, rather than focusing on one isolated prediction point.</div>
             </div>
             """,
@@ -1703,7 +1951,7 @@ with tab_about:
             <div class="panel">
                 <div class="section-kicker">Publication block</div>
                 <h4>Suggested public-sharing text</h4>
-                <p class="muted">Add your final paper title, DOI, collaborators, ethics note, and contact details here before public deployment.</p>
+                <p class="muted">This block now carries your institution, public app URL, GitHub repository, and both publication DOIs for easier sharing in presentations and posters.</p>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1714,7 +1962,8 @@ with tab_about:
             f"Contact: {st.session_state.contact_email}\n"
             f"App URL: {st.session_state.public_app_url}\n"
             f"GitHub: {st.session_state.github_url}\n"
-            f"Publication: {st.session_state.publication_url}\n",
+            f"Publication 1: {st.session_state.publication_url}\n"
+            f"Publication 2: {st.session_state.publication_url_secondary}\n",
             language="text",
         )
         qr_bytes = qr_image(st.session_state.public_app_url)
@@ -1740,7 +1989,7 @@ st.markdown(
                 <span class="footer-pill">{escape(st.session_state.institution_unit)}</span>
                 <span class="footer-pill">{escape(st.session_state.model_version)}</span>
             </div>
-            <div>{safe_link(st.session_state.github_url, 'GitHub')} · {safe_link(st.session_state.publication_url, 'Publication')} · {safe_link(st.session_state.public_app_url, 'Public app')}</div>
+            <div>{safe_link(st.session_state.github_url, 'GitHub')} · {safe_link(st.session_state.publication_url, 'Publication 1')} · {safe_link(st.session_state.publication_url_secondary, 'Publication 2')} · {safe_link(st.session_state.public_app_url, 'Public app')}</div>
         </div>
         <div><strong>M-Guide | Maternal Diabetes Prevention Platform</strong> — Monash-style prototype for research demonstration and public sharing. Replace placeholder branding with approved institutional assets before external release.</div>
         <div>Contact: {escape(st.session_state.contact_email)} | {escape(st.session_state.report_note)}</div>
