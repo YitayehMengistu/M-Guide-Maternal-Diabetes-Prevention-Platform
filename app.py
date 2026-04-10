@@ -20,1030 +20,591 @@ st.set_page_config(
 )
 
 # =========================================================
-# BRANDING + STYLING
+# STYLING
 # =========================================================
 CUSTOM_CSS = """
 <style>
     :root {
-        --mono-navy: #0b1f41;
-        --mono-blue: #005eb8;
-        --mono-cyan: #14b7c6;
-        --mono-soft: #f4f8fc;
-        --mono-border: #d8e1ee;
-        --mono-text: #10223d;
-        --mono-muted: #5b6f8a;
-        --success-bg: #e8f7ef;
+        --navy: #10284f;
+        --blue: #005eb8;
+        --cyan: #1ea8c7;
+        --teal: #25b49f;
+        --rose: #e89da5;
+        --bg: #f5f8fc;
+        --card: #ffffff;
+        --border: #d7e2ef;
+        --text: #132a4e;
+        --muted: #5d7190;
+        --success-bg: #eaf7ee;
         --success-text: #17603a;
         --warn-bg: #fff5d9;
-        --warn-text: #8a5a00;
+        --warn-text: #855400;
         --danger-bg: #fde8ea;
         --danger-text: #991b1b;
     }
-    .stApp {
-        background:
-            radial-gradient(circle at top right, rgba(0, 94, 184, 0.08), transparent 24%),
-            linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
-    }
-    .block-container {
-        padding-top: 1.05rem;
-        padding-bottom: 2.2rem;
-        max-width: 1420px;
-    }
-    section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #08172f 0%, #10284f 100%);
-        border-right: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    section[data-testid="stSidebar"] * {
-        color: #f7fbff;
-    }
-    div[data-testid="stTabs"] {
-        margin-top: 0.18rem;
-        margin-bottom: 0.45rem;
-    }
-    div[data-testid="stTabs"] button[role="tab"] {
-        color: #344a67 !important;
-        font-weight: 800 !important;
-        font-size: 1.18rem !important;
-        line-height: 1.2 !important;
-        padding-top: 0.75rem;
-        padding-bottom: 0.75rem;
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-        min-height: 3.1rem;
-        border-bottom: 4px solid transparent;
-        transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
-    }
-    div[data-testid="stTabs"] button[role="tab"]:hover {
-        color: var(--mono-blue) !important;
-        background: rgba(0, 94, 184, 0.04);
-    }
-    div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-        color: var(--mono-navy) !important;
-        border-bottom-color: var(--mono-blue) !important;
-        background: rgba(0, 94, 184, 0.05);
-    }
-    div[data-testid="stTabs"] button[role="tab"] p {
-        color: inherit !important;
-        font-weight: inherit !important;
-        font-size: inherit !important;
-        line-height: inherit !important;
-        opacity: 1 !important;
-    }
-    div[data-testid="stNumberInput"] label,
-    div[data-testid="stSelectbox"] label,
-    div[data-testid="stTextInput"] label,
-    div[data-testid="stTextArea"] label,
-    div[data-testid="stDateInput"] label,
-    div[data-testid="stTimeInput"] label,
-    div[data-testid="stSlider"] label,
-    div[data-testid="stRadio"] label,
-    div[data-testid="stCheckbox"] label {
-        display: block !important;
-        color: var(--mono-text) !important;
-        font-weight: 700 !important;
-        opacity: 1 !important;
-        margin-bottom: 0.18rem !important;
-    }
-    div[data-testid="stNumberInput"] label p,
-    div[data-testid="stSelectbox"] label p,
-    div[data-testid="stTextInput"] label p,
-    div[data-testid="stTextArea"] label p,
-    div[data-testid="stDateInput"] label p,
-    div[data-testid="stTimeInput"] label p,
-    div[data-testid="stSlider"] label p,
-    div[data-testid="stRadio"] label p,
-    div[data-testid="stCheckbox"] label p {
-        color: inherit !important;
-        font-weight: inherit !important;
-        font-size: 0.95rem !important;
-        opacity: 1 !important;
-        margin-bottom: 0 !important;
-    }
-    h1, h2, h3, h4, h5, h6 {
-        color: var(--mono-navy) !important;
-    }
-    .form-section-title {
-        color: var(--mono-navy);
-        font-size: 1.05rem;
-        font-weight: 800;
-        margin: 0.35rem 0 0.55rem 0;
-        padding-bottom: 0.15rem;
-        border-bottom: 2px solid #dbe5f2;
-    }
-    .form-section-note {
-        color: var(--mono-muted);
-        font-size: 0.88rem;
-        margin-top: -0.2rem;
-        margin-bottom: 0.6rem;
-    }
-    .hero-wrap {
-        background: linear-gradient(120deg, var(--mono-navy) 0%, #153a72 52%, var(--mono-cyan) 100%);
-        border-radius: 24px;
-        padding: 1.4rem 1.55rem 1.15rem 1.55rem;
-        color: white;
-        box-shadow: 0 18px 40px rgba(12, 31, 65, 0.18);
-        margin-bottom: 1rem;
-        overflow: hidden;
-        position: relative;
-    }
-    .hero-wrap:before {
-        content: "";
-        position: absolute;
-        top: -30px;
-        right: -10px;
-        width: 260px;
-        height: 260px;
-        background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 58%, transparent 70%);
-        border-radius: 50%;
-    }
-    .brand-chip {
-        display: inline-block;
-        padding: 0.25rem 0.72rem;
-        border-radius: 999px;
-        background: rgba(255,255,255,0.14);
-        border: 1px solid rgba(255,255,255,0.18);
-        font-size: 0.78rem;
-        font-weight: 700;
-        letter-spacing: 0.3px;
-        margin-bottom: 0.35rem;
-    }
-    .hero-wrap h1 {
-        margin: 0.1rem 0 0.35rem 0;
-        font-size: 2.05rem;
-        line-height: 1.08;
-        font-weight: 800;
-    }
-    .hero-wrap p {
-        margin: 0;
-        opacity: 0.97;
-        max-width: 980px;
-        font-size: 0.99rem;
-        line-height: 1.45;
-    }
-    .logo-panel {
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.16);
-        border-radius: 18px;
-        padding: 0.95rem;
-        min-height: 160px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        text-align: center;
-    }
-    .logo-panel img {
-        max-width: 100%;
-        max-height: 72px;
-        margin-bottom: 0.55rem;
-        object-fit: contain;
-        border-radius: 8px;
-    }
-    .logo-label {
-        font-size: 0.78rem;
-        font-weight: 700;
-        opacity: 0.9;
-        margin-bottom: 0.15rem;
-    }
-    .logo-caption {
-        font-size: 0.82rem;
-        opacity: 0.95;
-    }
-    .summary-tile {
-        background: white;
-        border: 1px solid var(--mono-border);
-        border-radius: 16px;
-        padding: 0.8rem 0.95rem;
-        min-height: 82px;
-        box-shadow: 0 8px 24px rgba(16, 34, 61, 0.05);
-    }
-    .summary-tile .label {
-        font-size: 0.8rem;
-        color: var(--mono-muted);
-        margin-bottom: 0.25rem;
-    }
-    .summary-tile .value {
-        font-size: 1.05rem;
-        color: var(--mono-navy);
-        font-weight: 800;
-        line-height: 1.22;
-    }
-    .journey {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 0.7rem;
-        margin: 0.95rem 0 1rem 0;
-    }
-    .journey-step {
-        background: white;
-        border: 1px solid var(--mono-border);
-        border-radius: 18px;
-        padding: 0.95rem;
-        min-height: 108px;
-        box-shadow: 0 8px 24px rgba(16, 34, 61, 0.05);
-    }
-    .journey-step strong {
-        display: block;
-        color: var(--mono-navy);
-        margin-bottom: 0.35rem;
-        font-size: 0.95rem;
-    }
-    .journey-step span {
-        color: var(--mono-muted);
-        font-size: 0.88rem;
-        line-height: 1.38;
-    }
-    .notice-banner {
-        background: linear-gradient(90deg, #f9c846 0%, #f3e58a 100%);
-        color: #3f2c00;
-        border-radius: 16px;
-        padding: 0.9rem 1rem;
-        font-weight: 700;
-        margin-bottom: 0.95rem;
-        border: 1px solid rgba(136, 95, 0, 0.15);
-    }
-    .panel {
-        background: white;
-        border: 1px solid var(--mono-border);
-        border-radius: 20px;
-        padding: 1.05rem 1.1rem;
-        box-shadow: 0 10px 28px rgba(16, 34, 61, 0.05);
-        margin-bottom: 1rem;
-    }
-    .panel h3, .panel h4 {
-        color: var(--mono-navy);
-        margin-top: 0;
-        margin-bottom: 0.35rem;
-    }
-    .muted {
-        color: var(--mono-muted);
-        font-size: 0.93rem;
-    }
-    .section-kicker {
-        display: inline-block;
-        font-size: 0.74rem;
-        font-weight: 800;
-        letter-spacing: 0.4px;
-        text-transform: uppercase;
-        color: var(--mono-blue);
-        margin-bottom: 0.45rem;
-    }
-    .metric-card {
-        background: #ffffff;
-        border: 1px solid var(--mono-border);
-        border-left: 5px solid var(--mono-blue);
-        border-radius: 18px;
-        padding: 0.95rem 1rem;
-        box-shadow: 0 8px 22px rgba(16, 34, 61, 0.05);
-        height: 100%;
-    }
-    .metric-card .small-label {
-        color: var(--mono-muted);
-        font-size: 0.8rem;
-        margin-bottom: 0.28rem;
-    }
-    .metric-card .big-value {
-        color: var(--mono-navy);
-        font-size: 1.7rem;
-        font-weight: 800;
-        line-height: 1.05;
-    }
-    .metric-card .subtext {
-        color: var(--mono-muted);
-        font-size: 0.86rem;
-        margin-top: 0.4rem;
-    }
-    .risk-pill {
-        display: inline-block;
-        padding: 0.34rem 0.8rem;
-        border-radius: 999px;
-        font-size: 0.82rem;
-        font-weight: 800;
-        margin-top: 0.15rem;
-        border: 1px solid transparent;
-    }
-    .risk-low {
-        background: var(--success-bg);
-        color: var(--success-text);
-        border-color: #bde3ca;
-    }
-    .risk-mod {
-        background: var(--warn-bg);
-        color: var(--warn-text);
-        border-color: #f1d27a;
-    }
-    .risk-high {
-        background: var(--danger-bg);
-        color: var(--danger-text);
-        border-color: #f2b8bd;
-    }
-    .callout {
-        background: #edf5ff;
-        border: 1px solid #cfe0f7;
-        border-left: 5px solid var(--mono-blue);
-        border-radius: 16px;
-        padding: 0.95rem 1rem;
-        color: #173860;
-        margin: 0.55rem 0 0.75rem 0;
-    }
-    .module-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.8rem;
-        margin-top: 0.75rem;
-    }
-    .module-card {
-        background: #fbfdff;
-        border: 1px solid var(--mono-border);
-        border-radius: 18px;
-        padding: 1rem;
-        min-height: 170px;
-    }
-    .module-card h4 {
-        margin: 0.15rem 0 0.45rem 0;
-        color: var(--mono-navy);
-    }
-    .mini-tag {
-        display: inline-block;
-        border-radius: 999px;
-        padding: 0.18rem 0.6rem;
-        background: #eaf1fb;
-        color: var(--mono-blue);
-        font-size: 0.72rem;
-        font-weight: 800;
-        text-transform: uppercase;
-    }
-    .report-page {
-        background: white;
-        border: 1px solid #d5e0ee;
-        border-radius: 12px;
-        padding: 1.25rem 1.35rem;
-        box-shadow: 0 14px 36px rgba(16, 34, 61, 0.08);
-        width: 100%;
-        max-width: 980px;
-        margin: 0 auto 1rem auto;
-    }
-    .report-head {
-        display: grid;
-        grid-template-columns: 1.55fr 0.65fr;
-        gap: 1rem;
-        border-bottom: 2px solid var(--mono-blue);
-        padding-bottom: 0.8rem;
-        margin-bottom: 0.9rem;
-    }
-    .report-title {
-        color: var(--mono-navy);
-        font-size: 1.55rem;
-        font-weight: 800;
-        margin-bottom: 0.2rem;
-    }
-    .report-subtitle {
-        color: var(--mono-muted);
-        font-size: 0.92rem;
-        line-height: 1.4;
-    }
-    .report-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.9rem;
-        margin: 0.9rem 0;
-    }
-    .report-box {
-        border: 1px solid var(--mono-border);
-        border-radius: 14px;
-        padding: 0.85rem 0.95rem;
-        background: #fbfdff;
-    }
-    .report-box h5 {
-        margin: 0 0 0.35rem 0;
-        color: var(--mono-navy);
-        font-size: 0.95rem;
-    }
-    .report-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 0.75rem;
-        font-size: 0.92rem;
-    }
-    .report-table th, .report-table td {
-        border: 1px solid #dbe5f0;
-        padding: 0.5rem 0.55rem;
-        text-align: left;
-        vertical-align: top;
-    }
-    .report-table th {
-        background: #f3f7fb;
-        color: var(--mono-navy);
-    }
-    .report-qr {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border: 1px dashed var(--mono-border);
-        border-radius: 14px;
-        min-height: 190px;
-        padding: 0.7rem;
-        background: #fbfdff;
-        text-align: center;
-    }
-    .report-qr img {
-        width: 135px;
-        height: 135px;
-        border: 1px solid var(--mono-border);
-        border-radius: 10px;
-        padding: 0.25rem;
-        background: white;
-    }
-    .report-footer {
-        margin-top: 0.9rem;
-        color: var(--mono-muted);
-        font-size: 0.82rem;
-        border-top: 1px solid #e4ebf3;
-        padding-top: 0.7rem;
-        line-height: 1.45;
-    }
-    .deploy-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.85rem;
-        margin-top: 0.75rem;
-    }
-    .footer-wrap {
-        margin-top: 1.25rem;
-        padding: 1rem 1.1rem;
-        border-top: 1px solid var(--mono-border);
-        color: var(--mono-muted);
-        font-size: 0.88rem;
-        line-height: 1.5;
-    }
-    .footer-wrap a {
-        color: var(--mono-blue);
-        text-decoration: none;
-        font-weight: 700;
-    }
-    .footer-top {
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        flex-wrap: wrap;
-        margin-bottom: 0.3rem;
-    }
-    .footer-pill {
-        display: inline-block;
-        padding: 0.18rem 0.55rem;
-        border-radius: 999px;
-        background: #eaf1fb;
-        color: var(--mono-blue);
-        font-size: 0.72rem;
-        font-weight: 800;
-        margin-right: 0.35rem;
-        margin-bottom: 0.3rem;
-    }
-    @media (max-width: 1180px) {
-        .report-head { grid-template-columns: 1fr; }
-        .journey { grid-template-columns: 1fr 1fr; }
-        .module-grid, .deploy-grid, .report-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 760px) {
-        .journey { grid-template-columns: 1fr; }
-    }
 
-    /* Aesthetic polish overrides */
     html, body, [data-testid="stAppViewContainer"] {
         font-size: 17px;
     }
-    .block-container {
-        max-width: 1640px !important;
-        padding-top: 1.25rem !important;
-        padding-left: 1.8rem !important;
-        padding-right: 1.8rem !important;
-        padding-bottom: 3rem !important;
+
+    .stApp {
+        background:
+            radial-gradient(circle at top right, rgba(0, 94, 184, 0.07), transparent 24%),
+            linear-gradient(180deg, #fbfdff 0%, var(--bg) 100%);
     }
+
+    .block-container {
+        max-width: 1600px !important;
+        padding-top: 1.2rem !important;
+        padding-bottom: 2.8rem !important;
+        padding-left: 1.6rem !important;
+        padding-right: 1.6rem !important;
+    }
+
     section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #08172f 0%, #10284f 100%);
+        border-right: 1px solid rgba(255,255,255,0.08);
         min-width: 320px !important;
         max-width: 320px !important;
     }
-    section[data-testid="stSidebar"] .stMarkdown p,
-    section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] div[data-baseweb="select"] * {
-        font-size: 1rem !important;
+
+    section[data-testid="stSidebar"] * {
+        color: #f7fbff;
     }
+
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3 {
-        font-size: 1.35rem !important;
-        font-weight: 800 !important;
-        color: #ffffff !important;
-    }
-    div[data-testid="stTabs"] button[role="tab"] {
         font-size: 1.28rem !important;
         font-weight: 900 !important;
-        min-height: 3.4rem !important;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        border-radius: 12px 12px 0 0;
+        color: white !important;
     }
-    div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-        box-shadow: inset 0 -4px 0 var(--mono-blue);
+
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] div[data-baseweb="select"] * {
+        font-size: 0.98rem !important;
     }
-    div[data-testid="stTabs"] button[role="tab"] p {
-        white-space: nowrap !important;
+
+    div[data-testid="stNumberInput"] label,
+    div[data-testid="stSelectbox"] label,
+    div[data-testid="stTextInput"] label,
+    div[data-testid="stSlider"] label {
+        display: block !important;
+        color: var(--text) !important;
+        font-weight: 800 !important;
+        margin-bottom: 0.22rem !important;
     }
+
     div[data-testid="stNumberInput"] label p,
     div[data-testid="stSelectbox"] label p,
     div[data-testid="stTextInput"] label p,
-    div[data-testid="stTextArea"] label p,
     div[data-testid="stSlider"] label p {
-        font-size: 1.02rem !important;
-        font-weight: 800 !important;
+        color: inherit !important;
+        font-weight: inherit !important;
+        font-size: 1rem !important;
     }
+
     div[data-testid="stNumberInput"] input {
-        font-size: 1.04rem !important;
+        font-size: 1rem !important;
         font-weight: 700 !important;
     }
+
     div[data-baseweb="select"] > div {
-        min-height: 3.2rem !important;
-        font-size: 1.02rem !important;
-    }
-    h1, h2, h3, h4, h5, h6 {
-        letter-spacing: -0.02em;
-    }
-    .hero-wrap {
-        border-radius: 28px;
-        padding: 1.75rem 1.8rem 1.45rem 1.8rem !important;
-        min-height: 270px;
-    }
-    .hero-wrap h1 {
-        font-size: 3rem !important;
-        line-height: 1.02 !important;
-        color: #ffffff !important;
-        text-shadow: 0 1px 0 rgba(0,0,0,0.08);
-        max-width: 1100px;
-    }
-    .hero-wrap p {
-        font-size: 1.25rem !important;
-        line-height: 1.55 !important;
-        color: rgba(255,255,255,0.98) !important;
-        max-width: 1020px !important;
-        font-weight: 500;
-    }
-    .brand-chip {
-        font-size: 0.92rem !important;
-        padding: 0.32rem 0.95rem !important;
-    }
-    .logo-panel {
-        min-height: 190px !important;
-        border-radius: 20px;
-    }
-    .logo-caption {
-        font-size: 0.95rem !important;
-        line-height: 1.4 !important;
-    }
-    .summary-tile {
-        padding: 1.15rem 1.2rem !important;
-        min-height: 108px !important;
-        border-radius: 20px !important;
-    }
-    .summary-tile .label {
-        font-size: 0.98rem !important;
-        margin-bottom: 0.45rem !important;
-    }
-    .summary-tile .value {
-        font-size: 1.7rem !important;
-        line-height: 1.15 !important;
-    }
-    .journey {
-        gap: 0.9rem !important;
-    }
-    .journey-step {
-        padding: 1.15rem !important;
-        min-height: 172px !important;
-        border-radius: 22px !important;
-    }
-    .journey-step strong {
-        font-size: 1.28rem !important;
-        line-height: 1.2 !important;
-        margin-bottom: 0.55rem !important;
-    }
-    .journey-step span {
+        min-height: 3rem !important;
         font-size: 1rem !important;
-        line-height: 1.65 !important;
     }
-    .notice-banner {
-        font-size: 1.12rem !important;
-        line-height: 1.6 !important;
-        padding: 1rem 1.2rem !important;
-        border-radius: 18px !important;
-    }
-    .panel {
-        padding: 1.25rem 1.3rem !important;
-        border-radius: 22px !important;
-    }
-    .panel h3 {
-        font-size: 2rem !important;
-        line-height: 1.2 !important;
-        margin-bottom: 0.55rem !important;
-    }
-    .panel h4 {
-        font-size: 1.45rem !important;
-        line-height: 1.25 !important;
-        margin-bottom: 0.45rem !important;
-    }
-    .muted {
-        font-size: 1.02rem !important;
-        line-height: 1.65 !important;
-    }
-    .section-kicker {
-        font-size: 0.88rem !important;
-        margin-bottom: 0.55rem !important;
-    }
-    .form-section-title {
-        font-size: 1.32rem !important;
-        margin: 0.65rem 0 0.45rem 0 !important;
-        padding-bottom: 0.3rem !important;
-    }
-    .form-section-note {
-        font-size: 0.95rem !important;
-        line-height: 1.55 !important;
-    }
-    .callout {
-        font-size: 1rem !important;
-        line-height: 1.7 !important;
-        padding: 1.05rem 1.1rem !important;
-        border-radius: 18px !important;
-    }
-    .metric-card {
-        padding: 1.1rem 1.15rem !important;
-        border-radius: 20px !important;
-    }
-    .metric-card .small-label {
-        font-size: 0.92rem !important;
-    }
-    .metric-card .big-value {
-        font-size: 2.2rem !important;
-    }
-    .metric-card .subtext {
-        font-size: 0.95rem !important;
-        line-height: 1.55 !important;
-    }
-    .risk-pill {
-        font-size: 0.94rem !important;
-        padding: 0.42rem 0.9rem !important;
-    }
-    .module-card {
-        min-height: 215px !important;
-        border-radius: 20px !important;
-    }
-    .module-card h4 {
-        font-size: 1.28rem !important;
-        line-height: 1.3 !important;
-    }
-    .module-card .muted,
-    .share-card .muted {
-        font-size: 1rem !important;
-        line-height: 1.6 !important;
-    }
-    .mini-tag {
-        font-size: 0.78rem !important;
-        padding: 0.24rem 0.72rem !important;
-    }
-    .share-card {
-        min-height: 285px !important;
-        border-radius: 20px !important;
-    }
-    .share-card h4 {
-        font-size: 1.35rem !important;
-    }
-    .link-box, .report-subtitle, .report-footer {
-        font-size: 0.96rem !important;
-        line-height: 1.55 !important;
-    }
+
     div.stButton > button {
-        font-size: 1.08rem !important;
-        font-weight: 800 !important;
-        min-height: 3.1rem !important;
+        min-height: 3rem !important;
         border-radius: 12px !important;
-    }
-    .stDownloadButton > button {
+        font-weight: 800 !important;
         font-size: 1rem !important;
-        font-weight: 700 !important;
-        min-height: 2.8rem !important;
-    }
-    div[data-testid="stDataFrame"] * {
-        font-size: 0.98rem !important;
-    }
-    .footer-wrap {
-        font-size: 0.98rem !important;
-        line-height: 1.65 !important;
-        margin-top: 1.7rem !important;
-    }
-    .footer-pill {
-        font-size: 0.78rem !important;
-        padding: 0.22rem 0.62rem !important;
-    }
-    @media (max-width: 1200px) {
-        .hero-wrap h1 { font-size: 2.45rem !important; }
-        .journey-step strong { font-size: 1.1rem !important; }
-        .summary-tile .value { font-size: 1.35rem !important; }
-        div[data-testid="stTabs"] button[role="tab"] { font-size: 1.02rem !important; }
     }
 
+    .hero {
+        background: linear-gradient(135deg, #103365 0%, #1d5d94 50%, #22b4c9 100%);
+        border-radius: 28px;
+        padding: 1.7rem 1.8rem;
+        color: white;
+        box-shadow: 0 18px 40px rgba(16, 40, 79, 0.16);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
 
-    .action-card {
-        background: #ffffff;
-        border: 1px solid var(--mono-border);
-        border-radius: 20px;
-        padding: 1.1rem 1.15rem;
-        box-shadow: 0 10px 26px rgba(16, 34, 61, 0.06);
-        min-height: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 0.7rem;
+    .hero:before {
+        content: "";
+        position: absolute;
+        right: -40px;
+        top: -40px;
+        width: 260px;
+        height: 260px;
+        background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 60%, transparent 72%);
+        border-radius: 50%;
     }
-    .action-card h4 {
-        margin: 0;
-        color: var(--mono-navy);
-        font-size: 1.12rem;
+
+    .hero-chip {
+        display: inline-block;
+        padding: 0.32rem 0.9rem;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.14);
+        border: 1px solid rgba(255,255,255,0.18);
+        font-size: 0.84rem;
         font-weight: 800;
-        line-height: 1.25;
+        margin-bottom: 0.6rem;
     }
-    .action-card .action-kicker {
-        font-size: 0.74rem;
-        text-transform: uppercase;
-        letter-spacing: 0.35px;
-        font-weight: 800;
-        color: var(--mono-blue);
+
+    .hero-title {
         margin: 0;
+        font-size: 2.8rem;
+        line-height: 1.02;
+        font-weight: 900;
+        color: white;
+        max-width: 980px;
     }
-    .action-card p {
-        color: var(--mono-text);
+
+    .hero-text {
+        margin-top: 0.7rem;
+        font-size: 1.16rem;
+        line-height: 1.6;
+        max-width: 980px;
+        color: rgba(255,255,255,0.98);
+    }
+
+    .summary-tile {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1rem 1.1rem;
+        min-height: 100px;
+        box-shadow: 0 10px 26px rgba(16, 40, 79, 0.05);
+    }
+
+    .summary-tile .label {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .summary-tile .value {
+        color: var(--text);
+        font-size: 1.55rem;
+        line-height: 1.18;
+        font-weight: 900;
+    }
+
+    .journey {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.8rem;
+        margin: 1rem 0;
+    }
+
+    .journey-step {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1rem;
+        min-height: 156px;
+        box-shadow: 0 10px 26px rgba(16, 40, 79, 0.05);
+    }
+
+    .journey-step strong {
+        display: block;
+        color: var(--text);
+        font-size: 1.18rem;
+        margin-bottom: 0.45rem;
+    }
+
+    .journey-step span {
+        color: var(--muted);
         font-size: 0.98rem;
         line-height: 1.6;
-        margin: 0;
     }
+
+    .notice {
+        background: linear-gradient(90deg, #f6d15a 0%, #f3e38c 100%);
+        border: 1px solid rgba(136,95,0,0.18);
+        color: #3f2c00;
+        border-radius: 18px;
+        padding: 1rem 1.1rem;
+        font-weight: 800;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .section-title {
+        color: var(--text);
+        font-size: 2rem;
+        line-height: 1.1;
+        font-weight: 900;
+        margin: 0.3rem 0 0.35rem 0;
+    }
+
+    .section-text {
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.7;
+        max-width: 980px;
+        margin-bottom: 0.9rem;
+    }
+
+    .application-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 12px 30px rgba(16, 40, 79, 0.05);
+        height: 100%;
+    }
+
+    .application-top {
+        color: white;
+        padding: 1.2rem 1.25rem 1.15rem 1.25rem;
+        min-height: 132px;
+    }
+
+    .application-top.blue { background: #2c5a90; }
+    .application-top.teal { background: #23b98d; }
+    .application-top.rose { background: #e29aa1; }
+
+    .application-kicker {
+        font-size: 0.82rem;
+        opacity: 0.96;
+        margin-bottom: 0.35rem;
+    }
+
+    .application-title {
+        font-size: 2rem;
+        line-height: 1.04;
+        font-weight: 900;
+    }
+
+    .application-body {
+        padding: 1.2rem 1.25rem 1.35rem 1.25rem;
+        color: #294466;
+        font-size: 0.98rem;
+        line-height: 1.7;
+    }
+
+    .pill-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        width: fit-content;
+        border-radius: 999px;
+        background: #28489c;
+        color: white;
+        padding: 0.64rem 1.05rem;
+        font-size: 0.94rem;
+        font-weight: 800;
+        margin-top: 0.85rem;
+    }
+
+    .module-shell {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        padding: 1.35rem;
+        box-shadow: 0 14px 30px rgba(16, 40, 79, 0.06);
+        margin-top: 1.15rem;
+        margin-bottom: 1rem;
+    }
+
+    .module-kicker {
+        color: var(--blue);
+        font-size: 0.84rem;
+        font-weight: 900;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        margin-bottom: 0.45rem;
+    }
+
+    .module-title {
+        color: var(--text);
+        font-size: 2.15rem;
+        line-height: 1.1;
+        font-weight: 900;
+        margin: 0 0 0.45rem 0;
+    }
+
+    .module-description {
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+    }
+
+    .form-section-title {
+        color: var(--text);
+        font-size: 1.22rem;
+        font-weight: 900;
+        margin: 0.65rem 0 0.32rem 0;
+        padding-bottom: 0.2rem;
+        border-bottom: 2px solid #dbe5f2;
+    }
+
+    .form-section-note {
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.6;
+        margin-bottom: 0.7rem;
+    }
+
+    .callout {
+        background: #edf5ff;
+        border: 1px solid #cfe0f7;
+        border-left: 5px solid var(--blue);
+        border-radius: 18px;
+        padding: 1rem 1.05rem;
+        color: #173860;
+        font-size: 0.98rem;
+        line-height: 1.7;
+        margin-top: 0.15rem;
+    }
+
+    .metric-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-left: 5px solid var(--blue);
+        border-radius: 20px;
+        padding: 1rem 1.1rem;
+        box-shadow: 0 10px 24px rgba(16, 40, 79, 0.05);
+        height: 100%;
+    }
+
+    .metric-card .small-label {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .metric-card .big-value {
+        color: var(--text);
+        font-size: 2rem;
+        line-height: 1.08;
+        font-weight: 900;
+    }
+
+    .metric-card .subtext {
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.55;
+        margin-top: 0.35rem;
+    }
+
+    .risk-pill {
+        display: inline-block;
+        padding: 0.36rem 0.85rem;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 800;
+        border: 1px solid transparent;
+    }
+
+    .risk-low { background: var(--success-bg); color: var(--success-text); border-color: #bde3ca; }
+    .risk-mod { background: var(--warn-bg); color: var(--warn-text); border-color: #f1d27a; }
+    .risk-high { background: var(--danger-bg); color: var(--danger-text); border-color: #f2b8bd; }
+
+    .action-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 1rem 1.05rem;
+        box-shadow: 0 10px 24px rgba(16, 40, 79, 0.05);
+        height: 100%;
+    }
+
+    .action-kicker {
+        color: var(--blue);
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        font-weight: 900;
+        margin-bottom: 0.3rem;
+    }
+
+    .action-title {
+        color: var(--text);
+        font-size: 1.12rem;
+        font-weight: 900;
+        margin-bottom: 0.6rem;
+    }
+
     .action-list {
         margin: 0;
         padding-left: 1.1rem;
         display: flex;
         flex-direction: column;
-        gap: 0.55rem;
-    }
-    .action-list li {
-        color: var(--mono-text);
-        font-size: 0.98rem;
-        line-height: 1.6;
-        margin: 0;
-    }
-    .reason-list {
-        margin: 0;
-        padding-left: 1.05rem;
-        display: flex;
-        flex-direction: column;
         gap: 0.45rem;
     }
+
+    .action-list li,
     .reason-list li {
-        color: var(--mono-text);
-        font-size: 0.95rem;
-        line-height: 1.55;
-        margin: 0;
+        color: var(--text);
+        font-size: 0.96rem;
+        line-height: 1.6;
     }
-    .action-intensity-pill {
-        display: inline-flex;
-        align-items: center;
-        width: fit-content;
-        border-radius: 999px;
+
+    .reason-list {
+        margin: 0;
+        padding-left: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.38rem;
+    }
+
+    .intensity-pill {
+        display: inline-block;
         padding: 0.28rem 0.75rem;
-        font-size: 0.84rem;
-        font-weight: 800;
-        border: 1px solid var(--mono-border);
+        border-radius: 999px;
         background: #f4f8fc;
-        color: var(--mono-navy);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-size: 0.82rem;
+        font-weight: 900;
+        margin-bottom: 0.6rem;
     }
-    .action-followup {
-        color: var(--mono-text);
-        font-size: 1rem;
-        line-height: 1.65;
-        margin: 0;
-    }
-    .action-note {
-        margin-top: 0.2rem;
-        padding: 0.8rem 0.9rem;
-        border-radius: 15px;
+
+    .note-box {
+        margin-top: 0.7rem;
+        padding: 0.75rem 0.9rem;
+        border-radius: 14px;
         background: #edf5ff;
         border: 1px solid #cfe0f7;
         color: #173860;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         line-height: 1.55;
     }
 
+    .light-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 1.2rem 1.25rem;
+        box-shadow: 0 10px 24px rgba(16, 40, 79, 0.05);
+        height: 100%;
+    }
 
-    .clean-hero {
-        background: linear-gradient(135deg, #ffffff 0%, #f7fbff 100%);
-        border: 1px solid var(--mono-border);
-        border-radius: 28px;
-        overflow: hidden;
-        box-shadow: 0 14px 34px rgba(16, 34, 61, 0.06);
-        margin-bottom: 1.2rem;
-    }
-    .clean-hero-grid {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        min-height: 360px;
-    }
-    .clean-hero-copy {
-        padding: 2rem 2.2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 0.8rem;
-    }
-    .clean-hero-kicker {
-        color: var(--mono-blue);
-        font-weight: 700;
-        font-size: 1rem;
-        letter-spacing: 0.01em;
-    }
-    .clean-hero-title {
-        color: var(--mono-navy);
-        font-size: 3.2rem;
-        line-height: 1.02;
+    .light-card h4 {
+        margin: 0 0 0.4rem 0;
+        color: var(--text);
+        font-size: 1.3rem;
         font-weight: 900;
-        margin: 0;
+        line-height: 1.2;
     }
-    .clean-hero-text {
+
+    .light-card p {
         color: #294466;
-        font-size: 1.2rem;
-        line-height: 1.6;
-        max-width: 780px;
+        font-size: 1rem;
+        line-height: 1.7;
         margin: 0;
     }
-    .clean-hero-panel {
-        background: linear-gradient(135deg, #163f75 0%, #2bb8c8 100%);
+
+    .accent-card {
+        background: linear-gradient(180deg, #ea507a 0%, #e34774 100%);
         color: white;
-        padding: 1.8rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 100%;
+        border-radius: 22px;
+        padding: 1.35rem 1.35rem;
+        min-height: 220px;
+        box-shadow: 0 12px 28px rgba(16, 40, 79, 0.08);
     }
-    .clean-hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.45rem 0.9rem;
+
+    .accent-card .badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.94);
+        color: #d94c73;
         border-radius: 999px;
-        background: rgba(255,255,255,0.14);
-        border: 1px solid rgba(255,255,255,0.2);
-        width: fit-content;
-        font-size: 0.85rem;
-        font-weight: 700;
+        padding: 0.28rem 0.75rem;
+        font-size: 0.82rem;
+        font-weight: 900;
         margin-bottom: 0.8rem;
     }
-    .clean-hero-points {
-        display: grid;
-        gap: 0.75rem;
-        margin-top: 1rem;
-    }
-    .clean-hero-point {
-        background: rgba(255,255,255,0.12);
-        border: 1px solid rgba(255,255,255,0.14);
-        border-radius: 18px;
-        padding: 0.95rem 1rem;
-    }
-    .clean-section-title {
-        color: var(--mono-navy);
-        font-size: 2.3rem;
+
+    .accent-card .title {
+        font-size: 2.05rem;
+        line-height: 1.1;
         font-weight: 900;
-        margin: 1.25rem 0 0.35rem 0;
-    }
-    .clean-section-text {
-        color: #5b6f8a;
-        font-size: 1.05rem;
-        line-height: 1.7;
-        margin-bottom: 1rem;
-        max-width: 950px;
-    }
-    .app-card {
-        background: #ffffff;
-        border: 1px solid var(--mono-border);
-        border-radius: 26px;
-        overflow: hidden;
-        box-shadow: 0 12px 30px rgba(16, 34, 61, 0.06);
-        height: 100%;
-    }
-    .app-card-top {
-        padding: 1.3rem 1.4rem 1.2rem 1.4rem;
-        color: white;
-        min-height: 170px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .app-card-top.blue { background: #234f81; }
-    .app-card-top.teal { background: #1fb88a; }
-    .app-card-top.rose { background: #ea9ea0; }
-    .app-card-kicker { font-size: 0.9rem; opacity: 0.95; margin-bottom: 0.45rem; }
-    .app-card-title { font-size: 2.15rem; font-weight: 900; line-height: 1.05; }
-    .app-card-body { padding: 1.35rem 1.45rem 1.5rem 1.45rem; color: #294466; font-size: 1.02rem; line-height: 1.7; }
-    .app-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        background: #28489c;
-        color: white;
-        padding: 0.7rem 1.2rem;
-        border-radius: 999px;
-        font-weight: 700;
-        font-size: 0.98rem;
-        margin-top: 1rem;
-    }
-    .insight-card {
-        background: #ffffff;
-        border: 1px solid var(--mono-border);
-        border-radius: 24px;
-        padding: 1.4rem 1.5rem;
-        min-height: 220px;
-        box-shadow: 0 10px 25px rgba(16, 34, 61, 0.05);
-        color: #234466;
-        font-size: 1.15rem;
-        line-height: 1.65;
-    }
-    .insight-card.emphasis {
-        background: linear-gradient(180deg, #eb537d 0%, #e24674 100%);
-        color: white;
-        border: none;
-    }
-    .insight-card strong { font-weight: 900; }
-    .solution-card {
-        background: #ffffff;
-        border: 1px solid var(--mono-border);
-        border-radius: 26px;
-        padding: 1.4rem;
-        min-height: 240px;
-        box-shadow: 0 10px 24px rgba(16, 34, 61, 0.05);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .solution-card .title { color: var(--mono-navy); font-size: 1.9rem; font-weight: 900; line-height: 1.12; }
-    .solution-card .text { color: #294466; font-size: 1.1rem; line-height: 1.7; }
-    .solution-card.dark { background: #234f81; color: white; border: none; }
-    .solution-card.dark .title, .solution-card.dark .text { color: white; }
-    .research-wrap {
-        background: #ffffff;
-        border: 1px solid var(--mono-border);
-        border-radius: 28px;
-        padding: 1.6rem;
-        box-shadow: 0 10px 24px rgba(16, 34, 61, 0.05);
-    }
-    .powered-card {
-        background: white;
-        border: 1px solid var(--mono-border);
-        border-radius: 28px;
-        overflow: hidden;
-        box-shadow: 0 12px 30px rgba(16, 34, 61, 0.05);
-        height: 100%;
-    }
-    .powered-image {
-        min-height: 150px;
-        background: linear-gradient(135deg, #d9ecfb 0%, #f9fbff 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--mono-navy);
-        font-weight: 900;
-        font-size: 1.5rem;
-    }
-    .powered-body { padding: 1.35rem 1.45rem 1.45rem 1.45rem; }
-    .powered-body h4 { margin: 0 0 0.45rem 0; color: var(--mono-navy); font-size: 1.8rem; }
-    .powered-body p { margin: 0; color: #294466; font-size: 1.04rem; line-height: 1.7; }
-    .research-side {
-        background: #f9fbff;
-        border: 1px solid var(--mono-border);
-        border-radius: 24px;
-        padding: 1.35rem;
-    }
-    .research-side h4 { margin: 0 0 0.55rem 0; color: var(--mono-navy); font-size: 1.9rem; }
-    .tag-link {
-        display: inline-block;
-        background: #eef3fb;
-        color: #294466;
-        padding: 0.42rem 0.8rem;
-        border-radius: 10px;
-        font-weight: 700;
-        margin-top: 0.35rem;
-    }
-    @media (max-width: 1100px) {
-        .clean-hero-grid { grid-template-columns: 1fr; }
-        .clean-hero-title { font-size: 2.5rem; }
+        margin: 0;
     }
 
+    .dark-solution {
+        background: #234f81;
+        color: white;
+        border-radius: 22px;
+        padding: 1.35rem;
+        min-height: 220px;
+        box-shadow: 0 12px 28px rgba(16, 40, 79, 0.08);
+    }
+
+    .dark-solution .badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.92);
+        color: #234f81;
+        border-radius: 999px;
+        padding: 0.28rem 0.75rem;
+        font-size: 0.82rem;
+        font-weight: 900;
+        margin-bottom: 0.8rem;
+    }
+
+    .dark-solution .title {
+        font-size: 2rem;
+        line-height: 1.12;
+        font-weight: 900;
+        margin-bottom: 0.55rem;
+    }
+
+    .dark-solution .text {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    .footer-wrap {
+        margin-top: 1.4rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.94rem;
+        line-height: 1.65;
+    }
+
+    .footer-wrap a {
+        color: var(--blue);
+        text-decoration: none;
+        font-weight: 800;
+    }
+
+    .footer-pill {
+        display: inline-block;
+        padding: 0.2rem 0.58rem;
+        border-radius: 999px;
+        background: #eaf1fb;
+        color: var(--blue);
+        font-size: 0.74rem;
+        font-weight: 900;
+        margin-right: 0.28rem;
+        margin-bottom: 0.3rem;
+    }
+
+    @media (max-width: 1200px) {
+        .journey { grid-template-columns: 1fr 1fr; }
+        .hero-title { font-size: 2.3rem; }
+        .application-title { font-size: 1.6rem; }
+    }
+
+    @media (max-width: 760px) {
+        .journey { grid-template-columns: 1fr; }
+        .hero-title { font-size: 2rem; }
+    }
 </style>
 """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 # =========================================================
-# CONSTANTS
+# PATHS / CONSTANTS
 # =========================================================
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_FILE = BASE_DIR / "All_data_Catboost_GDM_ML_model.bin"
@@ -1083,33 +644,38 @@ RECODE_DICT = {
 }
 
 DEFAULTS = {
+    "active_module": "booking",
     "patient_name": "Demo patient",
     "age": 30,
     "height": 165,
     "weight": 70.0,
     "parity": 1,
-    "booking_parity": 1,
     "ethnicity_group": "Southern and Central Asian",
     "family_hist_dm": 1,
-    "booking_family_hist_dm": 1,
     "past_hist_gdm": 0,
     "past_hist_obs_complica": 0,
     "anc_threshold": 0.50,
     "gdm_status": "Not diagnosed / screening stage",
+    # Antenatal published model
     "antenatal_fpg": 5.5,
     "antenatal_2h_ogtt": 8.6,
-    "post_view_antenatal_2h_ogtt": 8.6,
     "recurrent_gdm": 0,
     "insulin_treatment": 0,
     "irregular_menses": 0,
+    "antenatal_parity": 1,
+    "antenatal_family_hist_dm": 1,
+    # Postnatal model
+    "post_view_antenatal_2h_ogtt": 8.6,
     "postnatal_fpg": 5.2,
     "postnatal_2h_ogtt": 7.4,
     "postnatal_bmi": 27.0,
+    # Results
     "anc_prob": None,
     "anc_pred": None,
     "ant_prob": None,
     "post_prob": None,
     "booking_feature_frame": pd.DataFrame(),
+    # Branding / sharing
     "institution_name": "MCHRI",
     "institution_unit": "",
     "contact_email": "yitayeh.mengistu@monash.edu",
@@ -1122,6 +688,7 @@ DEFAULTS = {
     "report_note": "Research demo only. Decision support and presentation use only.",
 }
 
+YES_NO = {0: "No", 1: "Yes"}
 
 # =========================================================
 # STATE
@@ -1132,69 +699,68 @@ def init_state():
             st.session_state[key] = value
 
 
-def init_booking_mirror_state():
-    st.session_state.booking_parity = int(st.session_state.parity)
-    st.session_state.booking_family_hist_dm = int(st.session_state.family_hist_dm)
+def sync_shared_to_antenatal():
+    st.session_state.antenatal_parity = int(st.session_state.parity)
+    st.session_state.antenatal_family_hist_dm = int(st.session_state.family_hist_dm)
 
 
-def sync_sidebar_to_booking():
-    st.session_state.booking_parity = int(st.session_state.parity)
-    st.session_state.booking_family_hist_dm = int(st.session_state.family_hist_dm)
+def sync_antenatal_to_shared():
+    st.session_state.parity = int(st.session_state.antenatal_parity)
+    st.session_state.family_hist_dm = int(st.session_state.antenatal_family_hist_dm)
 
 
-def sync_booking_to_sidebar():
-    st.session_state.parity = int(st.session_state.booking_parity)
-    st.session_state.family_hist_dm = int(st.session_state.booking_family_hist_dm)
+def sync_antenatal_to_postnatal_link():
+    st.session_state.post_view_antenatal_2h_ogtt = float(st.session_state.antenatal_2h_ogtt)
+
+
+def sync_postnatal_link_to_antenatal():
+    st.session_state.antenatal_2h_ogtt = float(st.session_state.post_view_antenatal_2h_ogtt)
 
 
 def load_demo_patient():
     demo = {
+        "active_module": "booking",
         "patient_name": "Demo patient",
         "age": 33,
         "height": 160,
         "weight": 78.5,
         "parity": 2,
-        "booking_parity": 2,
         "ethnicity_group": "Southern and Central Asian",
         "family_hist_dm": 1,
-        "booking_family_hist_dm": 1,
         "past_hist_gdm": 1,
         "past_hist_obs_complica": 1,
         "gdm_status": "GDM confirmed",
         "antenatal_fpg": 5.8,
-        "antenatal_2h_ogtt": 9.4,
-        "post_view_antenatal_2h_ogtt": 9.4,
+        "antenatal_2h_ogtt": 9.6,
         "recurrent_gdm": 1,
         "insulin_treatment": 1,
         "irregular_menses": 1,
-        "postnatal_fpg": 5.9,
-        "postnatal_2h_ogtt": 8.9,
-        "postnatal_bmi": 31.4,
+        "antenatal_parity": 2,
+        "antenatal_family_hist_dm": 1,
+        "post_view_antenatal_2h_ogtt": 9.6,
+        "postnatal_fpg": 5.2,
+        "postnatal_2h_ogtt": 9.6,
+        "postnatal_bmi": 32.2,
     }
     for key, value in demo.items():
         st.session_state[key] = value
 
 
-def reset_everything():
+def reset_all():
     for key, value in DEFAULTS.items():
         st.session_state[key] = value
 
 
 init_state()
-init_booking_mirror_state()
-
-
-def sync_antenatal_to_post_view():
-    st.session_state.post_view_antenatal_2h_ogtt = float(st.session_state.antenatal_2h_ogtt)
-
-
-def sync_post_view_to_antenatal():
-    st.session_state.antenatal_2h_ogtt = float(st.session_state.post_view_antenatal_2h_ogtt)
-
+sync_shared_to_antenatal()
 
 # =========================================================
-# GENERIC HELPERS
+# HELPERS
 # =========================================================
+def yes_no(value: int) -> str:
+    return YES_NO[int(value)]
+
+
 def sigmoid(x: float) -> float:
     return 1.0 / (1.0 + math.exp(-x))
 
@@ -1217,21 +783,29 @@ def published_model_band(prob: float, threshold: float) -> str:
     return "High"
 
 
+def action_label(prob: float, threshold: float) -> str:
+    return "Above action threshold" if prob >= threshold else "Below action threshold"
+
+
+def action_intensity(prob: float, threshold: float) -> str:
+    if prob < threshold:
+        return "Low"
+    if prob < 0.20:
+        return "Medium"
+    return "High"
+
+
 def risk_css_class(label: str) -> str:
-    key = label.lower()
-    if key == "low":
+    label = label.lower()
+    if label == "low":
         return "risk-low"
-    if key == "moderate":
+    if label == "moderate":
         return "risk-mod"
     return "risk-high"
 
 
 def risk_pill(label: str) -> str:
     return f'<span class="risk-pill {risk_css_class(label)}">{escape(label)}</span>'
-
-
-def classification_text(prob: float, threshold: float) -> str:
-    return "Above action threshold" if prob >= threshold else "Below action threshold"
 
 
 def recode_ethnicity(group_label: str) -> str:
@@ -1245,21 +819,9 @@ def first_existing_logo() -> Optional[Path]:
     return None
 
 
-def file_to_data_uri(path: Path) -> str:
-    suffix = path.suffix.lower().lstrip('.')
-    mime = "image/png"
-    if suffix in {"jpg", "jpeg"}:
-        mime = "image/jpeg"
-    elif suffix == "svg":
-        mime = "image/svg+xml"
-    data = path.read_bytes()
-    encoded = base64.b64encode(data).decode("utf-8")
-    return f"data:{mime};base64,{encoded}"
-
-
 def qr_image(url: str):
     payload = (url or "").strip()
-    if not payload or not payload.startswith(("http://", "https://")):
+    if not payload.startswith(("http://", "https://")):
         return None
     qr = qrcode.QRCode(version=1, box_size=6, border=2)
     qr.add_data(payload)
@@ -1294,7 +856,6 @@ def safe_link(url: str, label: str) -> str:
 def load_booking_model():
     if not MODEL_FILE.exists() or not SCALER_FILE.exists():
         return None, None, "Booking model or scaler file not found in the app folder."
-
     model = CatBoostClassifier()
     model.load_model(str(MODEL_FILE))
     scaler = joblib.load(str(SCALER_FILE))
@@ -1303,9 +864,8 @@ def load_booking_model():
 
 booking_model, booking_scaler, booking_model_error = load_booking_model()
 
-
 # =========================================================
-# PREDICTION HELPERS
+# PREDICTION FUNCTIONS
 # =========================================================
 def build_booking_features() -> pd.DataFrame:
     row = {col: 0 for col in FEATURE_COLUMNS}
@@ -1316,15 +876,14 @@ def build_booking_features() -> pd.DataFrame:
     row["Family_Hist_DM"] = int(st.session_state.family_hist_dm)
     row["Past_Hist_GDM"] = int(st.session_state.past_hist_gdm)
     row["Past_Hist_Obs_Complica"] = int(st.session_state.past_hist_obs_complica)
-
-    ethnicity_col = recode_ethnicity(st.session_state.ethnicity_group)
+    ethnicity_col = recode_ethnicity(str(st.session_state.ethnicity_group))
     row[ethnicity_col] = 1
 
     df = pd.DataFrame([row], columns=FEATURE_COLUMNS)
-    df.loc[:, "Height"] = df["Height"].astype(int)
-    df.loc[:, "Weight"] = df["Weight"].astype(float)
-    df.loc[:, "Parity"] = df["Parity"].astype("int8")
-    df.loc[:, "Age"] = df["Age"].astype(int)
+    df["Height"] = df["Height"].astype(int)
+    df["Weight"] = df["Weight"].astype(float)
+    df["Parity"] = df["Parity"].astype("int8")
+    df["Age"] = df["Age"].astype(int)
     for col in [
         "Caucasian",
         "Oceanian_not_WANZ",
@@ -1332,17 +891,17 @@ def build_booking_features() -> pd.DataFrame:
         "South_Central_Asia",
         "SouthEast_NorthEast_Asia",
         "Other NEC",
+        "Family_Hist_DM",
+        "Past_Hist_GDM",
+        "Past_Hist_Obs_Complica",
     ]:
-        df.loc[:, col] = df[col].astype("int64")
-    for col in ["Family_Hist_DM", "Past_Hist_GDM", "Past_Hist_Obs_Complica"]:
-        df.loc[:, col] = df[col].astype("int32")
+        df[col] = df[col].astype(int)
     return df
 
 
 def predict_booking_risk():
     if booking_model is None or booking_scaler is None:
         raise RuntimeError(booking_model_error or "Booking model is not available.")
-
     X = build_booking_features()
     X_scaled = booking_scaler.transform(X)
     prob = float(booking_model.predict_proba(X_scaled)[0, 1])
@@ -1351,6 +910,7 @@ def predict_booking_risk():
 
 
 def predict_antenatal_t2dm_after_gdm() -> float:
+    # 7-variable antenatal published model
     logit = (
         -10.0757
         + 0.7086 * float(st.session_state.antenatal_fpg)
@@ -1375,22 +935,28 @@ def predict_postnatal_t2dm_after_gdm() -> float:
     return sigmoid(logit)
 
 
-def make_gauge(prob: float, title: str, threshold: Optional[float] = None, bar_color: str = "#005eb8"):
-    steps = [
-        {"range": [0, 10], "color": "#e8f7ef"},
-        {"range": [10, 20], "color": "#fff5d9"},
-        {"range": [20, 100], "color": "#fde8ea"},
-    ]
+# =========================================================
+# CHARTS / RESULT HELPERS
+# =========================================================
+def make_gauge(prob: float, title: str, threshold: Optional[float] = None):
     gauge = {
-        "axis": {"range": [0, 100], "tickwidth": 1, "tickcolor": "#57708c"},
-        "bar": {"color": bar_color},
+        "axis": {"range": [0, 100], "tickwidth": 1, "tickcolor": "#5d7190"},
+        "bar": {"color": "#005eb8"},
         "bgcolor": "white",
         "borderwidth": 1,
-        "bordercolor": "#d8e1ee",
-        "steps": steps,
+        "bordercolor": "#d7e2ef",
+        "steps": [
+            {"range": [0, 10], "color": "#eaf7ee"},
+            {"range": [10, 20], "color": "#fff5d9"},
+            {"range": [20, 100], "color": "#fde8ea"},
+        ],
     }
     if threshold is not None:
-        gauge["threshold"] = {"line": {"color": "#10223d", "width": 3}, "thickness": 0.75, "value": threshold * 100}
+        gauge["threshold"] = {
+            "line": {"color": "#10284f", "width": 3},
+            "thickness": 0.75,
+            "value": threshold * 100,
+        }
 
     fig = go.Figure(
         go.Indicator(
@@ -1401,60 +967,11 @@ def make_gauge(prob: float, title: str, threshold: Optional[float] = None, bar_c
             gauge=gauge,
         )
     )
-    fig.update_layout(height=300, margin=dict(l=20, r=20, t=55, b=10), paper_bgcolor="white", font={"color": "#10223d"})
-    return fig
-
-
-def make_comparison_chart(summary_df: pd.DataFrame):
-    if summary_df.empty:
-        return None
-    fig = go.Figure(
-        data=[
-            go.Bar(
-                x=summary_df["Short module"],
-                y=summary_df["Probability_pct"],
-                text=[f"{x:.1f}%" for x in summary_df["Probability_pct"]],
-                textposition="outside",
-                marker_color=["#005eb8", "#0d7d9d", "#14b7c6"][: len(summary_df)],
-            )
-        ]
-    )
     fig.update_layout(
-        title="Risk snapshot across completed modules",
-        xaxis_title="Module",
-        yaxis_title="Predicted probability (%)",
-        height=350,
-        plot_bgcolor="white",
+        height=320,
+        margin=dict(l=18, r=18, t=55, b=10),
         paper_bgcolor="white",
-        margin=dict(l=25, r=10, t=50, b=35),
-    )
-    return fig
-
-
-def make_journey_line_chart(summary_df: pd.DataFrame):
-    if summary_df.empty:
-        return None
-    fig = go.Figure(
-        data=[
-            go.Scatter(
-                x=summary_df["Journey stage"],
-                y=summary_df["Probability_pct"],
-                mode="lines+markers+text",
-                text=[f"{x:.1f}%" for x in summary_df["Probability_pct"]],
-                textposition="top center",
-                line={"width": 3, "color": "#005eb8"},
-                marker={"size": 12, "color": "#14b7c6"},
-            )
-        ]
-    )
-    fig.update_layout(
-        title="Risk journey view",
-        xaxis_title="Journey stage",
-        yaxis_title="Predicted probability (%)",
-        height=350,
-        plot_bgcolor="white",
-        paper_bgcolor="white",
-        margin=dict(l=25, r=10, t=50, b=35),
+        font={"color": "#132a4e"},
     )
     return fig
 
@@ -1472,24 +989,58 @@ def make_completion_donut():
             )
         ]
     )
-    fig.update_layout(title="Journey completion", height=320, margin=dict(l=10, r=10, t=50, b=10), paper_bgcolor="white")
+    fig.update_layout(
+        title="Journey completion",
+        height=310,
+        margin=dict(l=10, r=10, t=48, b=10),
+        paper_bgcolor="white",
+    )
     return fig
 
 
-def yes_no(value: int) -> str:
-    return "Yes" if int(value) == 1 else "No"
-
-
-def action_intensity_label(prob: float, threshold: float) -> str:
-    if prob < threshold:
-        return "Low"
-    if prob < 0.20:
-        return "Medium"
-    return "High"
+def render_result_cards(prob: float, band: str, title: str, threshold: float, subtitle: str):
+    left, right = st.columns([1.05, 1])
+    with left:
+        st.plotly_chart(make_gauge(prob, title, threshold), width="stretch")
+    with right:
+        st.markdown(
+            f"""
+            <div class="metric-card">
+                <div class="small-label">Result summary</div>
+                <div class="big-value">{prob:.1%}</div>
+                <div class="subtext">{escape(subtitle)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.markdown("<div style='height:0.55rem'></div>", unsafe_allow_html=True)
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown(
+                f"""
+                <div class="metric-card">
+                    <div class="small-label">Risk band</div>
+                    <div class="big-value" style="font-size:1.2rem;">{risk_pill(band)}</div>
+                    <div class="subtext">Band shown for visual triage.</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        with c2:
+            st.markdown(
+                f"""
+                <div class="metric-card">
+                    <div class="small-label">Action label</div>
+                    <div class="big-value" style="font-size:1rem;">{escape(action_label(prob, threshold))}</div>
+                    <div class="subtext">Threshold {threshold:.3f}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
 
 def booking_action_payload(prob: float, threshold: float) -> dict:
-    intensity = action_intensity_label(prob, threshold)
+    intensity = action_intensity(prob, threshold)
     reasons = []
     if int(st.session_state.family_hist_dm) == 1:
         reasons.append("family history of diabetes")
@@ -1502,47 +1053,46 @@ def booking_action_payload(prob: float, threshold: float) -> dict:
     if int(st.session_state.parity) >= 2:
         reasons.append("multiparity")
 
-    actions = []
-    follow_up = "Routine GDM screening at 24–28 weeks with standard antenatal review."
     if intensity == "Low":
         actions = [
             "Continue routine antenatal care and routine GDM screening at 24–28 weeks.",
             "Reinforce healthy nutrition, physical activity, and weight monitoring early in pregnancy.",
         ]
+        follow_up = "Routine GDM screening at 24–28 weeks with standard antenatal review."
     elif intensity == "Medium":
         actions = [
-            "Provide targeted antenatal lifestyle counselling and reinforce attendance for GDM screening.",
-            "Consider closer review before routine 24–28 week screening depending on local protocol.",
-            "Document the elevated booking risk so the care team can plan timely follow-up.",
+            "Provide targeted antenatal lifestyle counselling and reinforce attendance for routine GDM screening.",
+            "Document the elevated booking risk so the care team can plan timely review.",
+            "Consider closer follow-up before routine 24–28 week screening, depending on local protocol.",
         ]
         follow_up = "Enhanced antenatal review before routine screening; consider earlier testing if local policy supports it."
     else:
         actions = [
             "Flag as high risk for GDM and consider earlier glucose assessment or earlier review according to local policy.",
             "Provide intensified lifestyle counselling and closer antenatal follow-up from booking.",
-            "Discuss the result with the care team so a prevention-focused plan is documented early.",
+            "Discuss the result within the care team so a prevention-focused plan is documented early.",
         ]
         follow_up = "Earlier antenatal review and consideration of earlier glucose testing according to local protocol."
 
     tailored_note = None
-    if str(st.session_state.ethnicity_group) in [
+    if str(st.session_state.ethnicity_group) in {
         "Southern and Central Asian",
         "South-East and North-East Asian",
         "Middle-Eastern, North African, or Sub-Saharan African",
-    ]:
+    }:
         tailored_note = "Offer culturally appropriate dietary counselling and communication support where available."
 
     return {
         "intensity": intensity,
         "actions": actions,
-        "reasons": reasons,
+        "reasons": reasons or ["Based primarily on the current predicted risk level."],
         "follow_up": follow_up,
         "tailored_note": tailored_note,
     }
 
 
 def antenatal_action_payload(prob: float, threshold: float) -> dict:
-    intensity = action_intensity_label(prob, threshold)
+    intensity = action_intensity(prob, threshold)
     reasons = []
     if float(st.session_state.antenatal_fpg) >= 5.6:
         reasons.append("higher antenatal fasting plasma glucose")
@@ -1569,7 +1119,7 @@ def antenatal_action_payload(prob: float, threshold: float) -> dict:
             "Provide targeted counselling about future type 2 diabetes prevention and the importance of postpartum testing.",
             "Consider referral to dietetic or lifestyle support where available.",
         ]
-        follow_up = "Structured postpartum plan with clear testing date and prevention counselling before discharge."
+        follow_up = "Structured postpartum plan with a clear testing date and prevention counselling before discharge."
     else:
         actions = [
             "Arrange enhanced postpartum follow-up and clearly document the need for early postpartum testing.",
@@ -1581,14 +1131,14 @@ def antenatal_action_payload(prob: float, threshold: float) -> dict:
     return {
         "intensity": intensity,
         "actions": actions,
-        "reasons": reasons,
+        "reasons": reasons or ["Based primarily on the current predicted risk level."],
         "follow_up": follow_up,
         "tailored_note": None,
     }
 
 
 def postnatal_action_payload(prob: float, threshold: float) -> dict:
-    intensity = action_intensity_label(prob, threshold)
+    intensity = action_intensity(prob, threshold)
     reasons = []
     if float(st.session_state.postnatal_fpg) >= 5.6:
         reasons.append("elevated postnatal fasting glucose")
@@ -1604,7 +1154,7 @@ def postnatal_action_payload(prob: float, threshold: float) -> dict:
     if intensity == "Low":
         actions = [
             "Continue routine long-term diabetes-prevention advice and periodic glycaemic surveillance as per local guideline.",
-            "Reinforce healthy eating, physical activity, and weight management goals.",
+            "Reinforce healthy eating, physical activity, and weight-management goals.",
         ]
         follow_up = "Routine repeat glycaemic surveillance in primary care according to guideline."
     elif intensity == "Medium":
@@ -1625,29 +1175,27 @@ def postnatal_action_payload(prob: float, threshold: float) -> dict:
     return {
         "intensity": intensity,
         "actions": actions,
-        "reasons": reasons,
+        "reasons": reasons or ["Based primarily on the current predicted risk level."],
         "follow_up": follow_up,
         "tailored_note": None,
     }
 
 
 def render_recommendation_panel(payload: dict):
-    action_items = "".join(f"<li>{escape(item)}</li>" for item in payload["actions"])
-    reason_items = payload.get("reasons") or ["Based primarily on the current predicted risk level."]
-    reason_html = "".join(f"<li>{escape(reason)}</li>" for reason in reason_items)
-    followup_html = f"<p class='action-followup'>{escape(payload['follow_up'])}</p>"
-    tailored_html = ""
+    actions_html = "".join(f"<li>{escape(item)}</li>" for item in payload["actions"])
+    reasons_html = "".join(f"<li>{escape(item)}</li>" for item in payload["reasons"])
+    note_html = ""
     if payload.get("tailored_note"):
-        tailored_html = f"<div class='action-note'><strong>Tailored support:</strong> {escape(payload['tailored_note'])}</div>"
+        note_html = f"<div class='note-box'><strong>Tailored support:</strong> {escape(payload['tailored_note'])}</div>"
 
-    c1, c2, c3 = st.columns([1.12, 0.92, 0.9])
+    c1, c2, c3 = st.columns([1.15, 0.92, 0.9])
     with c1:
         st.markdown(
             f"""
             <div class="action-card">
                 <div class="action-kicker">Care recommendation</div>
-                <h4>Suggested next action</h4>
-                <ul class="action-list">{action_items}</ul>
+                <div class="action-title">Suggested next action</div>
+                <ul class="action-list">{actions_html}</ul>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1657,9 +1205,9 @@ def render_recommendation_panel(payload: dict):
             f"""
             <div class="action-card">
                 <div class="action-kicker">Reasoning</div>
-                <h4>Why this was suggested</h4>
-                <div class="action-intensity-pill">Action intensity: {escape(payload['intensity'])}</div>
-                <ul class="reason-list">{reason_html}</ul>
+                <div class="action-title">Why this was suggested</div>
+                <div class="intensity-pill">Action intensity: {escape(payload['intensity'])}</div>
+                <ul class="reason-list">{reasons_html}</ul>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1669,57 +1217,18 @@ def render_recommendation_panel(payload: dict):
             f"""
             <div class="action-card">
                 <div class="action-kicker">Follow-up</div>
-                <h4>Recommended follow-up</h4>
-                {followup_html}
-                {tailored_html}
+                <div class="action-title">Recommended follow-up</div>
+                <div style="color:#132a4e; font-size:0.98rem; line-height:1.65;">{escape(payload['follow_up'])}</div>
+                {note_html}
             </div>
             """,
             unsafe_allow_html=True,
         )
 
 
-def render_result_cards(prob: float, band: str, title: str, threshold: Optional[float], prediction_label: str, subtitle: str):
-    left, right = st.columns([1.05, 1])
-    with left:
-        st.plotly_chart(make_gauge(prob, title, threshold), width="stretch")
-    with right:
-        st.markdown(
-            f"""
-            <div class="metric-card">
-                <div class="small-label">Result summary</div>
-                <div class="big-value">{prob:.1%}</div>
-                <div class="subtext">{escape(subtitle)}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.markdown("<div style='height:0.55rem'></div>", unsafe_allow_html=True)
-        c1, c2 = st.columns(2)
-        with c1:
-            st.markdown(
-                f"""
-                <div class="metric-card">
-                    <div class="small-label">Risk band</div>
-                    <div class="big-value" style="font-size:1.22rem;">{risk_pill(band)}</div>
-                    <div class="subtext">Band shown for visual triage.</div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        with c2:
-            threshold_text = f"Threshold {threshold:.3f}" if threshold is not None else "Threshold not shown"
-            st.markdown(
-                f"""
-                <div class="metric-card">
-                    <div class="small-label">Action label</div>
-                    <div class="big-value" style="font-size:1.05rem;">{escape(prediction_label)}</div>
-                    <div class="subtext">{escape(threshold_text)}</div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-
+# =========================================================
+# REPORT HELPERS
+# =========================================================
 def patient_context_table() -> pd.DataFrame:
     return pd.DataFrame(
         [
@@ -1728,10 +1237,14 @@ def patient_context_table() -> pd.DataFrame:
             ["Age", str(st.session_state.age)],
             ["Parity", str(st.session_state.parity)],
             ["Ethnicity group", str(st.session_state.ethnicity_group)],
-            ["Family history of diabetes", "Yes" if st.session_state.family_hist_dm == 1 else "No"],
+            ["Family history of diabetes", yes_no(st.session_state.family_hist_dm)],
         ],
         columns=["Field", "Value"],
     )
+
+
+def modules_completed() -> int:
+    return int(st.session_state.anc_prob is not None) + int(st.session_state.ant_prob is not None) + int(st.session_state.post_prob is not None)
 
 
 def summary_dataframe() -> pd.DataFrame:
@@ -1740,46 +1253,30 @@ def summary_dataframe() -> pd.DataFrame:
         rows.append(
             {
                 "Module": "ANC booking - risk of GDM",
-                "Short module": "Booking risk of GDM",
-                "Journey stage": "Booking visit",
-                "Probability": round(float(st.session_state.anc_prob), 4),
                 "Probability_pct": float(st.session_state.anc_prob) * 100,
                 "Risk band": booking_risk_band(float(st.session_state.anc_prob)),
-                "Threshold": float(st.session_state.anc_threshold),
-                "Action label": classification_text(float(st.session_state.anc_prob), float(st.session_state.anc_threshold)),
+                "Action label": action_label(float(st.session_state.anc_prob), float(st.session_state.anc_threshold)),
             }
         )
     if st.session_state.ant_prob is not None:
         rows.append(
             {
                 "Module": "Pregnancy after GDM - future T2DM risk",
-                "Short module": "Pregnancy after GDM",
-                "Journey stage": "Pregnancy after GDM",
-                "Probability": round(float(st.session_state.ant_prob), 4),
                 "Probability_pct": float(st.session_state.ant_prob) * 100,
                 "Risk band": published_model_band(float(st.session_state.ant_prob), 0.096),
-                "Threshold": 0.096,
-                "Action label": classification_text(float(st.session_state.ant_prob), 0.096),
+                "Action label": action_label(float(st.session_state.ant_prob), 0.096),
             }
         )
     if st.session_state.post_prob is not None:
         rows.append(
             {
-                "Module": "Postnatal after GDM - future T2DM risk",
-                "Short module": "Postnatal follow-up",
-                "Journey stage": "Postnatal follow-up",
-                "Probability": round(float(st.session_state.post_prob), 4),
+                "Module": "Postnatal follow-up - future T2DM risk",
                 "Probability_pct": float(st.session_state.post_prob) * 100,
                 "Risk band": published_model_band(float(st.session_state.post_prob), 0.086),
-                "Threshold": 0.086,
-                "Action label": classification_text(float(st.session_state.post_prob), 0.086),
+                "Action label": action_label(float(st.session_state.post_prob), 0.086),
             }
         )
     return pd.DataFrame(rows)
-
-
-def modules_completed() -> int:
-    return int(st.session_state.anc_prob is not None) + int(st.session_state.ant_prob is not None) + int(st.session_state.post_prob is not None)
 
 
 def report_html(summary_df: pd.DataFrame) -> str:
@@ -1787,7 +1284,6 @@ def report_html(summary_df: pd.DataFrame) -> str:
         f"<tr><th>{escape(str(field))}</th><td>{escape(str(value))}</td></tr>"
         for field, value in patient_context_table().values.tolist()
     )
-
     if summary_df.empty:
         summary_rows = "<tr><td colspan='4'>No module has been run yet.</td></tr>"
         interpretation = "Run one or more modules to populate the report page."
@@ -1796,58 +1292,44 @@ def report_html(summary_df: pd.DataFrame) -> str:
             f"<tr><td>{escape(str(row['Module']))}</td><td>{row['Probability_pct']:.1f}%</td><td>{escape(str(row['Risk band']))}</td><td>{escape(str(row['Action label']))}</td></tr>"
             for _, row in summary_df.iterrows()
         )
-        phrases = []
-        if st.session_state.anc_prob is not None:
-            phrases.append(
-                f"Booking GDM risk {float(st.session_state.anc_prob):.1%} ({booking_risk_band(float(st.session_state.anc_prob))})."
-            )
-        if st.session_state.ant_prob is not None:
-            phrases.append(
-                f"Pregnancy-after-GDM future T2DM risk {float(st.session_state.ant_prob):.1%} ({published_model_band(float(st.session_state.ant_prob), 0.096)})."
-            )
-        if st.session_state.post_prob is not None:
-            phrases.append(
-                f"Postnatal future T2DM risk {float(st.session_state.post_prob):.1%} ({published_model_band(float(st.session_state.post_prob), 0.086)})."
-            )
-        interpretation = " ".join(phrases)
+        interpretation = "This prototype combines booking risk of GDM with antenatal and postnatal future T2DM risk after GDM in one prevention-oriented platform."
 
     qr_uri = qr_data_uri(st.session_state.public_app_url)
     qr_html = (
-        f"<div class='report-qr'><img src='{qr_uri}' alt='QR code'/><div style='margin-top:0.45rem;color:#5b6f8a;font-size:0.82rem;'>Scan to open public app</div></div>"
+        f"<div style='border:1px dashed #d7e2ef;border-radius:14px;padding:0.8rem;text-align:center;background:#fbfdff;'><img src='{qr_uri}' style='width:135px;height:135px;border:1px solid #d7e2ef;border-radius:10px;padding:0.25rem;background:white;'><div style='margin-top:0.45rem;color:#5b6f8a;font-size:0.82rem;'>Scan to open public app</div></div>"
         if qr_uri
-        else "<div class='report-qr'><div style='color:#5b6f8a;font-size:0.86rem;'>Add a public app URL in the sidebar to generate a QR code.</div></div>"
+        else ""
     )
 
     return f"""
-    <div class="report-page">
-        <div class="report-head">
+    <div style="background:white;border:1px solid #d5e0ee;border-radius:14px;padding:1.25rem 1.35rem;box-shadow:0 14px 36px rgba(16,34,61,0.08);max-width:980px;margin:0 auto 1rem auto;">
+        <div style="display:grid;grid-template-columns:1.55fr 0.65fr;gap:1rem;border-bottom:2px solid #005eb8;padding-bottom:0.8rem;margin-bottom:0.9rem;">
             <div>
-                <div class="report-title">M-Guide | Maternal Diabetes Prevention Platform</div>
-                <div class="report-subtitle">{escape(st.session_state.app_tagline)}<br>{escape(st.session_state.institution_name)} | {escape(st.session_state.institution_unit)} | {escape(st.session_state.model_version)}</div>
+                <div style="color:#132a4e;font-size:1.55rem;font-weight:800;margin-bottom:0.2rem;">M-Guide | Maternal Diabetes Prevention Platform</div>
+                <div style="color:#5b6f8a;font-size:0.92rem;line-height:1.4;">{escape(st.session_state.app_tagline)}<br>{escape(st.session_state.institution_name)} | {escape(st.session_state.model_version)}</div>
             </div>
             {qr_html}
         </div>
-        <div class="report-grid">
-            <div class="report-box">
-                <h5>Patient context</h5>
-                <table class="report-table">{patient_rows}</table>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;margin:0.9rem 0;">
+            <div style="border:1px solid #d7e2ef;border-radius:14px;padding:0.85rem 0.95rem;background:#fbfdff;">
+                <h5 style="margin:0 0 0.35rem 0;color:#132a4e;font-size:0.95rem;">Patient context</h5>
+                <table style="width:100%;border-collapse:collapse;font-size:0.92rem;">{patient_rows}</table>
             </div>
-            <div class="report-box">
-                <h5>Interpretation</h5>
-                <p style="margin:0; color:#173860; line-height:1.55;">{escape(interpretation)}</p>
-                <div class="callout" style="margin-top:0.8rem;">This prototype combines booking risk of GDM with antenatal and postnatal future T2DM risk after GDM in one prevention-oriented platform.</div>
+            <div style="border:1px solid #d7e2ef;border-radius:14px;padding:0.85rem 0.95rem;background:#fbfdff;">
+                <h5 style="margin:0 0 0.35rem 0;color:#132a4e;font-size:0.95rem;">Interpretation</h5>
+                <p style="margin:0;color:#173860;line-height:1.55;">{escape(interpretation)}</p>
             </div>
         </div>
-        <div class="report-box">
-            <h5>Risk journey table</h5>
-            <table class="report-table">
+        <div style="border:1px solid #d7e2ef;border-radius:14px;padding:0.85rem 0.95rem;background:#fbfdff;">
+            <h5 style="margin:0 0 0.35rem 0;color:#132a4e;font-size:0.95rem;">Risk journey table</h5>
+            <table style="width:100%;border-collapse:collapse;font-size:0.92rem;">
                 <thead>
-                    <tr><th>Module</th><th>Probability</th><th>Risk band</th><th>Action label</th></tr>
+                    <tr><th style="text-align:left;border:1px solid #dbe5f0;padding:0.5rem 0.55rem;background:#f3f7fb;">Module</th><th style="text-align:left;border:1px solid #dbe5f0;padding:0.5rem 0.55rem;background:#f3f7fb;">Probability</th><th style="text-align:left;border:1px solid #dbe5f0;padding:0.5rem 0.55rem;background:#f3f7fb;">Risk band</th><th style="text-align:left;border:1px solid #dbe5f0;padding:0.5rem 0.55rem;background:#f3f7fb;">Action label</th></tr>
                 </thead>
                 <tbody>{summary_rows}</tbody>
             </table>
         </div>
-        <div class="report-footer">
+        <div style="margin-top:0.9rem;color:#5b6f8a;font-size:0.82rem;border-top:1px solid #e4ebf3;padding-top:0.7rem;line-height:1.45;">
             <strong>{escape(st.session_state.report_note)}</strong><br>
             Contact: {escape(st.session_state.contact_email)}<br>
             Public app: {escape(st.session_state.public_app_url)}
@@ -1868,7 +1350,7 @@ with c1:
         st.rerun()
 with c2:
     if st.button("Reset all inputs", width="stretch"):
-        reset_everything()
+        reset_all()
         st.rerun()
 
 st.sidebar.markdown("---")
@@ -1879,14 +1361,14 @@ st.sidebar.number_input(
     max_value=15,
     step=1,
     key="parity",
-    on_change=sync_sidebar_to_booking,
+    on_change=sync_shared_to_antenatal,
 )
 st.sidebar.selectbox(
     "Family history of diabetes",
     options=[0, 1],
-    format_func=lambda x: "Yes" if x == 1 else "No",
+    format_func=yes_no,
     key="family_hist_dm",
-    on_change=sync_sidebar_to_booking,
+    on_change=sync_shared_to_antenatal,
 )
 st.sidebar.selectbox(
     "Current pathway status",
@@ -1919,15 +1401,14 @@ st.sidebar.text_input("Model version label", key="model_version")
 # =========================================================
 # HEADER
 # =========================================================
-completed_count = modules_completed()
-hero_left, hero_right = st.columns([4, 1])
+hero_left, hero_right = st.columns([4.6, 1])
 with hero_left:
     st.markdown(
         f"""
-        <div class="hero-wrap">
-            <span class="brand-chip">MONASH-STYLE PUBLIC DEMO</span>
-            <h1>M-Guide | Maternal Diabetes Prevention Platform</h1>
-            <p>{escape(st.session_state.app_tagline)}. A longitudinal risk journey from pregnancy booking to postpartum prevention, linking ANC booking risk of gestational diabetes with future type 2 diabetes risk during pregnancy after GDM and again after delivery.</p>
+        <div class="hero">
+            <div class="hero-chip">MONASH-STYLE PUBLIC DEMO</div>
+            <h1 class="hero-title">M-Guide | Maternal Diabetes Prevention Platform</h1>
+            <div class="hero-text">{escape(st.session_state.app_tagline)}. A longitudinal risk journey from ANC booking to postnatal prevention, linking early GDM risk estimation with future type 2 diabetes risk after GDM during pregnancy and again after delivery.</div>
         </div>
         """,
         unsafe_allow_html=True,
@@ -1936,66 +1417,102 @@ with hero_right:
     logo_path = first_existing_logo()
     if logo_path is not None:
         st.image(str(logo_path), width=180)
-    else:
+
+sum_cols = st.columns(4)
+summary_items = [
+    ("Patient label", str(st.session_state.patient_name)),
+    ("Pathway status", str(st.session_state.gdm_status)),
+    ("Modules completed", f"{modules_completed()}/3"),
+    ("Deployment mode", "Public demo ready"),
+]
+for col, (label, value) in zip(sum_cols, summary_items):
+    with col:
         st.markdown(
-            "<div class='logo-panel'><div class='logo-label'>Custom logo area</div><div class='logo-caption'>Add assets/custom_logo.png before deployment</div></div>",
+            f"""
+            <div class="summary-tile">
+                <div class="label">{escape(label)}</div>
+                <div class="value">{escape(value)}</div>
+            </div>
+            """,
             unsafe_allow_html=True,
         )
 
 st.markdown(
-    '<div class="notice-banner">Research demo only. This platform is for presentation and decision-support demonstration. It is not stand-alone diagnosis or real-world clinical deployment without governance, local validation, security review, and approval.</div>',
+    """
+    <div class="journey">
+        <div class="journey-step"><strong>1. Booking visit</strong><span>Estimate risk of developing GDM at 24–28 weeks from the saved CatBoost model.</span></div>
+        <div class="journey-step"><strong>2. Routine screening</strong><span>Screening takes place at 24–28 weeks and women with GDM move into future diabetes prevention planning.</span></div>
+        <div class="journey-step"><strong>3. Pregnancy after GDM</strong><span>Use the antenatal logistic equation to estimate future T2DM risk after delivery.</span></div>
+        <div class="journey-step"><strong>4. Postnatal follow-up</strong><span>Use postpartum glucose values and BMI to update long-term future T2DM risk.</span></div>
+        <div class="journey-step"><strong>5. Prevention summary</strong><span>Combine outputs into one presentation-ready patient prevention passport.</span></div>
+    </div>
+    """,
     unsafe_allow_html=True,
 )
 
+st.markdown(
+    '<div class="notice">Research demo only. This platform is for presentation and decision-support demonstration. It is not stand-alone diagnosis or real-world clinical deployment without governance, local validation, security review, and approval.</div>',
+    unsafe_allow_html=True,
+)
 
 # =========================================================
-# MODULE RENDERERS AND SINGLE-PAGE LAYOUT
+# LANDING / APPLICATIONS
 # =========================================================
+st.markdown("<div class='section-title'>Applications</div>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='section-text'>Choose a module depending on where the woman is in the pathway. The organisation below is intentionally simple: clear purpose, grouped predictors, and one obvious action.</div>",
+    unsafe_allow_html=True,
+)
 
-def show_secondary_name(value: str) -> str:
-    value = (value or '').strip()
-    return value
+app_cols = st.columns(3)
+app_defs = [
+    ("blue", "Maternal diabetes platform", "Booking visit", "Estimate the probability of developing gestational diabetes during pregnancy using the saved CatBoost model and scaler.", "Open booking screen →", "booking"),
+    ("teal", "Future diabetes prevention", "After GDM in pregnancy", "Use the published antenatal equation to estimate future type 2 diabetes risk after delivery among women with GDM.", "Open antenatal model →", "antenatal"),
+    ("rose", "Postpartum review", "Postnatal follow-up", "Update long-term future diabetes risk using linked antenatal OGTT, postnatal fasting glucose, postnatal 2-hour OGTT, and BMI.", "Open postnatal model →", "postnatal"),
+]
+for col, (color, kicker, title, body, button_text, module_name) in zip(app_cols, app_defs):
+    with col:
+        st.markdown(
+            f"""
+            <div class="application-card">
+                <div class="application-top {color}">
+                    <div class="application-kicker">{escape(kicker)}</div>
+                    <div class="application-title">{escape(title)}</div>
+                </div>
+                <div class="application-body">{escape(body)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        if st.button(button_text, key=f"open_{module_name}", width="stretch"):
+            st.session_state.active_module = module_name
+            st.rerun()
 
-
-def set_active_module(name: str):
-    st.session_state.active_module = name
-
-
-if "active_module" not in st.session_state:
-    st.session_state.active_module = "booking"
-
-
+# =========================================================
+# MODULE RENDERERS
+# =========================================================
 def render_booking_module():
+    st.markdown(
+        """
+        <div class="module-shell">
+            <div class="module-kicker">Stage 1</div>
+            <div class="module-title">ANC booking risk of developing GDM</div>
+            <div class="module-description">This module uses the saved CatBoost model and preprocessing scaler already stored in the app folder. Predictors are grouped in the same order clinicians would usually gather them at the first booking visit.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     if booking_model_error:
         st.error(booking_model_error)
 
-    st.markdown(
-        '<div class="form-section-title">Key booking-model predictors entered here</div><div class="form-section-note">These two predictors are shared across the platform, but are shown here as part of the booking model input set.</div>',
-        unsafe_allow_html=True,
-    )
-    g1, g2 = st.columns(2)
-    with g1:
-        st.number_input(
-            "Parity",
-            min_value=0,
-            max_value=15,
-            step=1,
-            key="booking_parity",
-            on_change=sync_booking_to_sidebar,
-        )
-    with g2:
-        st.selectbox(
-            "Family history of diabetes",
-            options=[0, 1],
-            format_func=lambda x: "Yes" if x == 1 else "No",
-            key="booking_family_hist_dm",
-            on_change=sync_booking_to_sidebar,
-        )
+    st.markdown('<div class="form-section-title">Shared background predictors</div><div class="form-section-note">These two variables are shared across the platform and are entered first for clarity.</div>', unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        st.number_input("Parity", min_value=0, max_value=15, step=1, key="parity", on_change=sync_shared_to_antenatal)
+    with c2:
+        st.selectbox("Family history of diabetes", options=[0, 1], format_func=yes_no, key="family_hist_dm", on_change=sync_shared_to_antenatal)
 
-    st.markdown(
-        '<div class="form-section-title">Maternal characteristics</div><div class="form-section-note">Core booking predictors available at the first antenatal visit.</div>',
-        unsafe_allow_html=True,
-    )
+    st.markdown('<div class="form-section-title">Maternal characteristics</div><div class="form-section-note">Core booking predictors available at the first antenatal visit.</div>', unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
     with c1:
         st.number_input("Age (years)", min_value=10, max_value=60, step=1, key="age")
@@ -2005,36 +1522,29 @@ def render_booking_module():
         st.selectbox("Ethnicity group", options=list(RECODE_DICT.keys()), key="ethnicity_group")
     with c3:
         st.markdown(
-            '<div class="callout"><strong>Presentation tip:</strong> position this module as the entry point for early prevention and targeted antenatal follow-up.</div>',
+            '<div class="callout"><strong>Presentation tip:</strong> use this screen to show how the app turns routine booking information into an early prevention conversation.</div>',
             unsafe_allow_html=True,
         )
 
-    st.markdown(
-        '<div class="form-section-title">Previous obstetric history</div><div class="form-section-note">These are the two history predictors used directly in the booking model.</div>',
-        unsafe_allow_html=True,
-    )
-    o1, o2, o3 = st.columns(3)
-    with o1:
-        st.selectbox(
-            "Past history of GDM",
-            options=[0, 1],
-            format_func=lambda x: "Yes" if x == 1 else "No",
-            key="past_hist_gdm",
-        )
-    with o2:
+    st.markdown('<div class="form-section-title">Previous obstetric history</div><div class="form-section-note">The booking model uses two history variables: past history of GDM and past obstetric complications.</div>', unsafe_allow_html=True)
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.selectbox("Past history of GDM", options=[0, 1], format_func=yes_no, key="past_hist_gdm")
+    with c2:
         st.selectbox(
             "Past obstetric complications",
             options=[0, 1],
-            format_func=lambda x: "Yes" if x == 1 else "No",
+            format_func=yes_no,
             key="past_hist_obs_complica",
             help="Yes if there is any relevant past obstetric complication included in the original model definition.",
         )
-    with o3:
-        st.info(
-            "Booking model predictors: age, height, weight, ethnicity group, parity, family history of diabetes, past history of GDM, and past obstetric complications."
+    with c3:
+        st.markdown(
+            '<div class="callout"><strong>Model predictors:</strong> age, height, weight, ethnicity group, parity, family history of diabetes, past history of GDM, and past obstetric complications.</div>',
+            unsafe_allow_html=True,
         )
 
-    if st.button("Run booking prediction", type="primary", width="stretch", key="run_booking_pred"):
+    if st.button("Run booking prediction", type="primary", width="stretch", key="run_booking"):
         try:
             prob, pred, feature_frame = predict_booking_risk()
             st.session_state.anc_prob = prob
@@ -2044,133 +1554,242 @@ def render_booking_module():
             st.error(f"Prediction failed: {exc}")
 
     if st.session_state.anc_prob is not None:
-        anc_prob = float(st.session_state.anc_prob)
-        anc_band = booking_risk_band(anc_prob)
-        pred_label = classification_text(anc_prob, float(st.session_state.anc_threshold))
+        prob = float(st.session_state.anc_prob)
+        band = booking_risk_band(prob)
         render_result_cards(
-            anc_prob,
-            anc_band,
-            "Risk of developing GDM at 24-28 weeks",
+            prob,
+            band,
+            "Risk of developing GDM at 24–28 weeks",
             float(st.session_state.anc_threshold),
-            pred_label,
             "Booking-stage risk output from the saved CatBoost model.",
         )
         st.markdown("### Suggested next action")
-        render_recommendation_panel(booking_action_payload(anc_prob, float(st.session_state.anc_threshold)))
+        render_recommendation_panel(booking_action_payload(prob, float(st.session_state.anc_threshold)))
         with st.expander("Model inputs sent to scaler and CatBoost model"):
             st.dataframe(st.session_state.booking_feature_frame, width="stretch")
 
 
 def render_antenatal_module():
     st.markdown(
-        '<div class="form-section-title">Antenatal predictors in the published model</div><div class="form-section-note">This model combines pregnancy glucose values, prior GDM pattern, treatment, menstrual history, parity, and family history of diabetes.</div>',
+        """
+        <div class="module-shell">
+            <div class="module-kicker">Stage 2</div>
+            <div class="module-title">Pregnancy after GDM: future T2DM risk after delivery</div>
+            <div class="module-description">This published antenatal model uses exactly seven predictors. They are grouped below as glucose markers, pregnancy history and treatment, and shared background variables so the form is easier to follow in a live demonstration.</div>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
-    a1, a2, a3 = st.columns(3)
-    with a1:
-        st.number_input("Antenatal fasting plasma glucose (FPG, mmol/L)", min_value=0.0, max_value=30.0, step=0.1, key="antenatal_fpg")
-        st.number_input("Antenatal 2-hour OGTT (mmol/L)", min_value=0.0, max_value=40.0, step=0.1, key="antenatal_2h_ogtt", on_change=sync_antenatal_to_post_view)
-    with a2:
-        st.selectbox(
-            "Recurrent GDM",
-            options=[0, 1],
-            format_func=lambda x: "Yes" if x == 1 else "No",
-            key="recurrent_gdm",
-        )
-        st.selectbox(
-            "Insulin treatment during pregnancy",
-            options=[0, 1],
-            format_func=lambda x: "Yes" if x == 1 else "No",
-            key="insulin_treatment",
-        )
-    with a3:
-        st.selectbox(
-            "History of irregular menstrual cycles",
-            options=[0, 1],
-            format_func=lambda x: "Yes" if x == 1 else "No",
-            key="irregular_menses",
-        )
-        st.metric("Parity", st.session_state.parity)
-        st.metric("Family history of diabetes", "Yes" if st.session_state.family_hist_dm == 1 else "No")
 
-    if st.button("Run antenatal future T2DM prediction", type="primary", width="stretch", key="run_antenatal_pred"):
+    st.markdown('<div class="form-section-title">1) Antenatal glucose markers</div><div class="form-section-note">Enter the two pregnancy glucose measurements used in the published model.</div>', unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        st.number_input("Antenatal fasting plasma glucose (FPG, mmol/L)", min_value=0.0, max_value=30.0, step=0.1, key="antenatal_fpg")
+    with c2:
+        st.number_input("Antenatal 2-hour OGTT (mmol/L)", min_value=0.0, max_value=40.0, step=0.1, key="antenatal_2h_ogtt", on_change=sync_antenatal_to_postnatal_link)
+
+    st.markdown('<div class="form-section-title">2) Pregnancy history and treatment</div><div class="form-section-note">These three yes/no variables capture recurrence, treatment intensity, and menstrual history.</div>', unsafe_allow_html=True)
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.selectbox("Recurrent GDM", options=[0, 1], format_func=yes_no, key="recurrent_gdm")
+    with c2:
+        st.selectbox("Insulin treatment in pregnancy", options=[0, 1], format_func=yes_no, key="insulin_treatment")
+    with c3:
+        st.selectbox("History of irregular menstrual cycles", options=[0, 1], format_func=yes_no, key="irregular_menses")
+
+    st.markdown('<div class="form-section-title">3) Shared background variables</div><div class="form-section-note">These two predictors are part of the published antenatal model and can be edited here directly for demonstration clarity.</div>', unsafe_allow_html=True)
+    c1, c2, c3 = st.columns([1, 1, 1.1])
+    with c1:
+        st.number_input("Parity", min_value=0, max_value=15, step=1, key="antenatal_parity", on_change=sync_antenatal_to_shared)
+    with c2:
+        st.selectbox("Family history of diabetes", options=[0, 1], format_func=yes_no, key="antenatal_family_hist_dm", on_change=sync_antenatal_to_shared)
+    with c3:
+        st.markdown(
+            '<div class="callout"><strong>Seven predictors in total:</strong> antenatal FPG, antenatal 2-hour OGTT, recurrent GDM, insulin treatment in pregnancy, history of irregular menstrual cycles, parity, and family history of diabetes.</div>',
+            unsafe_allow_html=True,
+        )
+
+    if st.button("Run antenatal future T2DM prediction", type="primary", width="stretch", key="run_antenatal"):
         st.session_state.ant_prob = predict_antenatal_t2dm_after_gdm()
 
     if st.session_state.ant_prob is not None:
-        ant_prob = float(st.session_state.ant_prob)
-        ant_band = published_model_band(ant_prob, 0.096)
-        ant_label = classification_text(ant_prob, 0.096)
+        prob = float(st.session_state.ant_prob)
+        band = published_model_band(prob, 0.096)
         render_result_cards(
-            ant_prob,
-            ant_band,
+            prob,
+            band,
             "Future T2DM risk after delivery - antenatal model",
             0.096,
-            ant_label,
             "Published antenatal logistic model for women with GDM.",
         )
         st.markdown("### Suggested next action")
-        render_recommendation_panel(antenatal_action_payload(ant_prob, 0.096))
+        render_recommendation_panel(antenatal_action_payload(prob, 0.096))
         st.info("Paper-reported action threshold used in this demo: 0.096.")
 
 
 def render_postnatal_module():
     st.markdown(
-        '<div class="form-section-title">Postnatal model variables</div><div class="form-section-note">This equation uses the linked antenatal 2-hour OGTT plus postnatal fasting glucose, postnatal 2-hour OGTT, and postnatal BMI.</div>',
+        """
+        <div class="module-shell">
+            <div class="module-kicker">Stage 3</div>
+            <div class="module-title">Postnatal follow-up: updated future T2DM risk</div>
+            <div class="module-description">This postnatal model combines the linked antenatal 2-hour OGTT with postpartum fasting glucose, postpartum 2-hour OGTT, and postpartum BMI.</div>
+        </div>
+        """,
         unsafe_allow_html=True,
     )
-    p1, p2, p3 = st.columns(3)
-    with p1:
+
+    st.markdown('<div class="form-section-title">Postnatal model variables</div><div class="form-section-note">The linked antenatal 2-hour OGTT is shown alongside the three postpartum predictors used in the published model.</div>', unsafe_allow_html=True)
+    c1, c2, c3 = st.columns(3)
+    with c1:
         st.number_input(
             "Antenatal 2-hour OGTT (linked value, mmol/L)",
             min_value=0.0,
             max_value=40.0,
             step=0.1,
             key="post_view_antenatal_2h_ogtt",
-            on_change=sync_post_view_to_antenatal,
-            help="This mirrors the antenatal 2h-OGTT value used in the postnatal model.",
+            on_change=sync_postnatal_link_to_antenatal,
         )
         st.number_input("Postnatal fasting plasma glucose (FPG, mmol/L)", min_value=0.0, max_value=30.0, step=0.1, key="postnatal_fpg")
-    with p2:
+    with c2:
         st.number_input("Postnatal 2-hour OGTT (mmol/L)", min_value=0.0, max_value=40.0, step=0.1, key="postnatal_2h_ogtt")
         st.number_input("Postnatal body mass index (BMI, kg/m²)", min_value=10.0, max_value=80.0, step=0.1, key="postnatal_bmi")
-    with p3:
+    with c3:
         st.markdown(
             '<div class="callout"><strong>Practical note:</strong> this module is strongest when postpartum testing has actually been completed.</div>',
             unsafe_allow_html=True,
         )
-        st.metric("Linked antenatal 2-hour OGTT", f"{float(st.session_state.post_view_antenatal_2h_ogtt):.1f}")
 
-    if st.button("Run postnatal future T2DM prediction", type="primary", width="stretch", key="run_postnatal_pred"):
+    if st.button("Run postnatal future T2DM prediction", type="primary", width="stretch", key="run_postnatal"):
         st.session_state.post_prob = predict_postnatal_t2dm_after_gdm()
 
     if st.session_state.post_prob is not None:
-        post_prob = float(st.session_state.post_prob)
-        post_band = published_model_band(post_prob, 0.086)
-        post_label = classification_text(post_prob, 0.086)
+        prob = float(st.session_state.post_prob)
+        band = published_model_band(prob, 0.086)
         render_result_cards(
-            post_prob,
-            post_band,
+            prob,
+            band,
             "Future T2DM risk after delivery - postnatal model",
             0.086,
-            post_label,
             "Published postnatal logistic model using postpartum glucose values and BMI.",
         )
         st.markdown("### Suggested next action")
-        render_recommendation_panel(postnatal_action_payload(post_prob, 0.086))
+        render_recommendation_panel(postnatal_action_payload(prob, 0.086))
         st.info("Paper-reported action threshold used in this demo: 0.086.")
 
 
-def render_report_section():
+if st.session_state.active_module == "booking":
+    render_booking_module()
+elif st.session_state.active_module == "antenatal":
+    render_antenatal_module()
+else:
+    render_postnatal_module()
+
+# =========================================================
+# SUPPORTING SECTIONS
+# =========================================================
+st.markdown("<div class='section-title'>About this approach</div>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='section-text'>The goal is not simply to predict risk, but to support clearer conversations, proportionate follow-up, and better allocation of care across the maternal pathway.</div>",
+    unsafe_allow_html=True,
+)
+
+c1, c2, c3 = st.columns(3)
+with c1:
     st.markdown(
         """
-        <div class="panel">
-            <div class="section-kicker">Clinical report</div>
-            <h3>PDF-style patient report page</h3>
-            <p class="muted">Create a simple one-page output for screenshots, slide decks, or prototype demonstrations.</p>
+        <div class="accent-card">
+            <div class="badge">Why consider risk stratification?</div>
+            <div class="title">Use risk to tailor care rather than treat every woman as needing the same intensity of follow-up.</div>
         </div>
         """,
         unsafe_allow_html=True,
     )
+with c2:
+    st.markdown(
+        """
+        <div class="light-card">
+            <h4>Earlier, clearer conversations</h4>
+            <p>Earlier identification of risk can support <strong>timely lifestyle advice</strong>, <strong>appropriate testing</strong>, and more focused follow-up.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with c3:
+    st.markdown(
+        """
+        <div class="light-card">
+            <h4>Simple language and visuals</h4>
+            <p>A clean web tool can communicate an <strong>individualised estimate of risk</strong> in language that is easier to discuss in clinic and postpartum review.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+c1, c2, c3 = st.columns(3)
+with c1:
+    st.markdown(
+        """
+        <div class="light-card">
+            <h4>Accessible on one platform</h4>
+            <p>A single interface keeps booking, pregnancy-after-GDM, and postnatal models together, so clinicians and women can move through the pathway without changing tools.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with c2:
+    st.markdown(
+        """
+        <div class="light-card">
+            <h4>Readable outputs with clear next steps</h4>
+            <p>Each model returns a percentage risk, a visual band, and a structured practical next-action section to support shared decision-making.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+with c3:
+    st.markdown(
+        """
+        <div class="dark-solution">
+            <div class="badge">Our solution</div>
+            <div class="title">A cleaner, demonstration-ready prediction experience</div>
+            <div class="text">This version is intentionally polished for public demonstration: grouped predictors, stronger visual hierarchy, obvious actions, and no duplicated sections.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+st.markdown("<div class='section-title'>Research and sharing</div>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='section-text'>Use the public app, code repository, and publications below for demonstrations, posters, slide decks, and collaborator sharing.</div>",
+    unsafe_allow_html=True,
+)
+
+share_cols = st.columns(3)
+share_items = [
+    ("Public app", st.session_state.public_app_url, "Scan to open the deployed Streamlit app."),
+    ("GitHub repository", st.session_state.github_url, "Scan to view source code and deployment files."),
+    ("Publication / DOI", st.session_state.publication_url, "Scan to open the publication or project page."),
+]
+for col, (title, url, caption) in zip(share_cols, share_items):
+    with col:
+        st.markdown(
+            f"""
+            <div class="light-card">
+                <h4>{escape(title)}</h4>
+                <p>{escape(caption)}</p>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        img_bytes = qr_image(url)
+        if img_bytes is not None:
+            st.image(img_bytes, width=170)
+        else:
+            st.info(f"Add a valid URL for {title.lower()} in the sidebar to generate a QR code.")
+        st.caption(url or "URL not set")
+
+with st.expander("Clinical report and downloads"):
     summary_df = summary_dataframe()
     html_report = report_html(summary_df)
     st.markdown(html_report, unsafe_allow_html=True)
@@ -2191,275 +1810,44 @@ def render_report_section():
             mime="text/html",
         )
 
-
-def render_about_deploy_section():
-    top_left, top_right = st.columns([1.1, 0.9])
-    with top_left:
+with st.expander("Platform details"):
+    left, right = st.columns([1.1, 0.9])
+    with left:
         st.markdown(
             """
-            <div class="panel">
-                <div class="section-kicker">About this demo</div>
-                <h3>What this final clean version includes</h3>
-                <p class="muted">This version is designed for a polished public research demo: stronger typography, applications-first navigation, QR-enabled sharing, publication-ready cards, and deployment-ready Streamlit Cloud files.</p>
-                <div class="callout"><strong>Public message:</strong> this platform supports prevention across the maternal metabolic pathway, rather than focusing on one isolated prediction point.</div>
+            <div class="light-card">
+                <h4>Deployment checklist</h4>
+                <p>Repository contents should include <code>app.py</code>, <code>requirements.txt</code>, <code>.streamlit/config.toml</code>, the saved booking model, the saved scaler, and optional branding assets.</p>
             </div>
             """,
             unsafe_allow_html=True,
         )
-    with top_right:
+    with right:
         st.markdown(
             f"""
-            <div class="panel">
-                <div class="section-kicker">Contacts and links</div>
-                <h4 style="margin-top:0;">Platform details</h4>
-                <p class="muted" style="margin-bottom:0.35rem;">Institution: {escape(st.session_state.institution_name)}</p>
-                <p class="muted" style="margin-bottom:0.35rem;">Contact: {escape(st.session_state.contact_email)}</p>
-                <p class="muted" style="margin-bottom:0.35rem;">GitHub: {safe_link(st.session_state.github_url, 'Open repository')}</p>
-                <p class="muted" style="margin-bottom:0;">Publication: {safe_link(st.session_state.publication_url, 'Primary DOI')}</p>
+            <div class="light-card">
+                <h4>Current links</h4>
+                <p><strong>Contact:</strong> {escape(st.session_state.contact_email)}<br>
+                <strong>GitHub:</strong> {safe_link(st.session_state.github_url, 'Open repository')}<br>
+                <strong>Publication 1:</strong> {safe_link(st.session_state.publication_url, 'Primary DOI')}<br>
+                <strong>Publication 2:</strong> {safe_link(st.session_state.publication_url_secondary, 'Secondary DOI')}</p>
             </div>
             """,
             unsafe_allow_html=True,
         )
-
-# =========================================================
-# MAIN SINGLE-PAGE EXPERIENCE
-# =========================================================
-secondary_name = show_secondary_name(st.session_state.institution_unit)
-provider_text = escape(st.session_state.institution_name)
-if secondary_name:
-    provider_text = f"{escape(st.session_state.institution_name)} and {escape(secondary_name)}"
-
-st.markdown(
-    f"""
-    <div class="clean-hero">
-        <div class="clean-hero-grid">
-            <div class="clean-hero-copy">
-                <div class="clean-hero-kicker">Web-based, data-driven prediction tools</div>
-                <h2 class="clean-hero-title">Personalised maternal diabetes risk support</h2>
-                <p class="clean-hero-text">These evidence-based tools are provided by {provider_text}. They are designed to support risk-stratified care across booking, pregnancy after GDM, and postpartum follow-up using clear risk estimates, simple language, and practical next steps.</p>
-            </div>
-            <div class="clean-hero-panel">
-                <div>
-                    <div class="clean-hero-badge">Decision support for clinicians and women</div>
-                    <h3 style="margin:0; font-size:2.2rem; line-height:1.1; font-weight:900;">One clean platform, three linked prediction stages</h3>
-                </div>
-                <div class="clean-hero-points">
-                    <div class="clean-hero-point"><strong>Booking:</strong> estimate risk of developing GDM at 24–28 weeks.</div>
-                    <div class="clean-hero-point"><strong>After GDM in pregnancy:</strong> estimate future T2DM risk after delivery.</div>
-                    <div class="clean-hero-point"><strong>Postnatal follow-up:</strong> update long-term future T2DM risk using postpartum results.</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-
-st.markdown("<div class='clean-section-title'>Applications</div>", unsafe_allow_html=True)
-st.markdown(
-    "<div class='clean-section-text'>Choose a module depending on where the woman is in the pathway. Use the buttons below to open the model directly in this section.</div>",
-    unsafe_allow_html=True,
-)
-
-app_cols = st.columns(3)
-app_cards = [
-    ("blue", "Maternal diabetes platform", "Booking visit", "Estimate the probability of developing gestational diabetes during pregnancy using the saved CatBoost model and scaler.", "Open booking screen", "booking"),
-    ("teal", "Future diabetes prevention", "After GDM in pregnancy", "Use the published antenatal equation to estimate future type 2 diabetes risk after delivery among women with GDM.", "Open antenatal model", "antenatal"),
-    ("rose", "Postpartum review", "Postnatal follow-up", "Update long-term future diabetes risk using linked antenatal OGTT, postnatal fasting glucose, postnatal 2-hour OGTT, and BMI.", "Open postnatal model", "postnatal"),
-]
-for col, (color, kicker, title, body, cta, target) in zip(app_cols, app_cards):
-    with col:
-        st.markdown(
-            f"""
-            <div class="app-card">
-                <div class="app-card-top {color}">
-                    <div class="app-card-kicker">{escape(kicker)}</div>
-                    <div class="app-card-title">{escape(title)}</div>
-                </div>
-                <div class="app-card-body">{escape(body)}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button(cta + " →", key=f"open_{target}", width="stretch"):
-            set_active_module(target)
-            st.rerun()
-
-if st.session_state.active_module == "booking":
-    render_booking_module()
-elif st.session_state.active_module == "antenatal":
-    render_antenatal_module()
-else:
-    render_postnatal_module()
-
-# keep the rest of the clean landing content
-st.markdown("<div class='clean-section-title'>About this approach</div>", unsafe_allow_html=True)
-st.markdown(
-    "<div class='clean-section-text'>The aim is not simply to predict risk, but to support clearer conversations, proportionate follow-up, and better allocation of care across the maternal pathway.</div>",
-    unsafe_allow_html=True,
-)
-a1, a2, a3 = st.columns(3)
-with a1:
-    st.markdown(
-        """
-        <div class="insight-card emphasis">
-            <div class="clean-hero-badge" style="background:rgba(255,255,255,0.9); color:#e24674;">Why consider risk stratification?</div>
-            <div style="font-size:2.45rem; font-weight:900; line-height:1.12; margin-top:0.8rem;">Use risk to tailor care rather than treat every woman as needing the same intensity of follow-up.</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-with a2:
-    st.markdown(
-        """
-        <div class="insight-card">
-            Earlier, clearer identification of risk can support <strong>timely lifestyle advice</strong>, <strong>appropriate testing</strong>, and more focused follow-up.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-with a3:
-    st.markdown(
-        """
-        <div class="insight-card">
-            A simple web tool can communicate an <strong>individualised estimate of risk</strong> in language that is easier to discuss in clinic and postpartum review.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-b1, b2, b3 = st.columns(3)
-with b1:
-    st.markdown(
-        """
-        <div class="insight-card">
-            <h4 style="margin-top:0; font-size:2rem; line-height:1.1;">Accessible on one platform</h4>
-            A single web interface keeps booking, pregnancy-after-GDM, and postnatal models together, so clinicians and women can move through the pathway without changing tools.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-with b2:
-    st.markdown(
-        """
-        <div class="insight-card">
-            <h4 style="margin-top:0; font-size:2rem; line-height:1.1;">Individualised estimates with simple visuals</h4>
-            Each model returns a percentage risk, a visual band, and a practical next-action section to support shared decision making.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-with b3:
-    st.markdown(
-        """
-        <div class="solution-card dark">
-            <div class="clean-hero-badge" style="background:rgba(255,255,255,0.92); color:#234f81;">Our solution</div>
-            <div class="title">A clean, data-driven prediction experience</div>
-            <div class="text">The interface is intentionally simple: clear headings, short descriptions, obvious actions, and no unnecessary clutter.</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-st.markdown("<div class='clean-section-title'>Research</div>", unsafe_allow_html=True)
-st.markdown(
-    "<div class='clean-section-text'>These tools are designed to be used by healthcare providers together with women who are or may be affected by gestational diabetes. They can support estimation of risk of developing gestational diabetes, and future type 2 diabetes risk after a pregnancy affected by GDM.</div>",
-    unsafe_allow_html=True,
-)
-r1, r2 = st.columns([1.2, 0.8])
-with r1:
-    st.markdown(
-        f"""
-        <div class="research-wrap">
-            <div class="section-kicker">Powered by {escape(st.session_state.institution_name)}</div>
-            <h3 style="font-size:3rem; margin:0 0 0.7rem 0; color:var(--mono-navy);">Research</h3>
-            <p class="clean-section-text" style="margin-bottom:0; max-width:none;">These evidence-based tools are designed to support risk-stratified care for women who may develop GDM and women with prior GDM who need long-term diabetes-prevention planning.</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-with r2:
-    st.markdown(
-        f"""
-        <div class="research-side">
-            <div class="section-kicker">Primary publication</div>
-            <h4>Prediction for risk-stratified care in maternal diabetes</h4>
-            <div class="tag-link">{safe_link(st.session_state.publication_url, 'Know more')}</div>
-            <div style="height:0.65rem"></div>
-            <div class="section-kicker">Related publication</div>
-            <div class="tag-link">{safe_link(st.session_state.publication_url_secondary, 'Know more')}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-st.markdown("<div class='clean-section-title'>Powered by</div>", unsafe_allow_html=True)
-pcols = st.columns(3)
-powered = [
-    ("MCHRI", "Monash Centre for Health Research and Implementation", "Evidence generation, implementation, and translation for clinical and public health research.", safe_link('https://www.monash.edu/medicine/mchri', 'Know more →')),
-    ("Monash Health", "Monash Health", "Public health-service partnership supporting translational, implementation-focused maternal health innovation.", safe_link('https://monashhealth.org', 'Know more →')),
-    ("Monash", "Monash University", "Research, translation, and partnership to deliver impact locally and internationally.", safe_link('https://www.monash.edu', 'Know more →')),
-]
-for col, (imgtext, title, text, link) in zip(pcols, powered):
-    with col:
-        st.markdown(
-            f"""
-            <div class="powered-card">
-                <div class="powered-image">{escape(imgtext)}</div>
-                <div class="powered-body">
-                    <h4>{escape(title)}</h4>
-                    <p>{escape(text)}</p>
-                    <div class="app-pill" style="margin-top:1rem; width:fit-content;">{link}</div>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-st.markdown("<div class='clean-section-title'>Share the tool</div>", unsafe_allow_html=True)
-st.markdown(
-    "<div class='clean-section-text'>Use the public app, code repository, and publication cards for posters, presentations, or sharing with collaborators.</div>",
-    unsafe_allow_html=True,
-)
-share_cols = st.columns(3)
-share_items = [
-    ("Public app", st.session_state.public_app_url, "Scan to open the deployed Streamlit app."),
-    ("GitHub repository", st.session_state.github_url, "Scan to view source code and deployment files."),
-    ("Publication / DOI", st.session_state.publication_url, "Scan to open the publication or project page."),
-]
-for col, (title, url, caption) in zip(share_cols, share_items):
-    with col:
-        st.markdown(f"<div class='panel'><div class='section-kicker'>{escape(title)}</div><h4>{escape(title)}</h4><p class='muted'>{escape(caption)}</p></div>", unsafe_allow_html=True)
-        img_bytes = qr_image(url)
-        if img_bytes is not None:
-            st.image(img_bytes, width=170)
-        else:
-            st.info(f"Add a valid URL for {title.lower()} in the sidebar to generate a QR code.")
-        st.caption(url or "URL not set")
-
-with st.expander("Clinical report and downloads"):
-    render_report_section()
-
-with st.expander("About deployment and platform details"):
-    render_about_deploy_section()
 
 # =========================================================
 # FOOTER
 # =========================================================
-secondary = show_secondary_name(st.session_state.institution_unit)
-mid = f" · {escape(secondary)}" if secondary else ""
 st.markdown(
     f"""
     <div class="footer-wrap">
-        <div class="footer-top">
-            <div>
-                <span class="footer-pill">{escape(st.session_state.institution_name)}</span>
-                <span class="footer-pill">{escape(st.session_state.model_version)}</span>
-            </div>
-            <div>{safe_link(st.session_state.github_url, 'GitHub')} · {safe_link(st.session_state.publication_url, 'Publication 1')} · {safe_link(st.session_state.publication_url_secondary, 'Publication 2')} · {safe_link(st.session_state.public_app_url, 'Public app')}</div>
+        <div>
+            <span class="footer-pill">{escape(st.session_state.institution_name)}</span>
+            <span class="footer-pill">{escape(st.session_state.model_version)}</span>
         </div>
-        <div><strong>M-Guide | Maternal Diabetes Prevention Platform</strong> — a clean, applications-first prototype for research demonstration and public sharing.</div>
+        <div style="margin-top:0.35rem;">{safe_link(st.session_state.github_url, 'GitHub')} · {safe_link(st.session_state.publication_url, 'Publication 1')} · {safe_link(st.session_state.publication_url_secondary, 'Publication 2')} · {safe_link(st.session_state.public_app_url, 'Public app')}</div>
+        <div style="margin-top:0.35rem;"><strong>M-Guide | Maternal Diabetes Prevention Platform</strong> — a clean, applications-first prototype for research demonstration and public sharing.</div>
         <div>Contact: {escape(st.session_state.contact_email)} | {escape(st.session_state.report_note)}</div>
     </div>
     """,
