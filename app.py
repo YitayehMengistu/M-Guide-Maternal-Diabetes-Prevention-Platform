@@ -650,8 +650,10 @@ DEFAULTS = {
     "height": 165,
     "weight": 70.0,
     "parity": 1,
+    "booking_parity": 1,
     "ethnicity_group": "Southern and Central Asian",
     "family_hist_dm": 1,
+    "booking_family_hist_dm": 1,
     "past_hist_gdm": 0,
     "past_hist_obs_complica": 0,
     "anc_threshold": 0.50,
@@ -699,14 +701,30 @@ def init_state():
             st.session_state[key] = value
 
 
-def sync_shared_to_antenatal():
+def init_booking_mirror_state():
+    st.session_state.booking_parity = int(st.session_state.parity)
+    st.session_state.booking_family_hist_dm = int(st.session_state.family_hist_dm)
+
+
+def sync_shared_to_module_inputs():
+    st.session_state.booking_parity = int(st.session_state.parity)
+    st.session_state.booking_family_hist_dm = int(st.session_state.family_hist_dm)
     st.session_state.antenatal_parity = int(st.session_state.parity)
     st.session_state.antenatal_family_hist_dm = int(st.session_state.family_hist_dm)
+
+
+def sync_booking_to_shared():
+    st.session_state.parity = int(st.session_state.booking_parity)
+    st.session_state.family_hist_dm = int(st.session_state.booking_family_hist_dm)
+    st.session_state.antenatal_parity = int(st.session_state.booking_parity)
+    st.session_state.antenatal_family_hist_dm = int(st.session_state.booking_family_hist_dm)
 
 
 def sync_antenatal_to_shared():
     st.session_state.parity = int(st.session_state.antenatal_parity)
     st.session_state.family_hist_dm = int(st.session_state.antenatal_family_hist_dm)
+    st.session_state.booking_parity = int(st.session_state.antenatal_parity)
+    st.session_state.booking_family_hist_dm = int(st.session_state.antenatal_family_hist_dm)
 
 
 def sync_antenatal_to_postnatal_link():
@@ -725,8 +743,10 @@ def load_demo_patient():
         "height": 160,
         "weight": 78.5,
         "parity": 2,
+        "booking_parity": 2,
         "ethnicity_group": "Southern and Central Asian",
         "family_hist_dm": 1,
+        "booking_family_hist_dm": 1,
         "past_hist_gdm": 1,
         "past_hist_obs_complica": 1,
         "gdm_status": "GDM confirmed",
@@ -752,7 +772,8 @@ def reset_all():
 
 
 init_state()
-sync_shared_to_antenatal()
+init_booking_mirror_state()
+sync_shared_to_module_inputs()
 
 # =========================================================
 # HELPERS
@@ -917,9 +938,9 @@ def predict_antenatal_t2dm_after_gdm() -> float:
         + 0.3656 * float(st.session_state.antenatal_2h_ogtt)
         + 0.3190 * int(st.session_state.recurrent_gdm)
         + 0.5100 * int(st.session_state.insulin_treatment)
-        + 0.3526 * int(st.session_state.parity)
+        + 0.3526 * int(st.session_state.antenatal_parity)
         + 1.0922 * int(st.session_state.irregular_menses)
-        + 0.0972 * int(st.session_state.family_hist_dm)
+        + 0.0972 * int(st.session_state.antenatal_family_hist_dm)
     )
     return sigmoid(logit)
 
@@ -1042,7 +1063,7 @@ def render_result_cards(prob: float, band: str, title: str, threshold: float, su
 def booking_action_payload(prob: float, threshold: float) -> dict:
     intensity = action_intensity(prob, threshold)
     reasons = []
-    if int(st.session_state.family_hist_dm) == 1:
+    if int(st.session_state.antenatal_family_hist_dm) == 1:
         reasons.append("family history of diabetes")
     if int(st.session_state.past_hist_gdm) == 1:
         reasons.append("past history of GDM")
@@ -1104,7 +1125,7 @@ def antenatal_action_payload(prob: float, threshold: float) -> dict:
         reasons.append("insulin treatment during pregnancy")
     if int(st.session_state.irregular_menses) == 1:
         reasons.append("history of irregular menstrual cycles")
-    if int(st.session_state.family_hist_dm) == 1:
+    if int(st.session_state.antenatal_family_hist_dm) == 1:
         reasons.append("family history of diabetes")
 
     if intensity == "Low":
@@ -1361,14 +1382,14 @@ st.sidebar.number_input(
     max_value=15,
     step=1,
     key="parity",
-    on_change=sync_shared_to_antenatal,
+    on_change=sync_shared_to_module_inputs,
 )
 st.sidebar.selectbox(
     "Family history of diabetes",
     options=[0, 1],
     format_func=yes_no,
     key="family_hist_dm",
-    on_change=sync_shared_to_antenatal,
+    on_change=sync_shared_to_module_inputs,
 )
 st.sidebar.selectbox(
     "Current pathway status",
@@ -1466,7 +1487,7 @@ st.markdown(
 
 app_cols = st.columns(3)
 app_defs = [
-    ("blue", "Maternal diabetes platform", "Booking visit", "Estimate the probability of developing gestational diabetes during pregnancy using the saved CatBoost model and scaler.", "Open booking screen →", "booking"),
+    ("blue", "Maternal GDM risk prediction", "Booking visit", "Estimate the probability of developing gestational diabetes during pregnancy using the saved CatBoost model and scaler.", "Open booking screen →", "booking"),
     ("teal", "Future diabetes prevention", "After GDM in pregnancy", "Use the published antenatal equation to estimate future type 2 diabetes risk after delivery among women with GDM.", "Open antenatal model →", "antenatal"),
     ("rose", "Postpartum review", "Postnatal follow-up", "Update long-term future diabetes risk using linked antenatal OGTT, postnatal fasting glucose, postnatal 2-hour OGTT, and BMI.", "Open postnatal model →", "postnatal"),
 ]
@@ -1508,9 +1529,9 @@ def render_booking_module():
     st.markdown('<div class="form-section-title">Shared background predictors</div><div class="form-section-note">These two variables are shared across the platform and are entered first for clarity.</div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
-        st.number_input("Parity", min_value=0, max_value=15, step=1, key="parity", on_change=sync_shared_to_antenatal)
+        st.number_input("Parity", min_value=0, max_value=15, step=1, key="booking_parity", on_change=sync_booking_to_shared)
     with c2:
-        st.selectbox("Family history of diabetes", options=[0, 1], format_func=yes_no, key="family_hist_dm", on_change=sync_shared_to_antenatal)
+        st.selectbox("Family history of diabetes", options=[0, 1], format_func=yes_no, key="booking_family_hist_dm", on_change=sync_booking_to_shared)
 
     st.markdown('<div class="form-section-title">Maternal characteristics</div><div class="form-section-note">Core booking predictors available at the first antenatal visit.</div>', unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
@@ -1575,7 +1596,7 @@ def render_antenatal_module():
         <div class="module-shell">
             <div class="module-kicker">Stage 2</div>
             <div class="module-title">Pregnancy after GDM: future T2DM risk after delivery</div>
-            <div class="module-description">This published antenatal model uses exactly seven predictors. They are grouped below as glucose markers, pregnancy history and treatment, and shared background variables so the form is easier to follow in a live demonstration.</div>
+            <div class="module-description">This published antenatal model uses exactly seven predictors: antenatal fasting plasma glucose, antenatal 2-hour OGTT, recurrent GDM, insulin treatment in pregnancy, history of irregular menstrual cycles, parity, and family history of diabetes. They are grouped below for a cleaner public demonstration workflow.</div>
         </div>
         """,
         unsafe_allow_html=True,
