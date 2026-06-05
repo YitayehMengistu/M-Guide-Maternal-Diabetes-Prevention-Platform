@@ -745,7 +745,7 @@ EXPERIENCE_CSS = """
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        min-height: 338px;
+        min-height: 0 !important;
     }
 
     .stage-top {
@@ -809,6 +809,50 @@ EXPERIENCE_CSS = """
         text-align: right;
     }
 
+    .prediction-workspace {
+        margin: 0.85rem 0 1.1rem 0;
+    }
+
+    .prediction-workspace .stage-card {
+        min-height: 0;
+        margin-top: 0.75rem;
+    }
+
+    .prediction-workspace .stage-body,
+    .stage-card .stage-body {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 0.9rem;
+        align-items: end;
+    }
+
+    .prediction-workspace .stage-status,
+    .stage-card .stage-status {
+        min-width: 180px;
+        margin-top: 0;
+        border-top: 0;
+        border-left: 1px solid #edf1f5;
+        padding-top: 0;
+        padding-left: 0.9rem;
+    }
+
+    .active-workspace {
+        margin: 0.75rem 0 1.2rem 0;
+        padding: 1rem;
+        border: 1px solid #cbdcec;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 16px 40px rgba(19, 34, 56, 0.08);
+    }
+
+    .visual-card {
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.65rem;
+        margin-bottom: 0.8rem;
+    }
+
     .interpret-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -827,6 +871,18 @@ EXPERIENCE_CSS = """
         .platform-summary,
         .interpret-grid {
             grid-template-columns: 1fr;
+        }
+        .prediction-workspace .stage-body,
+        .stage-card .stage-body {
+            display: block;
+        }
+        .prediction-workspace .stage-status,
+        .stage-card .stage-status {
+            border-left: 0;
+            border-top: 1px solid #edf1f5;
+            padding-left: 0;
+            padding-top: 0.7rem;
+            margin-top: 0.7rem;
         }
     }
 </style>
@@ -1290,41 +1346,55 @@ def render_platform_summary() -> None:
     )
 
 
-def render_stage_cards() -> None:
-    st.markdown('<div class="brand-kicker" style="margin-top:0.2rem;">Choose a prediction module</div>', unsafe_allow_html=True)
-    cols = st.columns(3)
-    for col, module_name in zip(cols, MODULES):
-        details = STAGE_DETAILS[module_name]
-        active = "active" if st.session_state.active_module == module_name else ""
-        theme = details["theme"]
-        status = stage_result_status(module_name)
-        with col:
-            st.markdown(
-                f"""
-                <div class="stage-card {theme} {active}">
-                    <div class="stage-top">
-                        <div class="stage-chip">Prediction {escape(details["number"])}</div>
-                        <div class="stage-name">{escape(details["card_title"])}</div>
-                        <div class="stage-target">{escape(details["prediction"])}</div>
-                    </div>
-                    <div class="stage-body">
-                        <div class="stage-meta">
-                            <div class="meta-line"><strong>Model:</strong> {escape(details["model"])}</div>
-                            <div class="meta-line"><strong>For:</strong> {escape(details["population"])}</div>
-                            <div class="meta-line"><strong>Output:</strong> {escape(details["output"])}</div>
-                        </div>
-                        <div class="stage-status">
-                            <div class="stage-status-label">Current result</div>
-                            <div class="stage-status-value">{escape(status)}</div>
-                        </div>
-                    </div>
+def render_stage_card(module_name: str) -> None:
+    details = STAGE_DETAILS[module_name]
+    active = "active" if st.session_state.active_module == module_name else ""
+    theme = details["theme"]
+    status = stage_result_status(module_name)
+    action_text = "Open now" if st.session_state.active_module != module_name else "Currently open"
+    st.markdown(
+        f"""
+        <div class="stage-card {theme} {active}">
+            <div class="stage-top">
+                <div class="stage-chip">Prediction {escape(details["number"])}</div>
+                <div class="stage-name">{escape(details["card_title"])}</div>
+                <div class="stage-target">{escape(details["prediction"])}</div>
+            </div>
+            <div class="stage-body">
+                <div class="stage-meta">
+                    <div class="meta-line"><strong>Model:</strong> {escape(details["model"])}</div>
+                    <div class="meta-line"><strong>For:</strong> {escape(details["population"])}</div>
+                    <div class="meta-line"><strong>Output:</strong> {escape(details["output"])}</div>
                 </div>
-                """,
-                unsafe_allow_html=True,
-            )
-            if st.button(details["button"], key=f"select_{module_name}", use_container_width=True):
-                st.session_state.active_module = module_name
-                st.rerun()
+                <div class="stage-status">
+                    <div>
+                        <div class="stage-status-label">Current result</div>
+                        <div class="stage-status-value">{escape(status)}</div>
+                    </div>
+                    <div class="stage-status-label">{escape(action_text)}</div>
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if st.button(details["button"], key=f"select_{module_name}", use_container_width=True):
+        st.session_state.active_module = module_name
+        st.rerun()
+
+
+def render_prediction_workspace() -> None:
+    st.markdown('<div class="brand-kicker" style="margin-top:0.2rem;">Choose a prediction module</div>', unsafe_allow_html=True)
+    for module_name in MODULES:
+        render_stage_card(module_name)
+        if st.session_state.active_module == module_name:
+            with st.container(border=True):
+                if module_name == "Booking visit":
+                    render_booking_module()
+                elif module_name == "Pregnancy after GDM":
+                    render_antenatal_module()
+                else:
+                    render_postnatal_module()
 
 
 def render_module_intro(module_name: str) -> None:
@@ -1364,6 +1434,156 @@ def render_module_intro(module_name: str) -> None:
     )
 
 
+def make_result_gauge(prob: float, threshold: float, title: str):
+    import plotly.graph_objects as go
+
+    pct = max(0.0, min(100.0, prob * 100.0))
+    threshold_pct = max(0.0, min(100.0, threshold * 100.0))
+    fig = go.Figure(
+        go.Indicator(
+            mode="gauge+number",
+            value=pct,
+            number={"suffix": "%", "font": {"size": 34, "color": "#132238"}},
+            title={"text": title, "font": {"size": 14, "color": "#132238"}},
+            gauge={
+                "axis": {"range": [0, 100], "tickwidth": 1, "tickcolor": "#697789"},
+                "bar": {"color": "#1769aa", "thickness": 0.28},
+                "bgcolor": "white",
+                "borderwidth": 1,
+                "bordercolor": "#dce3ea",
+                "steps": [
+                    {"range": [0, 10], "color": "#e9f7ef"},
+                    {"range": [10, 20], "color": "#fff6dc"},
+                    {"range": [20, 100], "color": "#fdecef"},
+                ],
+                "threshold": {
+                    "line": {"color": "#132238", "width": 3},
+                    "thickness": 0.75,
+                    "value": threshold_pct,
+                },
+            },
+        )
+    )
+    fig.update_layout(height=285, margin=dict(l=18, r=18, t=42, b=8), paper_bgcolor="white")
+    return fig
+
+
+def make_threshold_chart(prob: float, threshold: float, module_name: str):
+    import plotly.graph_objects as go
+
+    pct = prob * 100.0
+    threshold_pct = threshold * 100.0
+    fig = go.Figure()
+    fig.add_trace(
+        go.Bar(
+            x=[pct],
+            y=["Current patient"],
+            orientation="h",
+            marker_color="#1769aa",
+            text=[f"{pct:.1f}%"],
+            textposition="outside",
+            hovertemplate="Predicted risk: %{x:.1f}%<extra></extra>",
+        )
+    )
+    fig.add_vline(
+        x=threshold_pct,
+        line_width=3,
+        line_dash="dash",
+        line_color="#c85268",
+        annotation_text=f"Threshold {threshold_pct:.1f}%",
+        annotation_position="top",
+    )
+    fig.update_xaxes(range=[0, max(35, pct * 1.18, threshold_pct * 1.35)], ticksuffix="%")
+    fig.update_layout(
+        title=f"{STAGE_DETAILS[module_name]['short_name']}: risk compared with action threshold",
+        height=225,
+        margin=dict(l=12, r=20, t=54, b=26),
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        showlegend=False,
+        font={"color": "#132238"},
+    )
+    return fig
+
+
+def make_journey_chart(active_module: str):
+    import plotly.graph_objects as go
+
+    values = []
+    colors = []
+    hover = []
+    for module_name in MODULES:
+        if module_name == "Booking visit":
+            prob = st.session_state.anc_prob
+            band = booking_risk_band(float(prob)) if prob is not None else "Not run"
+        elif module_name == "Pregnancy after GDM":
+            prob = st.session_state.ant_prob
+            band = published_model_band(float(prob), 0.096) if prob is not None else "Not run"
+        else:
+            prob = st.session_state.post_prob
+            band = published_model_band(float(prob), 0.086) if prob is not None else "Not run"
+
+        values.append(float(prob) * 100.0 if prob is not None else 0.0)
+        colors.append("#1769aa" if module_name == active_module else "#9fb1c5" if prob is not None else "#dce3ea")
+        hover.append(f"{STAGE_DETAILS[module_name]['short_name']}<br>{band}")
+
+    fig = go.Figure(
+        go.Bar(
+            x=[STAGE_DETAILS[name]["number"] for name in MODULES],
+            y=values,
+            marker_color=colors,
+            text=[f"{v:.1f}%" if v > 0 else "Not run" for v in values],
+            textposition="outside",
+            customdata=hover,
+            hovertemplate="%{customdata}<br>Probability: %{y:.1f}%<extra></extra>",
+        )
+    )
+    fig.update_yaxes(range=[0, max(35, max(values + [0]) * 1.2)], ticksuffix="%")
+    fig.update_xaxes(
+        tickmode="array",
+        tickvals=[details["number"] for details in STAGE_DETAILS.values()],
+        ticktext=["Booking", "After GDM", "Postnatal"],
+    )
+    fig.update_layout(
+        title="Risk journey across completed prediction stages",
+        height=260,
+        margin=dict(l=10, r=15, t=54, b=34),
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        showlegend=False,
+        font={"color": "#132238"},
+    )
+    return fig
+
+
+def render_result_visualizations(prob: float, band: str, threshold: float, module_name: str) -> None:
+    details = STAGE_DETAILS[module_name]
+    st.markdown('<div class="visual-card">', unsafe_allow_html=True)
+    view_gauge, view_threshold, view_journey = st.tabs(["Gauge", "Threshold view", "Journey view"])
+    with view_gauge:
+        st.plotly_chart(
+            make_result_gauge(prob, threshold, details["short_name"]),
+            use_container_width=True,
+            config={"displayModeBar": False},
+        )
+        st.caption(f"{band} risk band. The dark marker shows the action threshold.")
+    with view_threshold:
+        st.plotly_chart(
+            make_threshold_chart(prob, threshold, module_name),
+            use_container_width=True,
+            config={"displayModeBar": False},
+        )
+        st.caption("This view makes it easier to see whether the estimate is below or above the action threshold.")
+    with view_journey:
+        st.plotly_chart(
+            make_journey_chart(module_name),
+            use_container_width=True,
+            config={"displayModeBar": False},
+        )
+        st.caption("Completed prediction stages are shown together so the risk journey can be discussed as one pathway.")
+    st.markdown("</div>", unsafe_allow_html=True)
+
+
 def render_result(prob: float, band: str, threshold: float, title: str, subtitle: str, payload: dict, module_name: str) -> None:
     pct = max(0.0, min(100.0, prob * 100.0))
     details = STAGE_DETAILS[module_name]
@@ -1393,6 +1613,12 @@ def render_result(prob: float, band: str, threshold: float, title: str, subtitle
                 </div>
             </div>
         </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    render_result_visualizations(prob, band, threshold, module_name)
+    st.markdown(
+        f"""
         <div class="result-card">
             <div class="result-kicker">Suggested next action</div>
             <ul class="list-clean">{actions}</ul>
@@ -1777,15 +2003,7 @@ with st.sidebar:
 render_header()
 render_platform_summary()
 
-render_stage_cards()
-selected_module = st.session_state.active_module
-
-if selected_module == "Booking visit":
-    render_booking_module()
-elif selected_module == "Pregnancy after GDM":
-    render_antenatal_module()
-else:
-    render_postnatal_module()
+render_prediction_workspace()
 
 render_model_library_section()
 render_report_section()
