@@ -664,7 +664,7 @@ STAGE_DETAILS = {
         "inputs": "Age, height, weight, parity, ethnicity, diabetes family history, past GDM, obstetric history",
         "output": "GDM risk percentage, risk band, and booking-stage action recommendation",
         "threshold": "Adjustable demo threshold; default 0.50",
-        "button": "Use booking predictor",
+        "button": "Click here for booking GDM risk",
         "intro": "Use routine booking information to support earlier prevention conversations before standard GDM screening.",
         "result_label": "Prediction 1 | Booking-stage GDM risk",
     },
@@ -679,7 +679,7 @@ STAGE_DETAILS = {
         "inputs": "Antenatal FPG, antenatal 2-hour OGTT, recurrent GDM, insulin treatment, irregular menses, parity, family history",
         "output": "Future T2DM risk percentage and postpartum prevention plan",
         "threshold": "Published action threshold 0.096",
-        "button": "Use antenatal predictor",
+        "button": "Click here for after-GDM T2DM risk",
         "intro": "Estimate post-delivery type 2 diabetes risk before birth, when postpartum follow-up planning can still be arranged.",
         "result_label": "Prediction 2 | Future T2DM risk after GDM",
     },
@@ -694,7 +694,7 @@ STAGE_DETAILS = {
         "inputs": "Linked antenatal 2-hour OGTT, postnatal FPG, postnatal 2-hour OGTT, postnatal BMI",
         "output": "Updated future T2DM risk percentage and longer-term follow-up recommendation",
         "threshold": "Published action threshold 0.086",
-        "button": "Use postnatal predictor",
+        "button": "Click here for postnatal T2DM risk update",
         "intro": "Refresh risk after delivery using postpartum glucose and BMI information, then document a longer-term prevention pathway.",
         "result_label": "Prediction 3 | Postnatal future T2DM update",
     },
@@ -888,6 +888,99 @@ EXPERIENCE_CSS = """
 </style>
 """
 st.markdown(EXPERIENCE_CSS, unsafe_allow_html=True)
+
+CONTRAST_FIX_CSS = """
+<style>
+    div.stButton > button,
+    button[data-testid^="stBaseButton"] {
+        background: #132238 !important;
+        border: 1px solid #132238 !important;
+        border-radius: 8px !important;
+        color: #ffffff !important;
+        font-weight: 850 !important;
+        min-height: 2.7rem !important;
+    }
+
+    div.stButton > button *,
+    button[data-testid^="stBaseButton"] *,
+    div.stDownloadButton > button *,
+    div.stFormSubmitButton > button * {
+        color: #ffffff !important;
+        opacity: 1 !important;
+    }
+
+    div.stFormSubmitButton > button,
+    button[data-testid="stBaseButton-primary"] {
+        background: #e84f5b !important;
+        border-color: #e84f5b !important;
+        color: #ffffff !important;
+    }
+
+    div.stButton > button:hover,
+    button[data-testid^="stBaseButton"]:hover {
+        background: #1769aa !important;
+        border-color: #1769aa !important;
+        color: #ffffff !important;
+    }
+
+    div.stFormSubmitButton > button:hover,
+    button[data-testid="stBaseButton-primary"]:hover {
+        background: #c93f4b !important;
+        border-color: #c93f4b !important;
+    }
+
+    div[data-baseweb="select"] > div,
+    div[data-baseweb="select"] div[role="button"] {
+        background: #ffffff !important;
+        border-color: #cfd8e3 !important;
+        color: #132238 !important;
+    }
+
+    div[data-baseweb="select"] *,
+    div[data-baseweb="select"] input,
+    div[data-baseweb="select"] span {
+        color: #132238 !important;
+        opacity: 1 !important;
+    }
+
+    div[data-baseweb="select"] svg {
+        color: #132238 !important;
+        fill: #132238 !important;
+    }
+
+    div[data-baseweb="popover"],
+    div[data-baseweb="popover"] > div,
+    ul[role="listbox"],
+    div[role="listbox"] {
+        background: #ffffff !important;
+        color: #132238 !important;
+    }
+
+    div[data-baseweb="popover"] *,
+    ul[role="listbox"] *,
+    div[role="listbox"] * {
+        color: #132238 !important;
+        opacity: 1 !important;
+    }
+
+    li[role="option"],
+    div[role="option"],
+    ul[role="listbox"] li,
+    div[data-baseweb="menu"] li {
+        background: #ffffff !important;
+        color: #132238 !important;
+    }
+
+    li[role="option"]:hover,
+    div[role="option"]:hover,
+    li[aria-selected="true"],
+    div[aria-selected="true"] {
+        background: #eaf3ff !important;
+        color: #132238 !important;
+    }
+</style>
+"""
+st.markdown(CONTRAST_FIX_CSS, unsafe_allow_html=True)
 
 
 # =========================================================
